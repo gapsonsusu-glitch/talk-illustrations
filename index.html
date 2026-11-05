@@ -1,0 +1,967 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1f4fd1"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Talk Illustrations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<style>
+/* Layout: phone-first notecard app — sticky blue header, stacked cards, five-tab bottom bar, bottom sheets for actions */
+:root{
+  --bg:#f4f6fb; --card:#ffffff; --ink:#14213d; --muted:#5b6782; --line:#dde3ef;
+  --accent:#1f4fd1; --on-accent:#ffffff; --accent-soft:#e6edff; --mark:#f2b705; --mark-soft:#fff4cf;
+  --ok:#1d8a5b; --warn:#b26a00; --bad:#c0392b; --wa:#1a8f4c;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --read:"Literata",Georgia,serif;
+  --ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1324; --card:#151d33; --ink:#e8edf8; --muted:#9aa6c2; --line:#26304a;
+  --accent:#7aa2ff; --on-accent:#0d1324; --accent-soft:#1c2a52; --mark:#f5c84a; --mark-soft:#3a3218;
+  --ok:#4cc38a; --warn:#f0a43a; --bad:#ff7b6b; --wa:#4cc38a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1324; --card:#151d33; --ink:#e8edf8; --muted:#9aa6c2; --line:#26304a;
+  --accent:#7aa2ff; --on-accent:#0d1324; --accent-soft:#1c2a52; --mark:#f5c84a; --mark-soft:#3a3218;
+  --ok:#4cc38a; --warn:#f0a43a; --bad:#ff7b6b; --wa:#4cc38a; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--ui);font-size:15px;line-height:1.5;padding-bottom:84px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:#1f4fd1}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:#1f4fd1;color:#fff}
+header .wrap{padding-block:14px 12px;display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:10px;background:#fff;display:grid;place-items:center;flex:none}
+.logo svg{width:22px;height:22px}
+header h1{font-family:var(--display);font-size:20px;margin:0;line-height:1.1;letter-spacing:-.01em}
+header p{margin:0;font-size:12.5px;opacity:.85}
+main .wrap{padding-block:16px;display:flex;flex-direction:column;gap:14px}
+h2{font-family:var(--display);font-size:22px;margin:4px 0 0;text-wrap:balance}
+h4{font-family:var(--display);font-size:15px;margin:0}
+.sub{color:var(--muted);margin:0;font-size:14px}
+.search{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips.wrapit{flex-wrap:wrap;overflow:visible}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 13px;border-radius:999px;font:500 13.5px var(--ui);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.count{font-size:13px;color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:12px}
+.ill{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.ill .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ill h3{font-family:var(--display);font-size:18px;margin:0;line-height:1.25;text-wrap:balance}
+.tag{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.tag.mine{color:var(--ok)}
+.story{font-family:var(--read);font-size:16px;line-height:1.6;margin:0}
+.point{background:var(--mark-soft);border-radius:10px;padding:10px 12px;font-size:14.5px}
+.point b{font-family:var(--display);font-weight:700}
+.twi{border-left:3px solid var(--accent);padding:4px 0 4px 12px;font-family:var(--read);white-space:pre-wrap;font-size:15.5px}
+.scr{font-size:14px;color:var(--muted)}
+.scr a{color:var(--accent)}
+.used{font-size:13px;color:var(--warn);font-weight:600}
+.unused{font-size:13px;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font:500 13.5px var(--ui);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--accent)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.wa{color:var(--wa);border-color:var(--wa)}
+.btn.big{padding:13px 16px;font-size:15px;width:100%;justify-content:center}
+.btn.danger{color:var(--bad)}
+.star{border:none;background:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;padding:2px}
+.star[aria-pressed="true"]{color:var(--mark)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+label{font-size:13px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+input,textarea,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;font-weight:400}
+textarea{min-height:90px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.two{grid-template-columns:1fr}}
+.note{font-size:13.5px;color:var(--ink);background:var(--accent-soft);border-radius:10px;padding:10px 12px}
+.note.warn{background:var(--mark-soft)}
+.empty{text-align:center;color:var(--muted);padding:28px 12px;border:1px dashed var(--line);border-radius:14px}
+.talk{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.talk>button.head{all:unset;box-sizing:border-box;width:100%;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.talk>button.head:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.talk h3{font-family:var(--display);margin:0;font-size:17px;line-height:1.25}
+.talk .meta{font-size:13px;color:var(--muted)}
+.talk .body{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:12px}
+.talk ol{margin:0;padding-left:20px;font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.pill{font-size:12px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.pill.ok{background:var(--accent-soft);color:var(--ok)}
+.pill.soon{background:var(--mark-soft);color:var(--warn)}
+.block{background:var(--bg);border-radius:10px;padding:10px 12px;font-size:14.5px;font-family:var(--read)}
+.block b{font-family:var(--ui);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{border:none;background:none;color:var(--muted);font:600 11.5px var(--ui);padding:10px 2px 9px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--accent)}
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.sheet{position:fixed;inset:0;background:rgba(10,15,30,.55);z-index:15;display:flex;align-items:flex-end;justify-content:center}
+.sheet .box{background:var(--card);width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:18px max(16px,env(safe-area-inset-left,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px;max-height:88vh;overflow:auto}
+.sheet h3{font-family:var(--display);margin:0;font-size:19px}
+.sheet .list-btn{text-align:left;justify-content:flex-start;width:100%;padding:12px}
+.steps{margin:0;padding-left:20px;font-size:14.5px}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:s .8s linear infinite;vertical-align:-3px}
+@keyframes s{to{transform:rotate(360deg)}}
+pre.prompt{white-space:pre-wrap;font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;margin:0;max-height:140px;overflow:auto}
+.clock{font-family:var(--display);font-weight:700;font-size:clamp(64px,22vw,120px);line-height:1;text-align:center;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--ink);padding-block:8px}
+.clock.soon{color:var(--warn)}
+.clock.over{color:var(--bad)}
+.clock-sub{text-align:center;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}.toast{transition:none}}
+</style>
+
+<header><div class="wrap">
+  <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1f4fd1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg></div>
+  <div><h1>Talk Illustrations</h1><p>Make the point stick</p></div>
+</div></header>
+
+<main><div class="wrap" id="view"></div></main>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <button data-tab="bank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h6v14H4zM14 5h6v14h-6z"/></svg>Bank</button>
+  <button data-tab="fresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Fresh ideas</button>
+  <button data-tab="talks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg>My talks</button>
+  <button data-tab="ministry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM19 17H6"/><path d="M11.5 6.5v6M9 9h5"/></svg>Ministry</button>
+  <button data-tab="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</button>
+</div></nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const VERSION="3.0";
+const APK_URL="https://github.com/nyarkogideon956-dot/talk-illustrations/releases/latest/download/talk-illustrations.apk";
+const RELEASES_URL="https://github.com/nyarkogideon956-dot/talk-illustrations/releases/latest";
+const isNative=()=>!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
+const APP_URL_DEFAULT="https://nyarkogideon956-dot.github.io/talk-illustrations/";
+const BANK=[
+{t:"Faith",h:"The trotro driver you never questioned",s:"You board a trotro to Kasoa at dawn. You can't see the road ahead from the back seat, and you don't know the driver's name, yet you sit back and even sleep. Why? Because he has made that trip many times and you have seen him arrive.",p:"Real faith isn't blind. It rests on a track record, and Jehovah's record of keeping his word is perfect.",r:"Hebrews 11:1; Joshua 23:14"},
+{t:"Faith",h:"Saying the chair is strong",s:"Anyone can stand beside a plastic chair and say, \"It will hold me.\" But you only show you believe it when you actually sit down on it.",p:"Faith is shown by what we do, not only by what we say.",r:"James 2:17, 18"},
+{t:"Faith",h:"Planting before the rains",s:"A farmer in the north plants his seed in dry, hard ground before a single drop has fallen. He isn't foolish. He has watched the seasons for years and knows the rains will come.",p:"We act now on Jehovah's promises because we know his 'seasons' never fail.",r:"Hebrews 11:6; Habakkuk 2:3"},
+{t:"Prayer",h:"A network that is never busy",s:"Sometimes you call and hear, \"The number you are calling is not reachable,\" or the network drops at the worst moment. But you can speak to Jehovah at midnight, on the road, in the market, and the line is never busy.",p:"Jehovah is always reachable. We can pray anytime, about anything.",r:"Psalm 65:2; 1 Thessalonians 5:17"},
+{t:"Prayer",h:"The friend who only calls for money",s:"Imagine a friend who only phones you when he needs a loan. Every call starts with \"Please, I need small help.\" How close would you feel to him?",p:"Our prayers should include thanks and praise, not only requests.",r:"Philippians 4:6; Colossians 3:15"},
+{t:"Prayer",h:"Holding Daddy's hand at the lorry station",s:"A small child crossing the busy road at a lorry station doesn't study the traffic. He just holds his father's hand tightly and walks when his father walks.",p:"In prayer we hold Jehovah's hand through situations too big for us.",r:"Isaiah 41:10, 13"},
+{t:"Endurance",h:"Watering the concrete",s:"After a mason casts a slab, he keeps pouring water on it for days. A visitor might think the concrete is being troubled. In fact, that slow curing is what makes it strong enough to carry a whole storey.",p:"Trials we endure faithfully make our faith stronger and more useful.",r:"James 1:2-4; 1 Peter 1:6, 7"},
+{t:"Endurance",h:"The palm tree in the harmattan",s:"When strong winds blow, the palm tree bends far over, almost touching the ground. But its roots go deep, and after the storm it stands straight again.",p:"Deep roots in God's Word let us bend under pressure without breaking.",r:"Psalm 92:12-14; Colossians 2:6, 7"},
+{t:"Endurance",h:"The runner who sees the finish line",s:"In a long race, the runners who finish are not always the fastest at the start. They are the ones who keep a steady pace and keep their eyes on the finish line.",p:"Endurance is about steady faithfulness to the end, not a fast start.",r:"Hebrews 12:1, 2; Matthew 24:13"},
+{t:"Love",h:"The plate kept warm",s:"A mother keeps a plate of food covered and warm for the child who comes home late, even when she is tired. Nobody asked her to. Love made her think ahead.",p:"Love looks for the needs of others before they ask.",r:"1 Corinthians 13:4, 5; Philippians 2:4"},
+{t:"Love",h:"Lights off, generator on",s:"When there is 'dumsor' and the whole street goes dark, you quickly see which house has a generator. Anyone can shine when there is power.",p:"Love is proved when things are hard, by actions and not just words.",r:"1 John 3:18; Proverbs 17:17"},
+{t:"Love",h:"The right hand washes the left",s:"Our elders say the right hand washes the left and the left washes the right. Neither hand can get clean alone.",p:"In the congregation we need each other and take turns giving help.",r:"Romans 12:10; Galatians 6:2"},
+{t:"Forgiveness",h:"Tearing out the debt page",s:"A shopkeeper keeps a notebook of who owes her. One day, moved by a customer's hardship, she tears out his page completely. She doesn't just put it aside to remind him later.",p:"When Jehovah forgives, he cancels the debt. We should forgive the same way.",r:"Colossians 3:13; Psalm 103:12"},
+{t:"Forgiveness",h:"A stone in your pocket",s:"Pick up a stone each time someone offends you and carry it in your pocket. After a few weeks you can hardly walk. The person who hurt you feels nothing; you carry all the weight.",p:"Holding a grudge hurts us most. Letting go brings relief.",r:"Ephesians 4:31, 32"},
+{t:"Forgiveness",h:"The cleaned chalkboard",s:"At the end of the lesson, the teacher wipes the board completely clean. The next class starts with nothing of yesterday's writing on it.",p:"Jehovah's forgiveness wipes the record clean.",r:"Isaiah 1:18; Acts 3:19"},
+{t:"Humility",h:"The branch full of fruit",s:"Look at a mango tree in season. The branches heavy with fruit bend low to the ground. The empty branches point straight up.",p:"The more we truly have to offer, the lower we should bow.",r:"Proverbs 22:4; 1 Peter 5:5"},
+{t:"Humility",h:"The empty barrel",s:"Knock on a full barrel and you hear a dull sound. Knock on an empty one and it booms loudly.",p:"Loud self-praise often shows emptiness. Let our works speak.",r:"Proverbs 27:2; Proverbs 11:2"},
+{t:"Family",h:"The part of the building nobody sees",s:"Visitors admire the paint, the ceiling and the tiles. Nobody praises the foundation buried in the ground, yet without it the whole house would crack.",p:"Spiritual routine at home is the hidden foundation of a strong family.",r:"Psalm 127:1; Matthew 7:24, 25"},
+{t:"Family",h:"Three strands in one rope",s:"Try to snap one thin strand of rope and it breaks easily. Twist three together and you cannot break it with your hands.",p:"A marriage with Jehovah in it is far stronger than two people alone.",r:"Ecclesiastes 4:12"},
+{t:"Family",h:"Watering a seedling every day",s:"You can't water a seedling once a month with a big bucket and expect it to grow. It needs a little water every day.",p:"Children grow spiritually through small, daily teaching, not occasional lectures.",r:"Deuteronomy 6:6, 7; Ephesians 6:4"},
+{t:"Ministry",h:"The fisherman comes back tomorrow",s:"A fisherman at Winneba may pull in an empty net. He doesn't burn his canoe. He mends the net and goes out again tomorrow.",p:"Results in the ministry belong to Jehovah. Our part is to keep going out.",r:"Galatians 6:9; 1 Corinthians 3:6, 7"},
+{t:"Ministry",h:"The seller who uses her own product",s:"The shea butter seller whose own skin glows doesn't need to shout. People see the results on her and ask where to buy.",p:"Living the truth makes our preaching believable.",r:"1 Peter 2:12; Romans 1:16"},
+{t:"Ministry",h:"One lamp in a dark compound",s:"During a power cut, one lit lamp in the middle of the compound draws everyone. People gather around it to see.",p:"Our good conduct and message give light in a dark world.",r:"Matthew 5:14-16; Philippians 2:15"},
+{t:"Hope",h:"The phone that goes off",s:"When your phone battery dies, the screen goes dark, but your contacts and photos are safe in your account. Charge it, and everything comes back.",p:"Those who die are safe in Jehovah's memory, ready for the resurrection.",r:"John 5:28, 29; Job 14:13-15"},
+{t:"Hope",h:"Seeing the house plan",s:"Before a family moves into a new house, they study the building plan and talk about which room will be whose. They are excited because the builder is reliable.",p:"Bible promises are a reliable 'plan' of the new world we can already picture.",r:"Revelation 21:3, 4; 2 Peter 3:13"},
+{t:"Hope",h:"Ticket in hand at the station",s:"At the bus station, the person holding a ticket waits calmly even if the bus is late. The one without a ticket keeps worrying.",p:"Jehovah's promises are our 'ticket'. We can wait with calm hope.",r:"Habakkuk 2:3; Romans 5:5"},
+{t:"Choices",h:"When the GPS says recalculating",s:"You take a wrong turn and the GPS doesn't shout at you. It calmly says \"recalculating\" and shows the way back to the road.",p:"Jehovah's Word guides us, and helps us return when we go off course.",r:"Psalm 119:105; Isaiah 30:21"},
+{t:"Choices",h:"The shortcut through the bush",s:"A path through the bush looks shorter than the main road. But it may lead to a swamp or snakes, and you end up far later than those on the road.",p:"A way that seems right can end badly. Trust Jehovah's road.",r:"Proverbs 14:12; Proverbs 3:5, 6"},
+{t:"Choices",h:"One bad tomato in the basket",s:"Leave one rotten tomato in a basket overnight. By morning, the good ones around it have started to spoil. The good ones never make the bad one fresh.",p:"Bad company spoils good habits. Choose friends carefully.",r:"1 Corinthians 15:33; Proverbs 13:20"},
+{t:"Bible study",h:"Eating once a week",s:"Imagine someone who eats one big meal on Sunday and nothing else all week. By Wednesday he is weak and dizzy, however big Sunday's meal was.",p:"We need regular personal Bible reading, not only meetings.",r:"Matthew 4:4; Psalm 1:2, 3"},
+{t:"Bible study",h:"Reading the manufacturer's manual",s:"When a new generator gives trouble, the wise man reads the manual written by the people who made it, not the advice of a passer-by.",p:"Our Maker's book tells us how life works best.",r:"2 Timothy 3:16, 17; Isaiah 48:17"},
+{t:"Obedience",h:"The hard hat on site",s:"A new labourer may find the hard hat hot and annoying. Then one day a piece of block falls from the scaffold, and he understands the rule.",p:"Jehovah's laws protect us even when we can't yet see the danger.",r:"Isaiah 48:17, 18; Psalm 19:7-11"},
+{t:"Obedience",h:"Following the doctor's prescription",s:"A patient feels better after two days and stops the medicine. A week later the sickness returns, stronger than before.",p:"Obeying fully, not just when it feels needed, keeps us spiritually healthy.",r:"Proverbs 3:7, 8; James 1:22"},
+{t:"Jehovah's care",h:"The hen and her chicks",s:"When a hawk circles over the farm, the mother hen gives one sharp call and every chick runs under her wings. She spreads herself over them, ready to take the attack.",p:"Jehovah protects those who run to him.",r:"Psalm 91:4; Matthew 23:37"},
+{t:"Jehovah's care",h:"The shepherd counts again",s:"A shepherd counts 99 sheep at the end of the day. He doesn't say, \"That's enough.\" He goes back out in the dark for the one that is missing.",p:"Every single one of us matters to Jehovah.",r:"Luke 15:4-7; Ezekiel 34:11, 12"},
+{t:"Contentment",h:"The monkey's hand in the jar",s:"Hunters put groundnuts in a jar with a narrow neck. The monkey reaches in and grabs a fistful, but now his fist is too big to come out. He won't let go, and he is caught.",p:"Greed traps us. Contentment sets us free.",r:"Luke 12:15; 1 Timothy 6:6-10"},
+{t:"Honesty",h:"The honest scale at the market",s:"Market women quickly learn which seller's scale is fair. Her line is always longer, even when her price is a little higher.",p:"Honesty builds trust, with people and with Jehovah.",r:"Proverbs 11:1; Hebrews 13:18"}
+];
+BANK.forEach((b,i)=>b.id="b"+i);
+const KEY="talkIllus.v1";
+const DEFAULT_MINS={"Midweek part":5,"Treasures":10,"Spiritual gems":10,"Bible reading":4,"Public talk":30,"Service meeting part":5,"Assembly part":15,"Other":5};
+const TYPES=Object.keys(DEFAULT_MINS);
+const AUDS=["Congregation meeting","Public talk","Youths","Families","Field service / Bible study","Assembly or convention"];
+
+let S={mine:[],fav:[],talks:[],used:{},extra:{},plans:[],lastBackup:0};
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
+S.talks.forEach((t,i)=>{t.id=t.id||("t"+Date.now()+i);t.place=t.place||"";t.scr=t.scr||"";t.ill=t.ill||[]});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+
+const view=document.getElementById("view");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const today=()=>new Date().toISOString().slice(0,10);
+const fmtDate=d=>d?new Date(d+"T00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"";
+const wa=t=>"https://wa.me/?text="+encodeURIComponent(t);
+const wol=r=>"https://wol.jw.org/en/wol/l/r1/lp-e?q="+encodeURIComponent(String(r).split(";")[0].trim());
+const all=()=>[...S.mine,...BANK];
+const byId=id=>all().find(x=>x.id===id);
+const talkById=id=>S.talks.find(t=>t.id===id);
+const themes=()=>[...new Set([...BANK.map(b=>b.t),...S.mine.map(b=>b.t)])];
+const places=()=>[...new Set([...S.talks.map(t=>t.place),...Object.values(S.used).flat().map(u=>u.w)].filter(Boolean))];
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),2400)}
+const plain=b=>`*${b.h}*\n${b.s}\n\nPoint: ${b.p}${b.r?"\nScripture: "+b.r:""}`;
+function appUrl(){return /github\.io$/.test(location.hostname)?location.origin+location.pathname.replace(/index\.html$/,""):APP_URL_DEFAULT}
+
+let tab="bank",theme="All",q="",fresh=[],openTalk="",twiOpen=new Set();
+let FR={theme:"",scr:"",point:"",part:"",aud:"Congregation meeting",n:"3"};
+
+/* ---------- Asking Claude ---------- */
+let sampleP=null;
+function getSample(){if(!sampleP)sampleP=(window.claude&&window.claude.use)?window.claude.use("sample").catch(()=>null):Promise.resolve(null);return sampleP}
+function parseJSON(text){
+  let t=String(text||"").replace(/```(?:json)?/gi,"").trim();
+  const a=t.search(/[\[{]/);if(a<0)throw new Error("no json");
+  const open=t[a],close=open==="["?"]":"}";const b=t.lastIndexOf(close);
+  return JSON.parse(t.slice(a,b+1));
+}
+function openSheet(html){
+  const sh=document.createElement("div");sh.className="sheet";
+  sh.innerHTML=`<div class="box" role="dialog" aria-modal="true">${html}</div>`;
+  document.body.appendChild(sh);
+  sh.addEventListener("click",e=>{if(e.target===sh||e.target.closest("[data-close]"))sh.remove()});
+  return sh;
+}
+function busy(label){const sh=openSheet(`<p style="margin:8px 0;font-size:16px"><span class="spin"></span>&nbsp; ${esc(label)}</p>`);return()=>sh.remove()}
+function manualAsk(prompt,json){
+  return new Promise((res,rej)=>{
+    const link=prompt.length<6000?"https://claude.ai/new?q="+encodeURIComponent(prompt):"https://claude.ai/new";
+    const sh=openSheet(`<h3>Ask Claude</h3>
+      <p class="sub">In the installed app this takes 3 quick steps:</p>
+      <ol class="steps"><li>Copy the request.</li><li>Open Claude, paste it (if it isn't already there) and send.</li><li>Copy Claude's whole answer and paste it below.</li></ol>
+      <div class="row"><button class="btn primary" data-k="copy">1. Copy request</button><a class="btn" href="${link}" target="_blank" rel="noopener">2. Open Claude</a></div>
+      <pre class="prompt" id="ask-pr">${esc(prompt)}</pre>
+      <label>3. Paste Claude's answer here<textarea id="ask-in" placeholder="Paste the answer"></textarea></label>
+      <div id="ask-err"></div>
+      <div class="row"><button class="btn primary" data-k="use">Use answer</button><button class="btn" data-k="cancel">Cancel</button></div>`);
+    sh.addEventListener("click",e=>{
+      if(e.target===sh){rej({code:"cancel"});return}
+      const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
+      if(k==="copy")copy(prompt,"ask-pr");
+      if(k==="cancel"){sh.remove();rej({code:"cancel"})}
+      if(k==="use"){
+        const v=sh.querySelector("#ask-in").value.trim();
+        if(!v){sh.querySelector("#ask-err").innerHTML=`<div class="note warn">Paste Claude's answer first.</div>`;return}
+        if(!json){sh.remove();res(v);return}
+        try{const out=parseJSON(v);sh.remove();res(out)}
+        catch(err){sh.querySelector("#ask-err").innerHTML=`<div class="note warn">That answer couldn't be read. Make sure you copied all of Claude's reply, from the first [ or { to the end.</div>`}
+      }
+    });
+  });
+}
+async function aiRun(prompt,json,label){
+  const s=await getSample();
+  if(s){
+    const close=busy(label||"Asking Claude…");
+    try{const out=json?await s.json(prompt,{modelTier:"default"}):(await s(prompt,{modelTier:"default"})).text;close();return out}
+    catch(e){close();if(e&&e.code==="not_granted")return manualAsk(prompt,json);throw e}
+  }
+  return manualAsk(prompt,json);
+}
+function aiError(e){
+  if(e&&e.code==="cancel")return;
+  toast(e&&e.code==="rate_limited"?"Too many requests just now. Wait a minute and try again.":"Couldn't get an answer. Check your internet and try again.");
+}
+
+/* ---------- Illustration cards ---------- */
+function usedHtml(id){
+  const u=(S.used[id]||[]).slice().sort((a,b)=>a.d<b.d?1:-1);
+  if(!u.length)return `<div class="unused">Not used yet</div>`;
+  return `<div class="used">Used ${u.length}× · last at ${esc(u[0].w||"a meeting")}, ${fmtDate(u[0].d)}</div>`;
+}
+function card(b,opts={}){
+  if(opts.fresh){
+    return `<article class="ill">
+      <div class="top"><div><div class="tag">${esc(b.t)} · new</div><h3>${esc(b.h)}</h3></div></div>
+      <p class="story">${esc(b.s)}</p>
+      <div class="point"><b>The point:</b> ${esc(b.p)}</div>
+      ${b.r?`<div class="scr">📖 <a href="${wol(b.r)}" target="_blank" rel="noopener">${esc(b.r)}</a></div>`:""}
+      <div class="row"><button class="btn primary" data-a="keep" data-i="${opts.i}" ${b.kept?"disabled":""}>${b.kept?"Kept ✓":"Keep in my bank"}</button>
+      <a class="btn wa" href="${wa(plain(b))}" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="btn" data-a="copyfresh" data-i="${opts.i}">Copy</button></div>
+    </article>`;
+  }
+  const fav=S.fav.includes(b.id),x=S.extra[b.id]||{};
+  return `<article class="ill">
+    <div class="top"><div><div class="tag ${b.mine?"mine":""}">${esc(b.t)}${b.mine?" · mine":""}</div><h3>${esc(b.h)}</h3></div>
+    <button class="star" data-a="fav" data-id="${b.id}" aria-pressed="${fav}" aria-label="Save to favourites">${fav?"★":"☆"}</button></div>
+    <p class="story">${esc(b.s)}</p>
+    <div class="point"><b>The point:</b> ${esc(b.p)}</div>
+    ${b.r?`<div class="scr">📖 <a href="${wol(b.r)}" target="_blank" rel="noopener">${esc(b.r)}</a></div>`:""}
+    ${x.twi&&twiOpen.has(b.id)?`<div class="twi">${esc(x.twi)}</div>`:""}
+    ${usedHtml(b.id)}
+    <div class="row">
+      <button class="btn" data-a="totalk" data-id="${b.id}">Add to a talk</button>
+      <a class="btn wa" href="${wa(plain(b))}" target="_blank" rel="noopener">WhatsApp</a>
+      ${x.twi?`<button class="btn" data-a="twitoggle" data-id="${b.id}">${twiOpen.has(b.id)?"Hide Twi":"Show Twi"}</button>`:""}
+      <button class="btn" data-a="more" data-id="${b.id}" aria-label="More actions">⋯ More</button>
+    </div></article>`;
+}
+
+/* ---------- Bank ---------- */
+function renderBank(){
+  const chips=["All","★ Saved","Not used yet","Mine",...themes()];
+  let items=all();
+  if(theme==="★ Saved")items=items.filter(b=>S.fav.includes(b.id));
+  else if(theme==="Mine")items=items.filter(b=>b.mine);
+  else if(theme==="Not used yet")items=items.filter(b=>!(S.used[b.id]||[]).length);
+  else if(theme!=="All")items=items.filter(b=>b.t===theme);
+  if(q){const k=q.toLowerCase();items=items.filter(b=>(b.h+b.s+b.p+b.r+b.t+((S.extra[b.id]||{}).twi||"")).toLowerCase().includes(k))}
+  const nudge=(S.talks.length||S.mine.length)&&Date.now()-(S.lastBackup||0)>14*864e5;
+  view.innerHTML=`${nudge?`<div class="note warn row" style="justify-content:space-between">Back up your talks so you don't lose them.<button class="btn" data-a="gomore">Back up now</button></div>`:""}
+  <h2>Illustration bank</h2>
+  <input class="search" id="q" type="search" placeholder="Search: prayer, family, hope, Psalm 91…" value="${esc(q)}">
+  <div class="chips">${chips.map(t=>`<button class="chip" data-a="theme" data-v="${esc(t)}" aria-pressed="${t===theme}">${esc(t)}</button>`).join("")}</div>
+  <div class="count">${items.length} illustration${items.length===1?"":"s"}</div>
+  <div class="list">${items.length?items.map(b=>card(b)).join(""):`<div class="empty">Nothing here yet. Try another theme, or get fresh ideas.</div>`}</div>`;
+  const qi=document.getElementById("q");
+  qi.oninput=e=>{q=e.target.value;const pos=qi.selectionStart;renderBank();const n=document.getElementById("q");n.focus();n.setSelectionRange(pos,pos)};
+}
+
+/* ---------- More-actions sheet for one illustration ---------- */
+function moreSheet(id){
+  const b=byId(id);
+  const sh=openSheet(`<h3>${esc(b.h)}</h3>
+    <button class="btn list-btn" data-k="twi">🗣️ Twi version</button>
+    <button class="btn list-btn" data-k="pic">🖼️ Picture idea</button>
+    <button class="btn list-btn" data-k="used">✅ Mark as used</button>
+    <button class="btn list-btn" data-k="copy">📋 Copy</button>
+    ${b.mine?`<button class="btn list-btn danger" data-k="del">🗑️ Delete my illustration</button>`:""}
+    <button class="btn" data-close>Close</button>`);
+  sh.addEventListener("click",e=>{
+    const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
+    if(k==="copy"){copy(plain(b));return}
+    if(k==="del"){if(e.target.dataset.sure){S.mine=S.mine.filter(m=>m.id!==id);save();sh.remove();rerender();toast("Deleted")}else{e.target.dataset.sure=1;e.target.textContent="Tap again to delete"}return}
+    sh.remove();
+    if(k==="twi")twiSheet(id);
+    if(k==="pic")picSheet(id);
+    if(k==="used")usedSheet(id);
+  });
+}
+function twiSheet(id){
+  const b=byId(id),x=S.extra[id]||{};
+  const sh=openSheet(`<h3>Twi version</h3>
+    <p class="sub">Check the Twi and correct anything that doesn't sound natural before you save it.</p>
+    <textarea id="twi-t" style="min-height:200px" placeholder="Tap “Make Twi version”, or type your own">${esc(x.twi||"")}</textarea>
+    <div class="row"><button class="btn" data-k="make">${x.twi?"Make it again":"Make Twi version"}</button><button class="btn primary" data-k="save">Save</button><button class="btn" data-close>Close</button></div>`);
+  sh.addEventListener("click",async e=>{
+    const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
+    const ta=sh.querySelector("#twi-t");
+    if(k==="save"){S.extra[id]={...(S.extra[id]||{}),twi:ta.value.trim()};twiOpen.add(id);save();sh.remove();rerender();toast("Twi saved")}
+    if(k==="make"){
+      const prompt=`Translate this talk illustration into natural, simple spoken Asante Twi, the way a brother would say it from the platform in a Twi congregation in Kasoa, Ghana. Keep it warm and easy to follow. Keep the Bible reference as it is.\n\nTitle: ${b.h}\nStory: ${b.s}\nPoint: ${b.p}\nScripture: ${b.r}\n\nReturn only the Twi text in this layout, nothing else:\n<title in Twi>\n<story in Twi>\nAsɛm titiriw: <point in Twi>\n${b.r}`;
+      try{const out=await aiRun(prompt,false,"Writing the Twi version…");ta.value=String(out).trim()}catch(err){aiError(err)}
+    }
+  });
+}
+function picSheet(id){
+  const b=byId(id),x=S.extra[id]||{};
+  const sh=openSheet(`<h3>Picture idea</h3>
+    <p class="sub">Describe the picture you want. Claude writes a description you can paste into Gemini or ChatGPT to make the image.</p>
+    <label>Style<select id="pic-style">${["Realistic photo","Warm painting","Simple cartoon for children","Line drawing for a handout"].map(s=>`<option>${s}</option>`).join("")}</select></label>
+    <label>How should it look? (optional)<textarea id="pic-d" placeholder="e.g. Evening at Kasoa lorry station, a father holding his small son's hand as they cross">${esc(x.picWish||"")}</textarea></label>
+    <button class="btn primary" data-k="make">Write picture description</button>
+    <label>Picture description<textarea id="pic-out" style="min-height:150px">${esc(x.pic||"")}</textarea></label>
+    <div class="row"><button class="btn" data-k="copy">Copy</button><a class="btn" href="https://gemini.google.com/app" target="_blank" rel="noopener">Open Gemini</a><a class="btn" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT</a><button class="btn" data-close>Close</button></div>`);
+  sh.addEventListener("click",async e=>{
+    const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
+    const out=sh.querySelector("#pic-out");
+    if(k==="copy"){copy(out.value,"pic-out");return}
+    if(k==="make"){
+      const style=sh.querySelector("#pic-style").value,wish=sh.querySelector("#pic-d").value.trim();
+      const prompt=`Write one detailed prompt for an AI image generator (such as Gemini or ChatGPT) to draw a single picture for this talk illustration.\n\nTitle: ${b.h}\nStory: ${b.s}\nPoint: ${b.p}\n\nStyle: ${style}\nThe speaker's own wishes: ${wish||"none, choose the clearest single moment"}\n\nRules for the picture: set in Ghana, with Ghanaian people, clothing, buildings, plants and light; modest, dignified and respectful; no words, letters or logos in the image; no crosses, halos or other religious symbols; nothing violent or frightening; one clear moment that shows the point. Mention the camera angle or composition and the mood.\n\nReturn only the prompt text, 80 to 150 words, nothing else.`;
+      try{const r=await aiRun(prompt,false,"Writing the picture description…");out.value=String(r).trim();S.extra[id]={...(S.extra[id]||{}),pic:out.value,picWish:wish};save()}catch(err){aiError(err)}
+    }
+  });
+}
+function usedSheet(id){
+  const b=byId(id),u=S.used[id]||[],pl=places();
+  const sh=openSheet(`<h3>Mark as used</h3><p class="sub">${esc(b.h)}</p>
+    <div class="two"><label>Date<input id="u-d" type="date" value="${today()}"></label>
+    <label>Where<input id="u-w" list="u-pl" placeholder="e.g. West Junction Twi, midweek" value="${esc(pl[0]||"")}"><datalist id="u-pl">${pl.map(p=>`<option>${esc(p)}</option>`).join("")}</datalist></label></div>
+    <button class="btn primary" data-k="add">Save</button>
+    ${u.length?`<h4>Used before</h4>${u.map((x,i)=>`<div class="row" style="justify-content:space-between"><span>${fmtDate(x.d)} · ${esc(x.w||"")}</span><button class="btn" data-k="rm" data-i="${i}">Remove</button></div>`).join("")}`:""}
+    <button class="btn" data-close>Close</button>`);
+  sh.addEventListener("click",e=>{
+    const el=e.target.closest("[data-k]");if(!el)return;
+    if(el.dataset.k==="add"){(S.used[id]=S.used[id]||[]).push({d:sh.querySelector("#u-d").value||today(),w:sh.querySelector("#u-w").value.trim()});save();sh.remove();rerender();toast("Marked as used")}
+    if(el.dataset.k==="rm"){S.used[id].splice(+el.dataset.i,1);save();sh.remove();rerender()}
+  });
+}
+function addToTalk(id,t){
+  if(!t.ill.includes(id))t.ill.push(id);save();
+  const hit=t.place&&(S.used[id]||[]).find(u=>u.w&&u.w.toLowerCase()===t.place.toLowerCase()&&u.tid!==t.id);
+  toast(hit?`Added. Note: you used this at ${hit.w} on ${fmtDate(hit.d)}`:"Added to "+t.title);
+}
+function pickTalk(id){
+  const sh=openSheet(`<h3>Add to which talk?</h3>
+  ${S.talks.length?S.talks.map(t=>`<button class="btn list-btn" data-k="${t.id}">${esc(t.title)}<br><span class="count">${esc(t.type)}${t.date?" · "+fmtDate(t.date):""}${t.place?" · "+esc(t.place):""}</span></button>`).join(""):`<p class="sub">You have no talks yet.</p>`}
+  <button class="btn primary" data-new>New talk…</button><button class="btn" data-close>Cancel</button>`);
+  sh.addEventListener("click",e=>{
+    if(e.target.closest("[data-new]")){sh.remove();go("talks");setTimeout(()=>document.getElementById("t-title")?.focus(),60);return}
+    const k=e.target.closest("[data-k]")?.dataset.k;if(k){addToTalk(id,talkById(k));sh.remove()}
+  });
+}
+
+/* ---------- Fresh ideas ---------- */
+function freshPrompt(f){
+  return `You are helping a Jehovah's Witness speaker in Ghana prepare a talk.
+${f.theme?"Talk theme: "+f.theme+"\n":""}${f.scr?"Scripture(s) to illustrate: "+f.scr+"\n":""}${f.point?"Main point to make: "+f.point+"\n":""}${f.part?`This week's material, copied from the meeting workbook:\n"""\n${f.part}\n"""\n`:""}Audience: ${f.aud}
+
+Give ${f.n} fresh, original illustrations that fit this ${f.part?"material":"theme"}${f.scr?" and help explain the scripture(s)":""}. Use everyday Ghanaian life (trotro, market, farm, compound, lorry station, building site, school, family life) unless the subject suits something else. Keep each story short (3 to 5 sentences), clear and easy to picture, warm and respectful, with no jokes at anyone's expense. Each must lead clearly to its point. Give one accurate Bible reference (New World Translation book names) that supports each point.
+
+Return ONLY a JSON array, no other text, like:
+[{"h":"short title","s":"the story","p":"the point it makes","r":"Book chapter:verse"}]`;
+}
+function renderFresh(){
+  const f=FR;
+  view.innerHTML=`<h2>Fresh ideas</h2>
+  <p class="sub">Type a theme, a scripture, or paste this week's part. You'll get new illustrations made for it.</p>
+  <div class="panel">
+    <label>Talk theme or title<input id="f-theme" placeholder="e.g. Keep on the watch" value="${esc(f.theme)}"></label>
+    <label>Scripture(s) to illustrate<input id="f-scr" placeholder="e.g. Proverbs 3:5, 6" value="${esc(f.scr)}"></label>
+    <label>Point you want to make (optional)<input id="f-point" placeholder="e.g. Don't let daily life distract you" value="${esc(f.point)}"></label>
+    <details ${f.part?"open":""}><summary>This week's part from JW Library</summary>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <div class="note">Open JW Library, go to this week's Meeting Workbook, press and hold on your part's text, choose Copy, then paste it here.</div>
+      <textarea id="f-part" placeholder="Paste your part's theme, scriptures and points">${esc(f.part)}</textarea></div>
+    </details>
+    <div class="two">
+      <label>Audience<select id="f-aud">${AUDS.map(a=>`<option ${a===f.aud?"selected":""}>${a}</option>`).join("")}</select></label>
+      <label>How many<select id="f-n">${["2","3","4","5"].map(n=>`<option ${n===f.n?"selected":""}>${n}</option>`).join("")}</select></label>
+    </div>
+    <button class="btn primary big" data-a="getfresh">Get fresh illustrations</button>
+  </div>
+  <div class="list" id="f-results">${fresh.map((b,i)=>card(b,{fresh:true,i})).join("")}</div>`;
+  [["f-theme","theme"],["f-scr","scr"],["f-point","point"],["f-part","part"],["f-aud","aud"],["f-n","n"]].forEach(([id,k])=>{const el=document.getElementById(id);el.oninput=el.onchange=e=>FR[k]=e.target.value});
+}
+async function getFresh(){
+  const f=FR;
+  if(!f.theme.trim()&&!f.scr.trim()&&!f.part.trim()){toast("Type a theme or scripture, or paste this week's part");document.getElementById("f-theme").focus();return}
+  try{
+    const out=await aiRun(freshPrompt(f),true,"Thinking of illustrations…");
+    const arr=Array.isArray(out)?out:(out&&out.illustrations)||[];
+    const tag=(f.theme||f.scr||"This week's part").trim().slice(0,40);
+    fresh=arr.filter(x=>x&&x.h&&x.s).map(x=>({t:tag,h:x.h,s:x.s,p:x.p||"",r:x.r||""}));
+    renderFresh();
+    if(!fresh.length)toast("No illustrations came back. Try again or reword it.");
+    else document.getElementById("f-results").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(e){aiError(e)}
+}
+
+/* ---------- My talks ---------- */
+function talkStatus(t){
+  if(t.given)return `<span class="pill ok">Given ✓</span>`;
+  if(t.date){const days=Math.round((new Date(t.date+"T00:00")-new Date(today()+"T00:00"))/864e5);
+    if(days>=0&&days<=7)return `<span class="pill soon">${days===0?"Today":days===1?"Tomorrow":"In "+days+" days"}</span>`}
+  return "";
+}
+function renderTalks(){
+  const pl=places();
+  view.innerHTML=`<h2>My talks</h2>
+  <div class="row" style="justify-content:space-between"><p class="sub" style="flex:1;min-width:200px">Plan each assignment, pick illustrations, and get help with the introduction and conclusion.</p><button class="btn" data-a="opentimer">⏱ Practise timer</button></div>
+  <details class="panel" ${S.talks.length?"":"open"}><summary>Add a talk</summary>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+    <label>Talk title<input id="t-title" placeholder="e.g. Imitate Jehovah's patience"></label>
+    <div class="two">
+      <label>Date<input id="t-date" type="date"></label>
+      <label>Type<select id="t-type">${TYPES.map(a=>`<option>${a}</option>`).join("")}</select></label>
+    </div>
+    <div class="two">
+      <label>Where<input id="t-place" list="t-pl" placeholder="e.g. West Junction Twi" value="${esc(pl[0]||"")}"><datalist id="t-pl">${pl.map(p=>`<option>${esc(p)}</option>`).join("")}</datalist></label>
+      <label>Main scripture<input id="t-scr" placeholder="e.g. 2 Peter 3:9"></label>
+    </div>
+    <button class="btn primary" data-a="addtalk">Add talk</button></div>
+  </details>
+  <div class="list">${S.talks.length?S.talks.map(talkCard).join(""):`<div class="empty">No talks yet. Add your next assignment above.</div>`}</div>`;
+}
+function talkCard(t){
+  const open=openTalk===t.id;
+  const ills=t.ill.map(byId).filter(Boolean);
+  return `<div class="talk"><button class="head" data-a="opentalk" data-id="${t.id}" aria-expanded="${open}">
+    <div><h3>${esc(t.title)}</h3><div class="meta">${esc(t.type)}${t.date?" · "+fmtDate(t.date):""}${t.place?" · "+esc(t.place):""}</div></div>
+    <div class="row">${talkStatus(t)}<span aria-hidden="true">${open?"▴":"▾"}</span></div></button>
+  ${open?`<div class="body">
+    ${t.scr?`<div class="scr">📖 <a href="${wol(t.scr)}" target="_blank" rel="noopener">${esc(t.scr)}</a></div>`:""}
+    <div><h4>Illustrations</h4>${ills.length?`<ol>${ills.map(b=>`<li><b>${esc(b.h)}</b> — ${esc(b.p)} <span class="scr">(${esc(b.r)})</span> <button class="btn" style="padding:2px 8px" data-a="unlink" data-id="${t.id}" data-v="${b.id}" aria-label="Remove">✕</button></li>`).join("")}</ol>`:`<p class="meta" style="margin:4px 0 0">None yet. Tap “Find illustrations”, or “Add to a talk” on any card in the bank.</p>`}</div>
+    ${t.intro?`<div class="block"><b>Introduction</b>${esc(t.intro)}</div>`:""}
+    ${t.concl?`<div class="block"><b>Conclusion</b>${esc(t.concl)}</div>`:""}
+    ${t.practice?`<div class="meta">Last practice: ${fmtMs(t.practice)} of ${t.mins||DEFAULT_MINS[t.type]||5} min</div>`:""}
+    <label>Notes<textarea data-notes="${t.id}" placeholder="Outline points, scriptures to read…">${esc(t.notes||"")}</textarea></label>
+    <div class="row">
+      <button class="btn" data-a="findill" data-id="${t.id}">Find illustrations</button>
+      <button class="btn" data-a="introconcl" data-id="${t.id}">Intro & conclusion</button>
+      <button class="btn" data-a="practise" data-id="${t.id}">Practise</button>
+    </div>
+    <div class="row">
+      <a class="btn wa" href="${wa(talkText(t))}" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="btn" data-a="copytalk" data-id="${t.id}">Copy</button>
+      <button class="btn" data-a="given" data-id="${t.id}">${t.given?"Undo “given”":"Mark as given"}</button>
+      <button class="btn danger" data-a="deltalk" data-id="${t.id}">Delete</button>
+    </div></div>`:""}</div>`;
+}
+function talkText(t){
+  const ills=t.ill.map(byId).filter(Boolean);
+  return `*${t.title}*\n${t.type}${t.date?" · "+fmtDate(t.date):""}${t.place?" · "+t.place:""}${t.scr?"\nScripture: "+t.scr:""}`+
+  (t.intro?`\n\nIntroduction:\n${t.intro}`:"")+(t.notes?`\n\nNotes:\n${t.notes}`:"")+
+  (ills.length?`\n\nIllustrations:\n${ills.map((b,i)=>`${i+1}. ${b.h}\n${b.s}\nPoint: ${b.p} (${b.r})`).join("\n\n")}`:"")+
+  (t.concl?`\n\nConclusion:\n${t.concl}`:"");
+}
+async function introConcl(t){
+  const ills=t.ill.map(byId).filter(Boolean);
+  const prompt=`Help a Jehovah's Witness speaker in Ghana with the opening and closing of a talk.
+Title: ${t.title}
+Type: ${t.type}, about ${t.mins||DEFAULT_MINS[t.type]||5} minutes
+${t.scr?"Main scripture: "+t.scr+"\n":""}${t.notes?"Speaker's notes:\n"+t.notes+"\n":""}${ills.length?"Illustrations planned: "+ills.map(b=>b.h+" ("+b.p+")").join("; ")+"\n":""}
+Give 2 introduction options (each 2 to 4 sentences; start with a question or a vivid everyday scene the audience in Ghana will relate to, and lead into the theme) and 2 conclusion options (each 2 or 3 sentences; sum up the main point and give one clear thing to do this week). Warm, simple English.
+
+Return ONLY JSON, no other text: {"intro":["...","..."],"conclusion":["...","..."]}`;
+  try{
+    const out=await aiRun(prompt,true,"Writing introduction and conclusion…");
+    const I=(out.intro||[]).slice(0,3),C=(out.conclusion||out.conclusions||[]).slice(0,3);
+    const sh=openSheet(`<h3>Pick an introduction</h3>
+      ${I.map((x,i)=>`<div class="block">${esc(x)}<div class="row" style="margin-top:8px"><button class="btn" data-k="i" data-i="${i}">Use this</button></div></div>`).join("")}
+      <h3>Pick a conclusion</h3>
+      ${C.map((x,i)=>`<div class="block">${esc(x)}<div class="row" style="margin-top:8px"><button class="btn" data-k="c" data-i="${i}">Use this</button></div></div>`).join("")}
+      <button class="btn primary" data-close>Done</button>`);
+    sh.addEventListener("click",e=>{
+      const el=e.target.closest("[data-k]");if(!el)return;
+      if(el.dataset.k==="i")t.intro=I[+el.dataset.i];else t.concl=C[+el.dataset.i];
+      save();el.textContent="Chosen ✓";el.disabled=true;rerender();
+    });
+  }catch(e){aiError(e)}
+}
+function toggleGiven(t){
+  if(t.given){Object.keys(S.used).forEach(id=>S.used[id]=S.used[id].filter(u=>u.tid!==t.id));t.given=false;toast("Marked as not given")}
+  else{t.ill.forEach(id=>(S.used[id]=S.used[id]||[]).push({d:t.date||today(),w:t.place||t.type,tid:t.id}));t.given=true;toast(t.ill.length?"Well done! Illustrations marked as used":"Marked as given")}
+  save();renderTalks();
+}
+
+/* ---------- Practise timer ---------- */
+let T={mins:5,acc:0,start:0,running:false,talkId:"",b1:false,b0:false},wakeLock=null;
+const elapsed=()=>T.acc+(T.running?Date.now()-T.start:0);
+function fmtMs(ms){const s=Math.floor(Math.abs(ms)/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+async function lockOn(){try{wakeLock=await navigator.wakeLock?.request("screen")}catch(e){}}
+function lockOff(){try{wakeLock&&wakeLock.release();wakeLock=null}catch(e){}}
+function renderTimer(){
+  view.innerHTML=`<button class="btn" data-a="backtalks" style="align-self:flex-start">← My talks</button><h2>Practise your talk</h2>
+  <div class="panel">
+    <label>Talk (optional)<select id="tm-talk"><option value="">— Just a timer —</option>${S.talks.filter(t=>!t.given).map(t=>`<option value="${t.id}" ${t.id===T.talkId?"selected":""}>${esc(t.title)}</option>`).join("")}</select></label>
+    <div class="chips wrapit">${[3,4,5,10,15,30,45].map(m=>`<button class="chip" data-a="mins" data-v="${m}" aria-pressed="${m===T.mins}">${m} min</button>`).join("")}</div>
+    <div id="clock" class="clock">0:00</div>
+    <div id="clock-sub" class="clock-sub"></div>
+    <div class="two"><button class="btn primary big" data-a="tstart" id="tstart">Start</button><button class="btn big" data-a="treset">Reset</button></div>
+    ${T.talkId?`<button class="btn" data-a="tsave">Save this practice time to the talk</button>`:""}
+    <p class="sub">The clock turns orange in the last minute and red when you go over. The phone vibrates at 1 minute left and at time up.</p>
+  </div>`;
+  document.getElementById("tm-talk").onchange=e=>{T.talkId=e.target.value;const t=talkById(T.talkId);if(t){T.mins=t.mins||DEFAULT_MINS[t.type]||5}renderTimer()};
+  tick();
+}
+function tick(){
+  const el=elapsed(),rem=T.mins*60000-el;
+  if(T.running){if(rem<=60000&&!T.b1){T.b1=true;vib(250)}if(rem<=0&&!T.b0){T.b0=true;vib([500,200,500])}}
+  if(tab!=="timer")return;
+  const c=document.getElementById("clock");if(!c)return;
+  c.textContent=(rem<0?"+":"")+fmtMs(rem);
+  c.className="clock"+(rem<0?" over":rem<=60000&&el>0?" soon":"");
+  document.getElementById("clock-sub").textContent=rem<0?`Over time · spoken ${fmtMs(el)}`:`left of ${T.mins} min · spoken ${fmtMs(el)}`;
+  const b=document.getElementById("tstart");if(b)b.textContent=T.running?"Pause":el>0?"Continue":"Start";
+}
+setInterval(tick,250);
+
+/* ---------- More: add your own, backup, app ---------- */
+let installEvt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installEvt=e;if(tab==="more")renderMore()});
+const isInstalled=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+function renderMore(){
+  const lb=S.lastBackup?new Date(S.lastBackup).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"never";
+  const shareMsg=`Here is a helpful app for preparing talks: Talk Illustrations.\nIt has illustrations sorted by theme, a talk planner and a practice timer.\n\nAndroid app (APK): ${APK_URL}\nTap the link, open the downloaded file and tap Install. If the phone asks, allow installing from this source.\n\nOr use it in Chrome: ${appUrl()}`;
+  view.innerHTML=`<h2>Add your own illustration</h2>
+  <div class="panel">
+    <label>Title<input id="m-h" placeholder="e.g. The tailor measures twice"></label>
+    <label>Theme<input id="m-t" list="themes" placeholder="e.g. Patience"><datalist id="themes">${themes().map(t=>`<option>${esc(t)}</option>`).join("")}</datalist></label>
+    <label>The story<textarea id="m-s" placeholder="Tell it the way you'd say it from the platform"></textarea></label>
+    <label>The point it makes<input id="m-p"></label>
+    <label>Scripture<input id="m-r" placeholder="e.g. Proverbs 19:11"></label>
+    <button class="btn primary" data-a="addmine">Save to my bank</button>
+  </div>
+  <h2>Backup</h2>
+  <p class="sub">Your talks, own illustrations, Twi versions, saved plans and “used” records stay on this phone only. Save a backup file and keep it on WhatsApp or Google Drive. If you delete the app or change phones, restore it here. Last backup: <b>${lb}</b>.</p>
+  <div class="panel">
+    <div class="row"><button class="btn primary" data-a="bkfile">Save backup file</button><button class="btn" data-a="bkshare">Send backup to WhatsApp / Drive</button></div>
+    <label>Restore from a backup file<input id="bk-file" type="file" accept=".json,application/json,text/plain"></label>
+    <details><summary>Copy or paste backup as text</summary>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <textarea id="bk-in" placeholder="Paste backup text here"></textarea>
+      <div class="row"><button class="btn" data-a="bkcopy">Copy backup text</button><button class="btn" data-a="bkload">Load pasted backup</button></div></div>
+    </details>
+  </div>
+  <h2>The app</h2>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><span>Version <b>${VERSION}</b></span>${isInstalled()||isNative()?`<span class="pill ok">Installed ✓</span>`:""}</div>
+    ${isNative()?`<a class="btn" href="${RELEASES_URL}" target="_blank" rel="noopener">Check for updates</a><p class="sub" style="margin:0">If there is a newer version, download it and tap Install. It installs over this one and keeps your talks.</p>`:
+    `${installEvt?`<button class="btn primary" data-a="install">Install app on this phone</button>`:isInstalled()?"":`<div class="note">To install: download the Android app (APK) with the link below, or open the app link in Chrome, tap ⋮, then “Install app”.</div>`}
+    <button class="btn" data-a="update">Check for updates</button>`}
+    <h4>Share the app</h4>
+    <p class="sub" style="margin:0">Anyone with the link can install it. Each person's talks stay private on their own phone.</p>
+    <div class="row"><a class="btn wa" href="${wa(shareMsg)}" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn" data-a="copylink">Copy link</button></div>
+    <div class="scr" style="word-break:break-all">APK: ${esc(APK_URL)}</div>
+  </div>`;
+  document.getElementById("bk-file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>restore(r.result);r.readAsText(f)};
+}
+const backupText=()=>JSON.stringify({app:"talk-illustrations",version:VERSION,saved:new Date().toISOString(),data:S});
+const backupName=()=>`talk-illustrations-backup-${today()}.json`;
+async function nativeBackup(){
+  try{const P=window.Capacitor.Plugins;const path=backupName();
+    await P.Filesystem.writeFile({path,data:backupText(),directory:"CACHE",encoding:"utf8"});
+    const {uri}=await P.Filesystem.getUri({path,directory:"CACHE"});
+    await P.Share.share({title:"Talk Illustrations backup",files:[uri]});
+    S.lastBackup=Date.now();save();renderMore();
+  }catch(e){if(!/cancel/i.test(String(e&&e.message)))toast("Couldn't send the backup. Use “Copy backup text” instead.")}
+}
+async function saveBackupFile(){
+  if(isNative())return nativeBackup();
+  const text=backupText();
+  try{const d=window.claude&&window.claude.use?await window.claude.use("downloads"):null;
+    if(d){const r=await d.save({filename:backupName(),data:text});if(r&&r.status){S.lastBackup=Date.now();save();renderMore();toast("Backup saved")}return}}catch(e){if(e&&e.code&&e.code!=="unavailable"){toast("Backup not saved");return}}
+  try{const url=URL.createObjectURL(new Blob([text],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download=backupName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);S.lastBackup=Date.now();save();renderMore();toast("Backup saved to Downloads")}
+  catch(e){toast("Couldn't save the file. Use “Copy backup text” instead.")}
+}
+async function shareBackup(){
+  if(isNative())return nativeBackup();
+  try{const file=new File([backupText()],backupName(),{type:"application/json"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"Talk Illustrations backup"});S.lastBackup=Date.now();save();renderMore();return}}catch(e){if(e&&e.name==="AbortError")return}
+  toast("Sending files isn't possible here. Use “Save backup file”.");
+}
+function restore(text){
+  try{
+    const o=JSON.parse(text);const d=o.data||o;if(!Array.isArray(d.talks)||!Array.isArray(d.mine))throw 0;
+    const mids=new Set(S.mine.map(m=>m.id));d.mine.forEach(m=>{if(!mids.has(m.id))S.mine.push(m)});
+    S.fav=[...new Set([...S.fav,...(d.fav||[])])];
+    d.talks.forEach((t,i)=>{t.id=t.id||("t"+Date.now()+i);const j=S.talks.findIndex(x=>x.id===t.id);if(j<0)S.talks.push(t);else S.talks[j]=t});
+    Object.entries(d.used||{}).forEach(([id,arr])=>{const cur=S.used[id]||[];arr.forEach(u=>{if(!cur.some(c=>c.d===u.d&&c.w===u.w))cur.push(u)});S.used[id]=cur});
+    (d.plans||[]).forEach(p=>{S.plans=S.plans||[];if(!S.plans.some(x=>x.id===p.id))S.plans.push(p)});
+    Object.entries(d.extra||{}).forEach(([id,x])=>S.extra[id]={...x,...(S.extra[id]||{})});
+    S.talks.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+    save();renderMore();toast("Backup restored");
+  }catch(e){toast("That isn't a Talk Illustrations backup")}
+}
+async function checkUpdate(){
+  if(!navigator.onLine){toast("You're offline. Connect to the internet and try again.");return}
+  const close=busy("Checking for updates…");
+  try{const reg=await navigator.serviceWorker?.getRegistration();if(reg)await reg.update()}catch(e){}
+  setTimeout(()=>{close();location.reload()},900);
+}
+
+async function copy(text,fallbackId){
+  try{await navigator.clipboard.writeText(text);toast("Copied")}
+  catch(e){const el=fallbackId&&document.getElementById(fallbackId);if(el){if(el.tagName==="TEXTAREA"){el.value=text;el.select()}else{const r=document.createRange();r.selectNodeContents(el);getSelection().removeAllRanges();getSelection().addRange(r)}}toast("Selected. Copy it from your keyboard menu")}
+}
+
+/* ---------- Ministry: data ---------- */
+const FS_BANK=[
+{r:"Ecclesiastes 9:11",key:"time and unexpected events",who:"Anyone who has suffered a loss",angle:"Many believe every misfortune is a punishment or a curse. This verse says bad things can simply 'befall them all', the good and the bad alike.",open:"When something bad happens to a good person, many say someone has caused it. What do you think?",read:"Notice the phrase “time and unexpected events” here.",follow:"If God doesn't cause our suffering, who or what does? Can I show you the Bible's answer next time?"},
+{r:"Proverbs 24:16",key:"get up again",who:"Someone discouraged by failure",angle:"The verse doesn't say the righteous never fall. It says they get up again, even after seven falls.",open:"Do you think a good person is someone who never fails?",read:"See what this proverb says makes a person righteous.",follow:"What do you think helps a person keep getting up? I can show you where the Bible says that strength comes from."},
+{r:"2 Thessalonians 3:10",key:"does not want to work",who:"Workers, traders, artisans",angle:"Not 'cannot work' but 'does not want to work'. The Bible shows compassion to the old and sick while honouring hard work.",open:"Our elders say if you don't work, you don't eat. Is that always true? What about the aged?",read:"Look at the exact words Paul used here.",follow:"Why do you think God cares about both hard work and compassion? There's more on how he views work."},
+{r:"Nehemiah 4:17",key:"one hand doing the work, the other holding a weapon",who:"Busy parents, builders",angle:"The builders kept working and protecting at the same time. Families today must earn a living and also protect their children's hearts.",open:"Many parents work so hard that there's little time left for the children. How can a parent balance both?",read:"These men were rebuilding Jerusalem's wall. Watch what they carried.",follow:"What do you think is the 'weapon' that protects a family today? The Bible has a practical answer."},
+{r:"Lamentations 3:22, 23",key:"new each morning",who:"Someone who feels guilty or weighed down",angle:"Jehovah's mercies are not used up. They are new each morning, like a fresh day.",open:"If you could start completely fresh tomorrow morning, what would you leave behind?",read:"A man who had seen great suffering wrote these words.",follow:"How do you think a person can really feel God's mercy? I'd like to show you how he forgives."},
+{r:"Habakkuk 1:2, 3",key:"How long?",who:"Someone angry at injustice",angle:"A faithful prophet asked God 'How long?' and God answered him. Questioning God about suffering isn't wrong.",open:"Have you ever wanted to ask God why he allows so much wickedness?",read:"You're not alone. Look at what a prophet asked God.",follow:"God answered Habakkuk. Would you like to see the answer he gave?"},
+{r:"Ecclesiastes 4:6",key:"a handful of rest",who:"Traders and the overworked",angle:"One handful with peace is better than two handfuls with stress and 'chasing the wind'.",open:"With the cost of living, everyone runs from morning to night. Do you think more money always means a better life?",read:"See how King Solomon, a very rich man, compared the two.",follow:"What would 'a handful of rest' look like for your family? The Bible gives balanced advice on money."},
+{r:"Proverbs 14:10",key:"the heart knows its own bitterness",who:"Someone hurting quietly",angle:"Even close friends can't fully feel our pain. But there is One who knows every heart.",open:"Do you feel that people around you really understand what you go through?",read:"This proverb admits something honest about pain.",follow:"Would it comfort you to know someone does understand completely? Psalm 139 shows who."},
+{r:"Isaiah 45:18",key:"formed it to be inhabited",who:"Someone worried about the end of the world",angle:"God didn't make the earth for nothing. He made it to be lived in, so he won't destroy it.",open:"Many people say the world will soon be burned up. What do you think will happen to the earth?",read:"Notice why the Creator says he made the earth.",follow:"If the earth will remain, who will live on it? Let me show you what the Bible says."},
+{r:"Malachi 3:16",key:"a book of remembrance",who:"Someone who feels unnoticed",angle:"God keeps a 'book of remembrance' for those who fear him and think on his name. Small acts of faith are noticed.",open:"Do you think God notices ordinary people and the small good things they do?",read:"This verse describes something God keeps.",follow:"How can a person get their name into that book? We can look at that together."},
+{r:"Ecclesiastes 7:10",key:"former days better",who:"Elderly people",angle:"Looking back with longing isn't wise. The real 'good days' are ahead, in God's promises.",open:"Many elders say Ghana was better in the old days. Do you agree?",read:"Solomon gave interesting advice about this feeling.",follow:"If the past wasn't the best, what makes the future hopeful? The Bible describes it."},
+{r:"Proverbs 17:22",key:"good medicine",who:"Health-conscious people",angle:"Science agrees: a joyful heart helps the body. The Bible said it thousands of years ago.",open:"Apart from drugs, what do you think helps a person stay healthy?",read:"Here's a medicine that's free.",follow:"Where can a person find real joy these days? The Bible has practical answers."},
+{r:"Zephaniah 3:17",key:"rejoice over you with joyful shouts",who:"Someone who thinks God is distant",angle:"God isn't cold or distant. He feels joy and even shouts for joy over his people.",open:"Do you think God has feelings, like joy?",read:"Watch how this prophet describes Jehovah.",follow:"If God can feel joy, what do you think makes him happy? Proverbs 27:11 gives a clue."},
+{r:"Job 14:14, 15",key:"you will long for the work of your hands",who:"Someone who lost a loved one",angle:"God doesn't just remember the dead. He longs to bring them back.",open:"When someone we love dies, do you think we will ever see them again?",read:"Job asked that same question. See the answer he gave.",follow:"Would you like to see how and where the dead will come back? John 5:28, 29 explains."},
+{r:"Psalm 56:8",key:"collect my tears in your skin bottle",who:"Someone grieving or crying",angle:"Not one tear is wasted. God 'collects' them, he notices every one.",open:"Do you think God sees it when people cry?",read:"David wrote this when he was running for his life.",follow:"If God sees our tears, will he ever stop them? Revelation shows his promise."},
+{r:"Micah 4:3, 4",key:"under his vine and fig tree",who:"Tenants, landlords, the insecure",angle:"Every family will have its own place, and 'no one will make them afraid', no landlords, no thieves.",open:"Rent keeps going up. Do you think everyone will one day have a safe home of their own?",read:"Look at this picture the prophet Micah gives.",follow:"Who can make that promise come true? We can look at it next time."},
+{r:"Isaiah 65:21, 22",key:"they will build houses and live in them",who:"Masons, builders, carpenters",angle:"The builder will live in what he builds. No more building for others while you suffer.",open:"You build houses for others. Do you think you'll ever enjoy the work of your own hands?",read:"Here's a promise for people who build.",follow:"When will this happen? Let me show you how God will bring it about."},
+{r:"Jonah 4:11",key:"many animals",who:"Farmers, animal lovers",angle:"God even thought about the animals in Nineveh. That shows how deep his care is.",open:"Do you think God cares about animals too?",read:"Listen to God's last words to Jonah.",follow:"If he cares for animals, how much more for you? Matthew 10:29-31 says more."},
+{r:"Ruth 1:16",key:"where you go I will go",who:"Married couples, in-laws",angle:"A daughter-in-law loyal to her mother-in-law! Loyal love can heal family tension.",open:"In-law problems break many homes. What do you think makes family members stay loyal to each other?",read:"This young widow said something surprising to her mother-in-law.",follow:"What gave Ruth that loyalty? Her new God. Would you like to know more about him?"},
+{r:"1 Kings 19:4, 5",key:"an angel touched him and said: Get up and eat",who:"The exhausted or discouraged",angle:"When the prophet Elijah was exhausted and discouraged, God gave him food and sleep first, not a lecture.",open:"Even strong people sometimes feel they can't go on. How do you think God sees them?",read:"Look at how God treated a tired prophet.",follow:"What does this show about how God cares for us? There's more comfort like this in the Bible."},
+{r:"Proverbs 22:29",key:"skillful in his work",who:"Artisans, tradesmen",angle:"The Bible honours good work. Skilful workers stand before kings.",open:"Do you think God values the work of craftsmen and tradesmen?",read:"See what this proverb says about skilled workers.",follow:"Did you know Jesus himself was a carpenter? The Bible has a lot to say about work."},
+{r:"Ecclesiastes 11:6",key:"you do not know which will succeed",who:"Farmers, business people",angle:"Plant in the morning and in the evening, because you don't know which will work. Practical wisdom for business.",open:"Many businesses collapse. What do you think makes some succeed?",read:"This is practical advice from a very successful king.",follow:"The Bible has wise principles for money and work. Can I show you a few more?"},
+{r:"Psalm 103:14",key:"he remembers that we are dust",who:"Someone who feels unworthy",angle:"God doesn't expect perfection. He knows our limits and remembers we are dust.",open:"Do you feel God expects too much from us?",read:"Notice what Jehovah remembers about us.",follow:"How does that make you feel about approaching God? We can learn more about his mercy."},
+{r:"Hosea 6:6",key:"loyal love rather than sacrifice",who:"Church-goers, religious people",angle:"God wants loyal love and knowledge more than rituals and offerings.",open:"Many people give big offerings. Do you think that's what God values most?",read:"See what God says he delights in.",follow:"How can we get to know God so that our worship pleases him? Let me show you."},
+{r:"Ecclesiastes 1:9",key:"nothing new under the sun",who:"Young people, tech lovers",angle:"Phones are new, but human problems like greed, envy and loneliness are as old as man.",open:"Technology changes so fast. Do you think people's problems have changed too?",read:"Solomon made an interesting observation 3,000 years ago.",follow:"If the problems are old, the solution must be lasting. Would you like to see what God offers?"},
+{r:"Isaiah 33:24",key:"No resident will say: I am sick",who:"Nurses, patients, carers",angle:"A future without hospitals: no one will even say 'I am sick'.",open:"You see sickness every day. Do you think there will ever be a world without hospitals?",read:"Look at this promise of health.",follow:"How will God fulfil this? Let me show you next time."},
+{r:"Proverbs 31:28",key:"her husband praises her",who:"Mothers, market women",angle:"The Bible honours a hardworking wife. Her husband and children praise her publicly.",open:"Do you think mothers get the appreciation they deserve?",read:"See how the Bible describes a capable wife.",follow:"The Bible gives advice that makes families happy. Can I share more next time?"},
+{r:"Proverbs 27:1",key:"do not boast about tomorrow",who:"Planners, young people",angle:"We plan, but tomorrow isn't promised. Wisdom is putting God in our plans.",open:"Many young people have big plans. What do you think is the wisest way to plan for the future?",read:"Here's a short but deep proverb.",follow:"How can we make plans God will bless? James 4:13-15 explains."},
+{r:"Esther 4:14",key:"for a time like this",who:"Youth searching for purpose",angle:"Esther's position had a purpose at the right time. Our life can have meaning too.",open:"Do you ever wonder what your life is really for?",read:"A young woman was told this at a crucial moment.",follow:"What purpose do you think God has for people today? Let's look at it together."},
+{r:"Philemon 11",key:"formerly useless, now useful",who:"Someone who thinks they can't change",angle:"Onesimus was a runaway slave, and Paul called him 'useful' after he changed.",open:"Do you think a person who has done wrong can really change?",read:"Paul wrote about a man whose name means 'useful'.",follow:"What helped him change? The same help is available to us."},
+{r:"Nahum 1:7",key:"a stronghold in the day of distress",who:"Someone in trouble",angle:"In a little-read prophecy we find a warm promise: Jehovah is a stronghold and knows those who take refuge in him.",open:"When trouble comes, where do you run for safety?",read:"This verse is in a book few people read.",follow:"How can someone take refuge in God? Let me show you."},
+{r:"Proverbs 13:12",key:"expectation postponed",who:"People waiting for jobs or visas",angle:"Long waiting makes the heart sick, but a desire fulfilled is a tree of life. God's promises will be fulfilled.",open:"Waiting for a job or a visa can be painful. How do you cope while waiting?",read:"The Bible understands this feeling.",follow:"Would you like to know about promises that will surely be fulfilled?"},
+{r:"Ecclesiastes 3:11",key:"put eternity in their heart",who:"Someone afraid of death",angle:"We all want to live on. God put that desire in us, so he must have a way to satisfy it.",open:"Why do you think humans don't want to die, even at old age?",read:"Look at what God placed in our hearts.",follow:"If God put that desire there, how will he satisfy it? Psalm 37:29 shows."},
+{r:"Deuteronomy 22:8",key:"a parapet for your roof",who:"Builders, landlords, parents",angle:"God commanded a railing on roofs to protect lives. He cares about our safety in everyday things.",open:"Do you think the Bible has anything to say about safety at home or work?",read:"Look at this law God gave his people.",follow:"What does this teach about how God values life? There's a lot more practical wisdom."}
+];
+const ADAGES=[
+{tw:"Wonyɛ adwuma a, worenni.",en:"If you don't work, you won't eat.",ask:"Is that always true? What about the elderly and the sick?",twist:"The Bible says 'if anyone does not WANT to work'. It shows care for those who can't work and expects effort from those who can.",r:"2 Thessalonians 3:10"},
+{tw:"Obi nkyerɛ abofra Nyame.",en:"No one shows a child God.",ask:"Is it true that everyone knows God naturally?",twist:"Creation shows God exists, but to know his name and purpose, people must be taught.",r:"Romans 10:14"},
+{tw:"Dua koro gye mframa a, ebu.",en:"A tree that faces the wind alone breaks.",ask:"Do you think a person can face life's problems alone?",twist:"The Bible agrees two are better than one, and adds a third strand: God.",r:"Ecclesiastes 4:9-12"},
+{tw:"Nsateaa nyinaa nnyɛ pɛ.",en:"The fingers are not all equal.",ask:"Does that mean God sees some people as better than others?",twist:"We have different gifts, but God is not partial. He accepts people of every nation.",r:"Acts 10:34, 35"},
+{tw:"Sɛ wo yɔnko abɔdwesɛ ka hyew a, sa nsuo bɔ wo deɛ ho.",en:"When your neighbour's beard catches fire, pour water on yours.",ask:"Do we really learn from what happens to others?",twist:"The shrewd one sees danger and hides. The Bible shows us where the danger is.",r:"Proverbs 22:3"},
+{tw:"Kwaterekwa se ɔbɛma wo ntoma a, tie ne din.",en:"When a naked man promises you cloth, listen to his name.",ask:"So whose promises can we really trust today?",twist:"Humans often can't keep their promises, but not one of Jehovah's promises has failed.",r:"Joshua 23:14"},
+{tw:"Tikoro nkɔ agyina.",en:"One head doesn't go into council.",ask:"Is it always good to take advice? From whom?",twist:"Plans succeed with many advisers, and the best counsel comes from God's Word.",r:"Proverbs 15:22"},
+{tw:"Aboa a onni dua no, Onyame na ɔpra ne ho.",en:"God drives the flies from the tailless animal.",ask:"If God cares for the helpless, why do so many still suffer?",twist:"God does care, and he has promised to rescue the poor who cry for help.",r:"Psalm 72:12-14"},
+{tw:"Sɛ wo werɛ fi na wosan kɔfa a, yenkyi.",en:"It is not wrong to go back for what you forgot. (Sankofa)",ask:"Is it ever too late to go back to God?",twist:"Jehovah himself invites: 'Return to me, and I will return to you.'",r:"Malachi 3:7"},
+{tw:"Ɔkɔtɔ nwo anoma.",en:"A crab doesn't give birth to a bird.",ask:"Does that mean we are stuck with our parents' faults and background?",twist:"The Bible says a son won't carry the father's error. Each person can choose a new path.",r:"Ezekiel 18:20"},
+{tw:"Abaa a wɔde bɔ Takyi no, ɛno ara na wɔde bɔ Baah.",en:"The stick used to beat Takyi is the same one used to beat Baah.",ask:"Do people really get treated the way they treat others?",twist:"Jesus said the measure you use will be measured out to you.",r:"Matthew 7:2"},
+{tw:"Nyansa nni obi baako ti mu.",en:"Wisdom is not in one person's head.",ask:"Then is there anyone with complete wisdom?",twist:"Humans share bits of wisdom, but God gives it generously to anyone who asks.",r:"James 1:5"},
+{tw:"Abofra bɔ nwa na ɔmmɔ akyekyedeɛ.",en:"A child can crack a snail, but not a tortoise.",ask:"Are there problems that are simply too big for us?",twist:"Some burdens are too heavy for us alone, but God's power is made perfect in weakness.",r:"2 Corinthians 12:9"},
+{tw:"Nnipa nyinaa yɛ Onyame mma, obi nnyɛ asase ba.",en:"All people are God's children; no one is the child of the earth.",ask:"If we all come from God, why so much tribalism?",twist:"God made all nations from one man. He wants us to seek him and live as one family.",r:"Acts 17:26, 27"}
+];
+const FW_QUICK=[
+"Act out a Bible account. Each person plays a character, then ask: what would you have done?",
+"Bible character guessing game: describe someone in three clues and the family guesses.",
+"Draw the scene. Read an account, then each person draws the moment they liked most.",
+"Watch a short jw.org video together, pause it once, and ask each child what they'd do.",
+"Practise a presentation for the ministry. The children play the householder.",
+"Make a family scripture jar. Each person writes a favourite verse and one is read each week.",
+"Pick a problem from school or work and look for a Bible principle that helps.",
+"Map night. Find the places from this week's Bible reading on a Bible map.",
+"Thank-you round. Each person names one thing Jehovah did for them this week, then pray together.",
+"Kitchen object lesson. Use salt, light or bread to explain one of Jesus' illustrations."
+];
+
+/* ---------- Ministry: views ---------- */
+let mtab="today",FS={more:[],someone:[],meetingText:"",meeting:null,family:null};
+let MS={sec:"",focus:"House-to-house",mins:"10",style:"Any",who:"",fam:"",face:"",fmins:"45"};
+const dayNo=()=>Math.floor((new Date(today()+"T00:00")-new Date("2026-01-01T00:00"))/864e5);
+function todayThree(){const d=dayNo(),n=FS_BANK.length;return [0,1,2].map(k=>FS_BANK[((d*3+k)%n+n)%n])}
+const todayAdage=()=>ADAGES[((dayNo())%ADAGES.length+ADAGES.length)%ADAGES.length];
+const lcText=x=>`${fmtDate(today())} · Field service\nScripture: ${x.r}${x.key?` (“${x.key}”)`:""}\nOpener: ${x.open||x.ask||""}\nQuestion left: ${x.follow||""}`;
+const fsPlain=x=>`*${x.r}* — “${x.key}”\n${x.angle}\n\nOpen: ${x.open}\nRead: ${x.read}\nThen ask: ${x.follow}`;
+const adPlain=a=>`*${a.tw}*\n(${a.en})\n\nAsk: ${a.ask}\nTwist: ${a.twist}\nScripture: ${a.r}`;
+function fsCard(x,src,i){
+  return `<article class="ill">
+    <div class="tag">${esc(x.who||"Field service")}</div>
+    <h3>📖 <a href="${wol(x.r)}" target="_blank" rel="noopener" style="color:inherit">${esc(x.r)}</a></h3>
+    <div class="point"><b>Key words:</b> “${esc(x.key)}”<br>${esc(x.angle)}</div>
+    ${x.tw?`<div class="twi">${esc(x.tw)}${x.en?`\n(${esc(x.en)})`:""}</div>`:""}
+    <div class="block"><b>Open with</b>${esc(x.open)}</div>
+    <div class="block"><b>Lead into the verse</b>${esc(x.read)}</div>
+    <div class="block"><b>Then ask</b>${esc(x.follow)}</div>
+    <div class="row"><button class="btn primary" data-a="lc" data-v="${src}" data-i="${i}">Copy for Life Compass</button>
+    <a class="btn wa" href="${wa(fsPlain(x))}" target="_blank" rel="noopener">WhatsApp</a></div>
+  </article>`;
+}
+function adageCard(a){
+  return `<article class="ill">
+    <div class="tag">Today's adage opener</div>
+    <div class="twi" style="font-size:17px;font-weight:600">${esc(a.tw)}</div>
+    <p class="story" style="margin:0"><i>${esc(a.en)}</i></p>
+    <div class="block"><b>Ask</b>${esc(a.ask)}</div>
+    <div class="point"><b>The twist:</b> ${esc(a.twist)}</div>
+    <div class="scr">📖 <a href="${wol(a.r)}" target="_blank" rel="noopener">${esc(a.r)}</a></div>
+    <div class="row"><button class="btn primary" data-a="lc" data-v="adage" data-i="0">Copy for Life Compass</button>
+    <a class="btn wa" href="${wa(adPlain(a))}" target="_blank" rel="noopener">WhatsApp</a></div>
+    <p class="sub" style="font-size:13px">Check the Twi wording before you use it.</p>
+  </article>`;
+}
+function renderMinistry(){
+  const seg=[["today","Today"],["someone","I see someone"],["meeting","Service meeting"],["family","Family worship"]];
+  let body="";
+  if(mtab==="today"){
+    body=`<p class="sub">${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})} · three scriptures we rarely use, each with a fresh angle. They change every day.</p>
+    <div class="list">${todayThree().map((x,i)=>fsCard(x,"today",i)).join("")}${adageCard(todayAdage())}</div>
+    <button class="btn primary big" data-a="fsmore">Give me 3 more</button>
+    <div class="list" id="fs-more">${FS.more.map((x,i)=>fsCard(x,"more",i)).join("")}</div>`;
+  }else if(mtab==="someone"){
+    body=`<div class="panel">
+      <label>Who did you meet, and where?<input id="ms-who" placeholder="e.g. neatly dressed man in a trotro" value="${esc(MS.who)}"></label>
+      <div class="chips wrapit">${["Neatly dressed man in a trotro","Mechanic at his shop","Market woman selling tomatoes","Student going to school","Elderly man under a tree","Nurse on her way to work","Young couple with a baby","Taxi driver waiting at the station"].map(s=>`<button class="chip" data-a="mswho" data-v="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+      <label>How do you want to start?<select id="ms-style">${["Any","With a Ghanaian adage","With a question","With a sincere compliment","With something in the news"].map(s=>`<option ${s===MS.style?"selected":""}>${s}</option>`).join("")}</select></label>
+      <button class="btn primary big" data-a="msgo">Give me openers</button>
+    </div>
+    <div class="list" id="ms-out">${FS.someone.map((x,i)=>fsCard(x,"someone",i)).join("")}</div>`;
+  }else if(mtab==="meeting"){
+    body=`<p class="sub">Build a lively meeting for field service from the “Love People—Make Disciples” brochure.</p>
+    <div class="panel">
+      <label>Lesson or section<input id="mt-sec" placeholder="e.g. Lesson 4, point 3" value="${esc(MS.sec)}"></label>
+      <label>Upload the material (PDF or text file from jw.org)<input id="mt-file" type="file" accept=".pdf,.txt,text/plain,application/pdf"></label>
+      <label>Or paste the material<textarea id="mt-text" placeholder="Copy the lesson's points from JW Library and paste here">${esc(FS.meetingText)}</textarea></label>
+      <div class="two">
+        <label>Today's ministry<select id="mt-focus">${["House-to-house","Public witnessing (cart)","Return visits","Bible studies","Business territory","Phone and letters"].map(s=>`<option ${s===MS.focus?"selected":""}>${s}</option>`).join("")}</select></label>
+        <label>Meeting length<select id="mt-mins">${["5","7","10","15"].map(s=>`<option ${s===MS.mins?"selected":""}>${s}</option>`).join("")}</select></label>
+      </div>
+      <button class="btn primary big" data-a="mtgo">Make the meeting plan</button>
+    </div>
+    <div id="mt-out">${FS.meeting?planCard("meeting",FS.meeting):""}</div>
+    ${savedPlans("meeting")}`;
+  }else{
+    body=`<p class="sub">Plan a family worship evening, for your own family or to help another family get started.</p>
+    <div class="panel">
+      <label>The family<input id="fw-fam" placeholder="e.g. Father, mother, boy 12, girl 7" value="${esc(MS.fam)}"></label>
+      <label>What are they facing or interested in? (optional)<input id="fw-face" placeholder="e.g. bullying at school, new in the truth, loves football" value="${esc(MS.face)}"></label>
+      <label>Time<select id="fw-mins">${["30","45","60"].map(s=>`<option ${s===MS.fmins?"selected":""}>${s} min</option>`).join("")}</select></label>
+      <button class="btn primary big" data-a="fwgo">Make the family worship plan</button>
+    </div>
+    <div id="fw-out">${FS.family?planCard("family",FS.family):""}</div>
+    <details class="panel"><summary>Quick activity ideas (work offline)</summary><ol class="steps" style="margin-top:10px">${FW_QUICK.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></details>
+    ${savedPlans("family")}`;
+  }
+  view.innerHTML=`<h2>Ministry</h2>
+  <div class="chips wrapit">${seg.map(([k,l])=>`<button class="chip" data-a="mtab" data-v="${k}" aria-pressed="${k===mtab}">${l}</button>`).join("")}</div>${body}`;
+  const bind=(id,k,obj)=>{const el=document.getElementById(id);if(el)el.oninput=el.onchange=e=>obj[k]=e.target.value};
+  bind("ms-who","who",MS);bind("ms-style","style",MS);bind("mt-sec","sec",MS);bind("mt-focus","focus",MS);bind("mt-mins","mins",MS);
+  bind("mt-text","meetingText",FS);bind("fw-fam","fam",MS);bind("fw-face","face",MS);
+  const fm=document.getElementById("fw-mins");if(fm)fm.onchange=e=>MS.fmins=e.target.value.split(" ")[0];
+  const mf=document.getElementById("mt-file");if(mf)mf.onchange=e=>loadMaterial(e.target.files[0]);
+}
+function savedPlans(kind){
+  const ps=(S.plans||[]).filter(p=>p.kind===kind);
+  if(!ps.length)return "";
+  return `<h4>Saved plans</h4><div class="list">${ps.map(p=>`<div class="talk"><button class="head" data-a="openplan" data-id="${p.id}"><div><h3>${esc(p.obj.title||p.obj.theme||"Plan")}</h3><div class="meta">${fmtDate(p.d)}</div></div><span>${openTalk===p.id?"▴":"▾"}</span></button>${openTalk===p.id?`<div class="body">${planInner(kind,p.obj)}<div class="row"><a class="btn wa" href="${wa(planText(kind,p.obj))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn danger" data-a="delplan" data-id="${p.id}">Delete</button></div></div>`:""}</div>`).join("")}</div>`;
+}
+function planInner(kind,o){
+  const B=(l,v)=>v?`<div class="block"><b>${l}</b>${esc(v)}</div>`:"";
+  if(kind==="meeting")return B("Timing",o.timing)+B("Opening",o.opening)+(o.points&&o.points.length?`<div class="block"><b>Key points</b><ol class="steps">${o.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>`:"")+B("Scripture",o.scripture)+B("Demonstration",o.demo)+B("Video to mention or play",o.video)+B("Article to share",o.article)+B("Send-off",o.closing);
+  return B("Theme",o.theme)+B("Scripture",o.scripture)+B("Why this fits",o.why)+(o.plan&&o.plan.length?`<div class="block"><b>The evening</b><ol class="steps">${o.plan.map(p=>`<li><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14px;color:inherit">${esc(p.part)}</b>${p.minutes?` (${esc(p.minutes)} min)`:""}: ${esc(p.what)}</li>`).join("")}</ol></div>`:"")+B("Fresh activity",o.activity)+B("Question for everyone",o.question)+B("Tip for the head of the family",o.tip);
+}
+function planText(kind,o){
+  if(kind==="meeting")return `*${o.title||"Meeting for field service"}*\n${o.timing||""}\n\nOpening: ${o.opening||""}\n\nPoints:\n${(o.points||[]).map((p,i)=>(i+1)+". "+p).join("\n")}\n\nScripture: ${o.scripture||""}\nDemonstration: ${o.demo||""}\nVideo: ${o.video||""}\nArticle: ${o.article||""}\n\nSend-off: ${o.closing||""}`;
+  return `*Family worship: ${o.theme||""}*\nScripture: ${o.scripture||""}\n\n${(o.plan||[]).map(p=>`• ${p.part}${p.minutes?" ("+p.minutes+" min)":""}: ${p.what}`).join("\n")}\n\nActivity: ${o.activity||""}\nQuestion: ${o.question||""}\nTip: ${o.tip||""}`;
+}
+function planCard(kind,o){
+  return `<article class="ill"><div class="tag">${kind==="meeting"?"Meeting for field service":"Family worship"}</div><h3>${esc(o.title||o.theme||"Your plan")}</h3>
+  ${planInner(kind,o)}
+  ${kind==="meeting"?`<p class="sub" style="font-size:13px">Find the video and article in JW Library. If a title doesn't come up, search the topic.</p>`:""}
+  <div class="row"><button class="btn primary" data-a="saveplan" data-v="${kind}">Save plan</button><a class="btn wa" href="${wa(planText(kind,o))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-a="copyplan" data-v="${kind}">Copy</button></div></article>`;
+}
+
+/* ---------- Ministry: reading files ---------- */
+let pdfP=null;
+function loadPdfJs(){
+  if(!pdfP)pdfP=new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    s.onload=()=>{window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";res(window.pdfjsLib)};s.onerror=()=>{pdfP=null;rej()};document.head.appendChild(s)});
+  return pdfP;
+}
+async function loadMaterial(file){
+  if(!file)return;
+  const close=busy("Reading the file…");
+  try{
+    let text="";
+    if(/pdf$/i.test(file.type)||/\.pdf$/i.test(file.name)){
+      const lib=await loadPdfJs();const doc=await lib.getDocument({data:await file.arrayBuffer()}).promise;
+      for(let p=1;p<=Math.min(doc.numPages,12);p++){const c=await (await doc.getPage(p)).getTextContent();text+=c.items.map(i=>i.str).join(" ")+"\n"}
+    }else text=await file.text();
+    FS.meetingText=text.replace(/[ \t]+/g," ").trim().slice(0,12000);close();renderMinistry();toast("File loaded. Check the text, then make the plan.");
+  }catch(e){close();toast("Couldn't read this file. Copy the text from JW Library and paste it instead.")}
+}
+
+/* ---------- Ministry: asking Claude ---------- */
+const COMMON="Revelation 21:3, 4; John 17:3; Psalm 37:29; Psalm 83:18; Matthew 24:14; 2 Timothy 3:1-5; John 3:16; Matthew 6:9, 10; Isaiah 2:4; Daniel 2:44; Acts 24:15; Genesis 1:28; Isaiah 35:5, 6; John 5:28, 29; 1 John 5:19";
+const FS_SHAPE=`Return ONLY a JSON array, no other text:\n[{"r":"Book chapter:verse","key":"the key word or phrase from the New World Translation","angle":"the surprising angle in 1-2 sentences","open":"natural opening question","read":"one short line to lead into reading the verse","follow":"follow-up question that leads toward a return visit or Bible study","who":"who this suits"}]`;
+const FS_RULES=`You help a pioneer of Jehovah's Witnesses in Kasoa, Ghana start conversations in the field ministry.
+Choose verses that are RARELY used in the ministry. Avoid well-known ones such as ${COMMON}. Prefer books like Ecclesiastes, Proverbs, Nehemiah, Lamentations, Job, Ruth, Esther, Philemon and the minor prophets.
+For each verse, find a key word or phrase (New World Translation wording) that gives an unexpected "I never saw it that way" angle that touches the heart, like noticing that 2 Thessalonians 3:10 says "does not WANT to work".
+Openers must sound natural for everyday people in Ghana: short, warm, respectful, never preachy. Keep everything in line with the teachings of Jehovah's Witnesses. Quote no more than the key phrase.`;
+async function fsMore(){
+  const shown=[...todayThree(),...FS.more].map(x=>x.r).join("; ");
+  try{const out=await aiRun(`${FS_RULES}\nAlso avoid: ${shown}.\n\nGive 3 verses.\n${FS_SHAPE}`,true,"Finding fresh scriptures…");
+    const arr=(Array.isArray(out)?out:[]).filter(x=>x&&x.r&&x.open);FS.more=[...arr,...FS.more];renderMinistry();
+    document.getElementById("fs-more")?.scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(e){aiError(e)}
+}
+async function msGo(){
+  if(!MS.who.trim()){toast("Describe who you met first");return}
+  const adage=MS.style==="With a Ghanaian adage";
+  const prompt=`${FS_RULES}\n\nThe person: ${MS.who}\nHow to start: ${MS.style}${adage?`\nStart each opener with a well-known Akan (Twi) proverb, ask "Is that always true?", then let the verse give the deeper twist. Add "tw" (the proverb in Twi) and "en" (its English meaning) to each item.`:""}\n\nGive 3 different openers that fit this person and place, each with its own rarely-used verse.\n${FS_SHAPE}`;
+  try{const out=await aiRun(prompt,true,"Writing openers…");
+    FS.someone=(Array.isArray(out)?out:[]).filter(x=>x&&x.r&&x.open).map(x=>({...x,who:x.who||MS.who}));renderMinistry();
+    document.getElementById("ms-out")?.scrollIntoView({behavior:"smooth",block:"start"});
+    if(adage)toast("Check the Twi wording before you use it");
+  }catch(e){aiError(e)}
+}
+async function mtGo(){
+  if(!FS.meetingText.trim()&&!MS.sec.trim()){toast("Upload or paste the material, or type the lesson");return}
+  const prompt=`Help a pioneer of Jehovah's Witnesses in Ghana conduct a meeting for field service of about ${MS.mins} minutes, based on the brochure "Love People—Make Disciples".
+Lesson or section: ${MS.sec||"see material"}
+${FS.meetingText?`Material:\n"""\n${FS.meetingText.slice(0,9000)}\n"""\n`:""}Today's ministry: ${MS.focus}
+
+Make it lively, practical and different from a lecture: involve the group, keep it short, and send them out encouraged. Keep everything in line with Jehovah's Witnesses' teachings and the material given.
+If you are not sure a particular jw.org video or article exists, describe the topic to search for instead of inventing a title.
+
+Return ONLY JSON, no other text:
+{"title":"short title","timing":"rough minutes for each part","opening":"a warm opening question or short experience","points":["2 or 3 key points from the material, in simple words"],"scripture":"one scripture to use today and how","demo":"a short demonstration: who plays whom and what they say","video":"a jw.org video (title or topic) to mention or play","article":"a jw.org article (title or topic) to offer people today","closing":"one clear goal for today and a short encouraging send-off"}`;
+  try{FS.meeting=await aiRun(prompt,true,"Making the meeting plan…");renderMinistry();document.getElementById("mt-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
+}
+async function fwGo(){
+  if(!MS.fam.trim()){toast("Describe the family first");return}
+  const prompt=`Help a Jehovah's Witness family in Ghana plan a family worship evening of ${MS.fmins} minutes.
+The family: ${MS.fam}
+Facing or interested in: ${MS.face||"nothing particular"}
+
+Make it warm, relaxed and enjoyable, with a fresh hands-on activity suited to the children's ages, not a lecture. Use the Bible and jw.org material (mention a video or article topic where it helps; describe the topic if you are not sure of a title). Keep everything in line with Jehovah's Witnesses' teachings.
+
+Return ONLY JSON, no other text:
+{"theme":"short theme","scripture":"main scripture","why":"why this suits this family, 1 sentence","plan":[{"part":"name of the part","minutes":"number","what":"what to do"}],"activity":"the fresh activity idea in detail","question":"one question for everyone to answer","tip":"one tip for the head of the family"}`;
+  try{FS.family=await aiRun(prompt,true,"Making the family worship plan…");renderMinistry();document.getElementById("fw-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
+}
+function ministryAction(a,el){
+  const v=el.dataset.v,i=+el.dataset.i;
+  switch(a){
+    case "mtab":mtab=v;openTalk="";renderMinistry();return true;
+    case "fsmore":fsMore();return true;
+    case "mswho":MS.who=v;document.getElementById("ms-who").value=v;return true;
+    case "msgo":msGo();return true;
+    case "mtgo":mtGo();return true;
+    case "fwgo":fwGo();return true;
+    case "lc":{const x=v==="adage"?todayAdage():v==="today"?todayThree()[i]:FS[v][i];copy(lcText(x));toast("Copied. Paste it into the person's notes in Life Compass");return true}
+    case "saveplan":{const o=v==="meeting"?FS.meeting:FS.family;(S.plans=S.plans||[]).unshift({id:"p"+Date.now(),kind:v,d:today(),obj:o});save();el.textContent="Saved ✓";el.disabled=true;return true}
+    case "copyplan":copy(planText(v,v==="meeting"?FS.meeting:FS.family));return true;
+    case "openplan":openTalk=openTalk===el.dataset.id?"":el.dataset.id;renderMinistry();return true;
+    case "delplan":if(el.dataset.sure){S.plans=S.plans.filter(p=>p.id!==el.dataset.id);save();renderMinistry()}else{el.dataset.sure=1;el.textContent="Tap again to delete"}return true;
+  }
+  return false;
+}
+
+/* ---------- Actions ---------- */
+view.addEventListener("click",e=>{
+  const el=e.target.closest("[data-a]");if(!el)return;const a=el.dataset.a,id=el.dataset.id,v=el.dataset.v;
+  if(ministryAction(a,el))return;
+  const t=id&&talkById(id);
+  switch(a){
+    case "opentimer":go("timer");break;
+    case "backtalks":go("talks");break;
+    case "theme":theme=v;renderBank();break;
+    case "fav":{const i=S.fav.indexOf(id);i<0?S.fav.push(id):S.fav.splice(i,1);save();renderBank();break}
+    case "totalk":pickTalk(id);break;
+    case "more":moreSheet(id);break;
+    case "twitoggle":twiOpen.has(id)?twiOpen.delete(id):twiOpen.add(id);renderBank();break;
+    case "gomore":go("more");break;
+    case "getfresh":getFresh();break;
+    case "keep":{const b=fresh[+el.dataset.i];S.mine.unshift({t:b.t,h:b.h,s:b.s,p:b.p,r:b.r,id:"m"+Date.now(),mine:true});b.kept=true;save();el.textContent="Kept ✓";el.disabled=true;toast("Saved to your bank");break}
+    case "copyfresh":copy(plain(fresh[+el.dataset.i]));break;
+    case "addtalk":{const title=document.getElementById("t-title").value.trim();if(!title){toast("Type the talk title");return}
+      const type=document.getElementById("t-type").value;
+      const nt={id:"t"+Date.now(),title,date:document.getElementById("t-date").value,type,place:document.getElementById("t-place").value.trim(),scr:document.getElementById("t-scr").value.trim(),ill:[],notes:"",mins:DEFAULT_MINS[type]};
+      S.talks.unshift(nt);openTalk=nt.id;save();renderTalks();toast("Talk added");break}
+    case "opentalk":openTalk=openTalk===id?"":id;renderTalks();break;
+    case "unlink":t.ill=t.ill.filter(x=>x!==v);save();renderTalks();break;
+    case "findill":FR={theme:t.title,scr:t.scr||"",point:"",part:"",aud:t.type==="Public talk"?"Public talk":t.type==="Assembly part"?"Assembly or convention":"Congregation meeting",n:"3"};fresh=[];go("fresh");break;
+    case "introconcl":introConcl(t);break;
+    case "practise":T={...T,talkId:id,mins:t.mins||DEFAULT_MINS[t.type]||5,acc:0,running:false,b1:false,b0:false};go("timer");break;
+    case "copytalk":copy(talkText(t));break;
+    case "given":toggleGiven(t);break;
+    case "deltalk":if(el.dataset.sure){S.talks=S.talks.filter(x=>x.id!==id);Object.keys(S.used).forEach(k=>S.used[k]=S.used[k].filter(u=>u.tid!==id));save();renderTalks();toast("Talk deleted")}else{el.dataset.sure=1;el.textContent="Tap again to delete"}break;
+    case "mins":T.mins=+v;const tt=talkById(T.talkId);if(tt){tt.mins=T.mins;save()}T.b1=T.b0=false;renderTimer();break;
+    case "tstart":if(T.running){T.acc+=Date.now()-T.start;T.running=false;lockOff()}else{T.start=Date.now();T.running=true;lockOn()}tick();break;
+    case "treset":T.acc=0;T.running=false;T.b1=T.b0=false;lockOff();tick();break;
+    case "tsave":{const x=talkById(T.talkId);if(x&&elapsed()>0){x.practice=elapsed();save();toast("Saved: "+fmtMs(x.practice))}break}
+    case "addmine":{const g=k=>document.getElementById(k).value.trim();if(!g("m-h")||!g("m-s")){toast("Add a title and the story");return}
+      S.mine.unshift({id:"m"+Date.now(),mine:true,t:g("m-t")||"My own",h:g("m-h"),s:g("m-s"),p:g("m-p"),r:g("m-r")});save();["m-h","m-t","m-s","m-p","m-r"].forEach(k=>document.getElementById(k).value="");toast("Saved to your bank");break}
+    case "bkfile":saveBackupFile();break;
+    case "bkshare":shareBackup();break;
+    case "bkcopy":copy(backupText(),"bk-in");S.lastBackup=Date.now();save();break;
+    case "bkload":restore(document.getElementById("bk-in").value);break;
+    case "install":installEvt.prompt();installEvt.userChoice.finally(()=>{installEvt=null;renderMore()});break;
+    case "update":checkUpdate();break;
+    case "copylink":copy(APK_URL);break;
+  }
+});
+view.addEventListener("input",e=>{const n=e.target.dataset.notes;if(n){const t=talkById(n);if(t){t.notes=e.target.value;save()}}});
+
+function rerender(){({bank:renderBank,fresh:renderFresh,talks:renderTalks,timer:renderTimer,ministry:renderMinistry,more:renderMore})[tab]()}
+function go(t){tab=t;if(t!=="talks"&&t!=="ministry")openTalk="";const hi=t==="timer"?"talks":t;document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===hi?"page":"false"));rerender();window.scrollTo(0,0)}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>go(b.dataset.tab));
+go("bank");
+</script>
+<script>if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script></body></html>
