@@ -127,7 +127,7 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const VERSION="4.0";
+const VERSION="4.1";
 const APK_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest/download/talk-illustrations.apk";
 const RELEASES_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest";
 const isNative=()=>!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
@@ -788,27 +788,30 @@ function renderMinistry(){
   }else if(mtab==="kept"){
     body=(S.kept||[]).length?`<p class="sub">Openers you kept. They work without internet.</p><div class="list">${S.kept.map((x,i)=>fsCard(x,"kept",i)).join("")}</div>`:`<div class="empty">No kept openers yet. Tap “Keep” on any scripture or opener you like.</div>`;
   }else if(mtab==="meeting"){
-    body=`<p class="sub">Build a lively meeting for field service from the “Love People—Make Disciples” brochure.</p>
+    body=`<p class="sub">Type the topic. You get quick notes, a short outline, and jw.org articles and videos to choose from.</p>
     <div class="panel">
-      <label>Lesson or section<input id="mt-sec" placeholder="e.g. Lesson 4, point 3" value="${esc(MS.sec)}"></label>
-      <label>Upload the material (PDF or text file from jw.org)<input id="mt-file" type="file" accept=".pdf,.txt,text/plain,application/pdf"></label>
+      <label>Topic<input id="mt-topic" placeholder="e.g. Starting conversations in public places" value="${esc(MS.topic||"")}"></label>
+      <label>Lesson from “Love People—Make Disciples” (optional)<input id="mt-sec" placeholder="e.g. Lesson 4, point 3" value="${esc(MS.sec)}"></label>
       <label>Other publications to draw from (optional)<input id="mt-other" placeholder="e.g. Enjoy Life Forever! lesson 5, a recent Watchtower article" value="${esc(MS.other||"")}"></label>
-      <label>Or paste the material<textarea id="mt-text" placeholder="Copy the lesson's points from JW Library and paste here">${esc(FS.meetingText)}</textarea></label>
+      <details ${FS.meetingText?"open":""}><summary>Add the lesson material (optional)</summary><div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+      <label>Upload a PDF or text file from jw.org<input id="mt-file" type="file" accept=".pdf,.txt,text/plain,application/pdf"></label>
+      <label>Or paste it<textarea id="mt-text" placeholder="Copy the lesson's points from JW Library and paste here">${esc(FS.meetingText)}</textarea></label></div></details>
       <div class="two">
         <label>Today's ministry<select id="mt-focus">${["House-to-house","Public witnessing (cart)","Return visits","Bible studies","Business territory","Phone and letters"].map(s=>`<option ${s===MS.focus?"selected":""}>${s}</option>`).join("")}</select></label>
         <label>Meeting length<select id="mt-mins">${["5","7","10","15"].map(s=>`<option ${s===MS.mins?"selected":""}>${s}</option>`).join("")}</select></label>
       </div>
-      <button class="btn primary big" data-a="mtgo">Make the meeting plan</button>
+      <button class="btn primary big" data-a="mtgo">Get notes and references</button>
     </div>
     <div id="mt-out">${FS.meeting?planCard("meeting",FS.meeting):""}</div>
     ${savedPlans("meeting")}`;
   }else{
-    body=`<p class="sub">Plan a family worship evening, for your own family or to help another family get started.</p>
+    body=`<p class="sub">Get a short summary, a brief outline, and jw.org articles and videos to choose from. You decide the rest.</p>
     <div class="panel">
       <label>The family<input id="fw-fam" placeholder="e.g. Father, mother, boy 12, girl 7" value="${esc(MS.fam)}"></label>
+      <label>Topic (optional)<input id="fw-topic" placeholder="e.g. contentment, honesty at school" value="${esc(MS.ftopic||"")}"></label>
       <label>What are they facing or interested in? (optional)<input id="fw-face" placeholder="e.g. bullying at school, new in the truth, loves football" value="${esc(MS.face)}"></label>
       <label>Time<select id="fw-mins">${["30","45","60"].map(s=>`<option ${s===MS.fmins?"selected":""}>${s} min</option>`).join("")}</select></label>
-      <button class="btn primary big" data-a="fwgo">Make the family worship plan</button>
+      <button class="btn primary big" data-a="fwgo">Get notes and references</button>
     </div>
     <div id="fw-out">${FS.family?planCard("family",FS.family):""}</div>
     <details class="panel"><summary>Quick activity ideas (work offline)</summary><ol class="steps" style="margin-top:10px">${FW_QUICK.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></details>
@@ -817,7 +820,7 @@ function renderMinistry(){
   view.innerHTML=`<h2>Ministry</h2>
   <div class="chips">${seg.map(([k,l])=>`<button class="chip" data-a="mtab" data-v="${k}" aria-pressed="${k===mtab}">${l}</button>`).join("")}</div>${body}`;
   const bind=(id,k,obj)=>{const el=document.getElementById(id);if(el)el.oninput=el.onchange=e=>obj[k]=e.target.value};
-  bind("ms-who","who",MS);bind("ms-style","style",MS);bind("mt-sec","sec",MS);bind("mt-focus","focus",MS);bind("mt-mins","mins",MS);
+  bind("ms-who","who",MS);bind("mt-topic","topic",MS);bind("fw-topic","ftopic",MS);bind("ms-style","style",MS);bind("mt-sec","sec",MS);bind("mt-focus","focus",MS);bind("mt-mins","mins",MS);
   bind("mt-text","meetingText",FS);bind("mt-other","other",MS);bind("fw-fam","fam",MS);bind("fw-face","face",MS);
   const fm=document.getElementById("fw-mins");if(fm)fm.onchange=e=>MS.fmins=e.target.value.split(" ")[0];
   const mf=document.getElementById("mt-file");if(mf)mf.onchange=e=>loadMaterial(e.target.files[0]);
@@ -828,27 +831,34 @@ function savedPlans(kind){
   return `<h4>Saved plans</h4><div class="list">${ps.map(p=>`<div class="talk"><button class="head" data-a="openplan" data-id="${p.id}"><div><h3>${esc(p.obj.title||p.obj.theme||"Plan")}</h3><div class="meta">${fmtDate(p.d)}</div></div><span>${openTalk===p.id?"▴":"▾"}</span></button>${openTalk===p.id?`<div class="body">${planInner(kind,p.obj)}<div class="row"><a class="btn wa" href="${wa(planText(kind,p.obj))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn danger" data-a="delplan" data-id="${p.id}">Delete</button></div></div>`:""}</div>`).join("")}</div>`;
 }
 function resLink(r){return `<a href="${jwSearch(r.search||r.title)}" target="_blank" rel="noopener">${r.type==="video"?"🎬":"📄"} ${esc(r.title)}</a>`}
-function resList(o,pickable){
+function resList(o,pickable,kind){
   const rs=o.resources||[];if(!rs.length)return "";
   const picked=o.picked||[];
   const items=pickable?rs.map((r,i)=>({r,i})):rs.map((r,i)=>({r,i})).filter(x=>!pickable&&(o.picked?picked.includes(x.i):true));
   if(!items.length)return "";
-  return `<div class="block"><b>${pickable?"Pick the articles and videos to use":o.picked?"Chosen articles and videos":"Articles and videos"}</b><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">${items.map(({r,i})=>`<div>${pickable?`<button class="btn" style="padding:3px 9px" data-a="pickres" data-i="${i}" aria-pressed="${picked.includes(i)}">${picked.includes(i)?"✓ Chosen":"Choose"}</button> `:""}${resLink(r)}${r.why?`<div class="meta" style="font-family:var(--ui);font-size:13px;color:var(--muted)">${esc(r.why)}</div>`:""}</div>`).join("")}</div></div>`;
+  return `<div class="block"><b>${pickable?"Pick the articles and videos to use":o.picked?"Chosen articles and videos":"Articles and videos"}</b><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">${items.map(({r,i})=>`<div>${pickable?`<button class="btn" style="padding:3px 9px" data-a="pickres" data-v="${kind||"family"}" data-i="${i}" aria-pressed="${picked.includes(i)}">${picked.includes(i)?"✓ Chosen":"Choose"}</button> `:""}${resLink(r)}${r.why?`<div class="meta" style="font-family:var(--ui);font-size:13px;color:var(--muted)">${esc(r.why)}</div>`:""}</div>`).join("")}</div></div>`;
 }
 const resText=o=>{const rs=(o.resources||[]).filter((r,i)=>!o.picked||o.picked.includes(i));return rs.length?"\n\nArticles and videos:\n"+rs.map(r=>`• ${r.title}${r.why?" — "+r.why:""}\n  ${jwSearch(r.search||r.title)}`).join("\n"):""};
+function briefInner(o,pickable,kind){
+  const L=(l,a)=>a&&a.length?`<div class="block" style="font-family:var(--ui)"><b>${l}</b><ul class="steps" style="padding-left:18px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
+  return L("Summary",o.summary)+L("Outline",o.outline)+((o.scriptures||[]).length?`<div class="scr">📖 ${o.scriptures.map(r=>`<a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a>`).join(" · ")}</div>`:"")+resList(o,pickable,kind);
+}
+function briefText(o,head){return `*${head}*\n\n${(o.summary||[]).map(x=>"• "+x).join("\n")}${(o.outline||[]).length?"\n\nOutline:\n"+o.outline.map((x,i)=>(i+1)+". "+x).join("\n"):""}${(o.scriptures||[]).length?"\n\nScriptures: "+o.scriptures.join("; "):""}${resText(o)}`}
 function planInner(kind,o,pickable){
+  if(o.summary)return briefInner(o,pickable,kind);
   const B=(l,v)=>v?`<div class="block"><b>${l}</b>${esc(v)}</div>`:"";
   if(kind==="meeting")return B("Timing",o.timing)+B("Opening",o.opening)+(o.points&&o.points.length?`<div class="block"><b>Key points</b><ol class="steps">${o.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>`:"")+((o.sources||[]).length?`<div class="block"><b>From other publications</b><ul class="steps">${o.sources.map(s=>`<li><i>${esc(s.pub)}</i>: ${esc(s.point)}</li>`).join("")}</ul></div>`:"")+B("Scripture",o.scripture)+B("Demonstration",o.demo)+B("Video to mention or play",o.video)+B("Article to share",o.article)+resList(o,false)+B("Send-off",o.closing);
   return B("Theme",o.theme)+B("Scripture",o.scripture)+B("Why this fits",o.why)+(o.plan&&o.plan.length?`<div class="block"><b>The evening</b><ol class="steps">${o.plan.map(p=>`<li><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14px;color:inherit">${esc(p.part)}</b>${p.minutes?` (${esc(p.minutes)} min)`:""}: ${esc(p.what)}</li>`).join("")}</ol></div>`:"")+B("Fresh activity",o.activity)+resList(o,pickable)+B("Question for everyone",o.question)+B("Tip for the head of the family",o.tip);
 }
 function planText(kind,o){
+  if(o.summary)return briefText(o,(kind==="meeting"?"Field service meeting: ":"Family worship: ")+(o.title||o.theme||""));
   if(kind==="meeting")return `*${o.title||"Meeting for field service"}*\n${o.timing||""}\n\nOpening: ${o.opening||""}\n\nPoints:\n${(o.points||[]).map((p,i)=>(i+1)+". "+p).join("\n")}\n\nScripture: ${o.scripture||""}\nDemonstration: ${o.demo||""}${(o.sources||[]).length?"\n\nFrom other publications:\n"+o.sources.map(s=>`• ${s.pub}: ${s.point}`).join("\n"):""}${o.video?"\nVideo: "+o.video:""}${o.article?"\nArticle: "+o.article:""}${resText(o)}\n\nSend-off: ${o.closing||""}`;
   return `*Family worship: ${o.theme||""}*\nScripture: ${o.scripture||""}\n\n${(o.plan||[]).map(p=>`• ${p.part}${p.minutes?" ("+p.minutes+" min)":""}: ${p.what}`).join("\n")}\n\nActivity: ${o.activity||""}${resText(o)}\nQuestion: ${o.question||""}\nTip: ${o.tip||""}`;
 }
 function planCard(kind,o){
   return `<article class="ill"><div class="tag">${kind==="meeting"?"Meeting for field service":"Family worship"}</div><h3>${esc(o.title||o.theme||"Your plan")}</h3>
-  ${planInner(kind,o,kind==="family")}
-  <p class="sub" style="font-size:13px">Links open a jw.org search for each title. If it doesn't come up, look for the topic in JW Library.</p>
+  ${planInner(kind,o,true)}
+  <p class="sub" style="font-size:13px">Tap “Choose” on the ones you'll use. Only those go into the saved plan and WhatsApp message. Links open a jw.org search for each title. If it doesn't come up, look for the topic in JW Library.</p>
   <div class="row"><button class="btn primary" data-a="saveplan" data-v="${kind}">Save plan</button><a class="btn wa" href="${wa(planText(kind,o))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-a="copyplan" data-v="${kind}">Copy</button></div></article>`;
 }
 
@@ -896,33 +906,26 @@ async function msGo(){
     if(adage)toast("Check the Twi wording before you use it");
   }catch(e){aiError(e)}
 }
+const BRIEF_SHAPE=(t)=>`Return ONLY JSON, no other text:
+{"${t}":"short title","summary":["2 or 3 short points on what to do, one line each"],"outline":["3 to 5 short outline points, a few words each"],"scriptures":["2 or 3 Bible references"],"resources":[{"type":"video or article","title":"jw.org title (or the topic if you are not sure it exists)","why":"a few words on how it helps","search":"2 to 4 search words"}]}
+Give 5 or 6 resources, mixing videos and articles. Keep every line short: notes, not a script.`;
 async function mtGo(){
-  if(!FS.meetingText.trim()&&!MS.sec.trim()){toast("Upload or paste the material, or type the lesson");return}
-  const prompt=`Help a pioneer of Jehovah's Witnesses in Ghana conduct a meeting for field service of about ${MS.mins} minutes, based on the brochure "Love People—Make Disciples".
-Lesson or section: ${MS.sec||"see material"}
-${FS.meetingText?`Material:\n"""\n${FS.meetingText.slice(0,9000)}\n"""\n`:""}Today's ministry: ${MS.focus}
-${MS.other?"Other publications the conductor wants to use: "+MS.other+"\n":""}
-Besides the brochure, also draw on other publications and tools of Jehovah's Witnesses that fit (for example the Enjoy Life Forever! book, The Watchtower and Awake!, the Life and Ministry Meeting Workbook, jw.org articles and videos), so the meeting feels fresh.
-
-Make it lively, practical and different from a lecture: involve the group, keep it short, and send them out encouraged. Keep everything in line with Jehovah's Witnesses' teachings and the material given.
-If you are not sure a particular jw.org video or article exists, describe the topic to search for instead of inventing a title.
-
-Return ONLY JSON, no other text:
-{"title":"short title","timing":"rough minutes for each part","opening":"a warm opening question or short experience","points":["2 or 3 key points from the material, in simple words"],"scripture":"one scripture to use today and how","demo":"a short demonstration: who plays whom and what they say","sources":[{"pub":"another publication","point":"what to take from it"}],"resources":[{"type":"video or article","title":"jw.org title (or topic if unsure)","why":"how it helps today","search":"2 to 4 search words"}],"closing":"one clear goal for today and a short encouraging send-off"}
-Give 3 or 4 resources, mixing videos and articles.`;
-  try{FS.meeting=await aiRun(prompt,true,"Making the meeting plan…");renderMinistry();document.getElementById("mt-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
+  if(!(MS.topic||"").trim()&&!FS.meetingText.trim()&&!MS.sec.trim()){toast("Type the topic first");return}
+  const prompt=`A pioneer of Jehovah's Witnesses in Ghana is conducting a meeting for field service of about ${MS.mins} minutes. He wants quick notes and references only, not a script; he will prepare the rest himself.
+Topic: ${MS.topic||"see the lesson"}
+${MS.sec?"Lesson from the brochure Love People—Make Disciples: "+MS.sec+"\n":""}${MS.other?"Other publications he wants to use: "+MS.other+"\n":""}${FS.meetingText?`Lesson material:\n"""\n${FS.meetingText.slice(0,9000)}\n"""\n`:""}Today's ministry: ${MS.focus}
+Draw on publications and tools of Jehovah's Witnesses (Love People—Make Disciples, Enjoy Life Forever!, The Watchtower, Awake!, jw.org articles and videos). Keep everything in line with their teachings.
+${BRIEF_SHAPE("title")}`;
+  try{FS.meeting=await aiRun(prompt,true,"Finding notes and references…");renderMinistry();document.getElementById("mt-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
 }
 async function fwGo(){
   if(!MS.fam.trim()){toast("Describe the family first");return}
-  const prompt=`Help a Jehovah's Witness family in Ghana plan a family worship evening of ${MS.fmins} minutes.
+  const prompt=`Help plan family worship for a family of Jehovah's Witnesses in Ghana (about ${MS.fmins} minutes). The person wants a short summary, a brief outline and jw.org references only, not a full script; they will decide the rest.
 The family: ${MS.fam}
-Facing or interested in: ${MS.face||"nothing particular"}
-
-Make it warm, relaxed and enjoyable, with a fresh hands-on activity suited to the children's ages, not a lecture. Use the Bible and jw.org material. Offer 5 or 6 jw.org articles and videos the family can choose from (for children this age and for the parent), using real titles when you are sure, otherwise the topic. Keep everything in line with Jehovah's Witnesses' teachings.
-
-Return ONLY JSON, no other text:
-{"theme":"short theme","scripture":"main scripture","why":"why this suits this family, 1 sentence","plan":[{"part":"name of the part","minutes":"number","what":"what to do"}],"activity":"the fresh activity idea in detail","resources":[{"type":"video or article","title":"jw.org title (or topic if unsure)","why":"why it suits this family","search":"2 to 4 search words"}],"question":"one question for everyone to answer","tip":"one tip for the head of the family"}`;
-  try{FS.family=await aiRun(prompt,true,"Making the family worship plan…");renderMinistry();document.getElementById("fw-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
+${MS.ftopic?"Topic: "+MS.ftopic+"\n":""}Facing or interested in: ${MS.face||"nothing particular"}
+Pick resources that suit the children's ages. Keep everything in line with the teachings of Jehovah's Witnesses.
+${BRIEF_SHAPE("theme")}`;
+  try{FS.family=await aiRun(prompt,true,"Finding notes and references…");renderMinistry();document.getElementById("fw-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
 }
 function ministryAction(a,el){
   const v=el.dataset.v,i=+el.dataset.i;
@@ -937,7 +940,7 @@ function ministryAction(a,el){
     case "fskeep":{const x=fsList(v)[i];S.kept=S.kept||[];if(!isKept(x))S.kept.unshift({...x,keptOn:today()});save();el.textContent="Kept ✓";el.disabled=true;toast("Kept. Find it under Ministry → Kept");return true}
     case "unkeep":if(el.dataset.sure){S.kept.splice(i,1);save();renderMinistry()}else{el.dataset.sure=1;el.textContent="Tap again to remove"}return true;
     case "deeper":{const x=fsList(v)[i];insightSheet(x.r,x.key,null);return true}
-    case "pickres":{const o=FS.family;if(!o)return true;o.picked=o.picked||[];const k=o.picked.indexOf(i);k<0?o.picked.push(i):o.picked.splice(k,1);renderMinistry();return true}
+    case "pickres":{const o=v==="meeting"?FS.meeting:FS.family;if(!o)return true;o.picked=o.picked||[];const k=o.picked.indexOf(i);k<0?o.picked.push(i):o.picked.splice(k,1);renderMinistry();return true}
     case "saveplan":{const o=JSON.parse(JSON.stringify(v==="meeting"?FS.meeting:FS.family));(S.plans=S.plans||[]).unshift({id:"p"+Date.now(),kind:v,d:today(),obj:o});save();el.textContent="Saved ✓";el.disabled=true;return true}
     case "copyplan":copy(planText(v,v==="meeting"?FS.meeting:FS.family));return true;
     case "openplan":openTalk=openTalk===el.dataset.id?"":el.dataset.id;renderMinistry();return true;
