@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1f4fd1"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Talk Illustrations</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1f4fd1"><link rel="manifest" href="manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Illustrations"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Talk Illustrations</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
 <style>
@@ -127,7 +127,7 @@ details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const VERSION="3.0.1";
+const VERSION="4.0";
 const APK_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest/download/talk-illustrations.apk";
 const RELEASES_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest";
 const isNative=()=>!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
@@ -177,7 +177,7 @@ const DEFAULT_MINS={"Midweek part":5,"Treasures":10,"Spiritual gems":10,"Bible r
 const TYPES=Object.keys(DEFAULT_MINS);
 const AUDS=["Congregation meeting","Public talk","Youths","Families","Field service / Bible study","Assembly or convention"];
 
-let S={mine:[],fav:[],talks:[],used:{},extra:{},plans:[],lastBackup:0};
+let S={mine:[],fav:[],talks:[],used:{},extra:{},plans:[],kept:[],lastBackup:0};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
 S.talks.forEach((t,i)=>{t.id=t.id||("t"+Date.now()+i);t.place=t.place||"";t.scr=t.scr||"";t.ill=t.ill||[]});
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -481,11 +481,13 @@ function talkCard(t){
     <div><h4>Illustrations</h4>${ills.length?`<ol>${ills.map(b=>`<li><b>${esc(b.h)}</b> — ${esc(b.p)} <span class="scr">(${esc(b.r)})</span> <button class="btn" style="padding:2px 8px" data-a="unlink" data-id="${t.id}" data-v="${b.id}" aria-label="Remove">✕</button></li>`).join("")}</ol>`:`<p class="meta" style="margin:4px 0 0">None yet. Tap “Find illustrations”, or “Add to a talk” on any card in the bank.</p>`}</div>
     ${t.intro?`<div class="block"><b>Introduction</b>${esc(t.intro)}</div>`:""}
     ${t.concl?`<div class="block"><b>Conclusion</b>${esc(t.concl)}</div>`:""}
+    ${(t.insights||[]).map((w,wi)=>`<div class="block"><b>Word insight · ${esc(w.v)}${w.k?" — “"+esc(w.k)+"”":""}</b>${insightHtml(w.o)}<div class="row" style="margin-top:6px"><button class="btn" style="padding:3px 9px" data-a="delinsight" data-id="${t.id}" data-v="${wi}">Remove</button></div></div>`).join("")}
     ${t.practice?`<div class="meta">Last practice: ${fmtMs(t.practice)} of ${t.mins||DEFAULT_MINS[t.type]||5} min</div>`:""}
     <label>Notes<textarea data-notes="${t.id}" placeholder="Outline points, scriptures to read…">${esc(t.notes||"")}</textarea></label>
     <div class="row">
       <button class="btn" data-a="findill" data-id="${t.id}">Find illustrations</button>
       <button class="btn" data-a="introconcl" data-id="${t.id}">Intro & conclusion</button>
+      <button class="btn" data-a="insight" data-id="${t.id}">Word insight</button>
       <button class="btn" data-a="practise" data-id="${t.id}">Practise</button>
     </div>
     <div class="row">
@@ -500,6 +502,7 @@ function talkText(t){
   return `*${t.title}*\n${t.type}${t.date?" · "+fmtDate(t.date):""}${t.place?" · "+t.place:""}${t.scr?"\nScripture: "+t.scr:""}`+
   (t.intro?`\n\nIntroduction:\n${t.intro}`:"")+(t.notes?`\n\nNotes:\n${t.notes}`:"")+
   (ills.length?`\n\nIllustrations:\n${ills.map((b,i)=>`${i+1}. ${b.h}\n${b.s}\nPoint: ${b.p} (${b.r})`).join("\n\n")}`:"")+
+  ((t.insights||[]).length?"\n\n"+t.insights.map(w=>insightText(w.v,w.k,w.o)).join("\n\n"):"")+
   (t.concl?`\n\nConclusion:\n${t.concl}`:"");
 }
 async function introConcl(t){
@@ -572,6 +575,7 @@ const isInstalled=()=>matchMedia("(display-mode: standalone)").matches||navigato
 function renderMore(){
   const lb=S.lastBackup?new Date(S.lastBackup).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"never";
   const shareMsg=`Here is a helpful app for preparing talks: Talk Illustrations.\nIt has illustrations sorted by theme, a talk planner and a practice timer.\n\nAndroid app (APK): ${APK_URL}\nTap the link, open the downloaded file and tap Install. If the phone asks, allow installing from this source.\n\nOr use it in Chrome: ${appUrl()}`;
+  const iosMsg=`Here is a helpful app for preparing talks: Talk Illustrations.\nIt has illustrations by theme, a talk planner, ministry openers and a practice timer.\n\nOn iPhone:\n1. Open this link in *Safari* (not Chrome): ${appUrl()}\n2. Tap the Share button (the square with an arrow) at the bottom.\n3. Scroll down and tap “Add to Home Screen”, then “Add”.\n4. Open it from the new icon on your home screen.`;
   view.innerHTML=`<h2>Add your own illustration</h2>
   <div class="panel">
     <label>Title<input id="m-h" placeholder="e.g. The tailor measures twice"></label>
@@ -582,7 +586,7 @@ function renderMore(){
     <button class="btn primary" data-a="addmine">Save to my bank</button>
   </div>
   <h2>Backup</h2>
-  <p class="sub">Your talks, own illustrations, Twi versions, saved plans and “used” records stay on this phone only. Save a backup file and keep it on WhatsApp or Google Drive. If you delete the app or change phones, restore it here. Last backup: <b>${lb}</b>.</p>
+  <p class="sub">Your talks, own illustrations, Twi versions, kept openers, saved plans and “used” records stay on this phone only. Save a backup file and keep it on WhatsApp or Google Drive. If you delete the app or change phones, restore it here. Last backup: <b>${lb}</b>.</p>
   <div class="panel">
     <div class="row"><button class="btn primary" data-a="bkfile">Save backup file</button><button class="btn" data-a="bkshare">Send backup to WhatsApp / Drive</button></div>
     <label>Restore from a backup file<input id="bk-file" type="file" accept=".json,application/json,text/plain"></label>
@@ -600,7 +604,7 @@ function renderMore(){
     <button class="btn" data-a="update">Check for updates</button>`}
     <h4>Share the app</h4>
     <p class="sub" style="margin:0">Anyone with the link can install it. Each person's talks stay private on their own phone.</p>
-    <div class="row"><a class="btn wa" href="${wa(shareMsg)}" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn" data-a="copylink">Copy link</button></div>
+    <div class="row"><a class="btn wa" href="${wa(shareMsg)}" target="_blank" rel="noopener">Send to Android</a><a class="btn wa" href="${wa(iosMsg)}" target="_blank" rel="noopener">Send to iPhone</a><button class="btn" data-a="copylink">Copy link</button></div>
     <div class="scr" style="word-break:break-all">APK: ${esc(APK_URL)}</div>
   </div>`;
   document.getElementById("bk-file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>restore(r.result);r.readAsText(f)};
@@ -636,6 +640,7 @@ function restore(text){
     S.fav=[...new Set([...S.fav,...(d.fav||[])])];
     d.talks.forEach((t,i)=>{t.id=t.id||("t"+Date.now()+i);const j=S.talks.findIndex(x=>x.id===t.id);if(j<0)S.talks.push(t);else S.talks[j]=t});
     Object.entries(d.used||{}).forEach(([id,arr])=>{const cur=S.used[id]||[];arr.forEach(u=>{if(!cur.some(c=>c.d===u.d&&c.w===u.w))cur.push(u)});S.used[id]=cur});
+    (d.kept||[]).forEach(k=>{S.kept=S.kept||[];if(!S.kept.some(x=>x.r===k.r&&x.open===k.open))S.kept.push(k)});
     (d.plans||[]).forEach(p=>{S.plans=S.plans||[];if(!S.plans.some(x=>x.id===p.id))S.plans.push(p)});
     Object.entries(d.extra||{}).forEach(([id,x])=>S.extra[id]={...x,...(S.extra[id]||{})});
     S.talks.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
@@ -691,6 +696,8 @@ const FS_BANK=[
 {r:"Ecclesiastes 3:11",key:"put eternity in their heart",who:"Someone afraid of death",angle:"We all want to live on. God put that desire in us, so he must have a way to satisfy it.",open:"Why do you think humans don't want to die, even at old age?",read:"Look at what God placed in our hearts.",follow:"If God put that desire there, how will he satisfy it? Psalm 37:29 shows."},
 {r:"Deuteronomy 22:8",key:"a parapet for your roof",who:"Builders, landlords, parents",angle:"God commanded a railing on roofs to protect lives. He cares about our safety in everyday things.",open:"Do you think the Bible has anything to say about safety at home or work?",read:"Look at this law God gave his people.",follow:"What does this teach about how God values life? There's a lot more practical wisdom."}
 ];
+const FS_VID={"Ecclesiastes 9:11":"why do bad things happen","Proverbs 24:16":"overcoming discouragement","2 Thessalonians 3:10":"work Bible view","Nehemiah 4:17":"protect your family","Lamentations 3:22, 23":"God's forgiveness mercy","Habakkuk 1:2, 3":"why does God allow suffering","Ecclesiastes 4:6":"money and happiness","Proverbs 14:10":"comfort emotional pain","Isaiah 45:18":"will the earth be destroyed","Malachi 3:16":"does God notice me","Ecclesiastes 7:10":"hope for the future","Proverbs 17:22":"joy and health","Zephaniah 3:17":"does God have feelings","Job 14:14, 15":"resurrection hope","Psalm 56:8":"does God care when I cry","Micah 4:3, 4":"God's Kingdom peace security","Isaiah 65:21, 22":"life in paradise","Jonah 4:11":"God's care for animals","Ruth 1:16":"loyalty in the family","1 Kings 19:4, 5":"coping with depression","Proverbs 22:29":"work hard skillful","Ecclesiastes 11:6":"Bible principles money business","Psalm 103:14":"God understands our weakness","Hosea 6:6":"worship God approves","Ecclesiastes 1:9":"technology Bible","Isaiah 33:24":"no more sickness","Proverbs 31:28":"capable wife","Proverbs 27:1":"plan for the future","Esther 4:14":"purpose of life","Philemon 11":"can people change","Nahum 1:7":"God our refuge","Proverbs 13:12":"hope waiting","Ecclesiastes 3:11":"why we die","Deuteronomy 22:8":"value of life safety"};
+const jwSearch=q=>"https://www.jw.org/en/search/?q="+encodeURIComponent(q);
 const ADAGES=[
 {tw:"Wonyɛ adwuma a, worenni.",en:"If you don't work, you won't eat.",ask:"Is that always true? What about the elderly and the sick?",twist:"The Bible says 'if anyone does not WANT to work'. It shows care for those who can't work and expects effort from those who can.",r:"2 Thessalonians 3:10"},
 {tw:"Obi nkyerɛ abofra Nyame.",en:"No one shows a child God.",ask:"Is it true that everyone knows God naturally?",twist:"Creation shows God exists, but to know his name and purpose, people must be taught.",r:"Romans 10:14"},
@@ -727,7 +734,9 @@ const dayNo=()=>Math.floor((new Date(today()+"T00:00")-new Date("2026-01-01T00:0
 function todayThree(){const d=dayNo(),n=FS_BANK.length;return [0,1,2].map(k=>FS_BANK[((d*3+k)%n+n)%n])}
 const todayAdage=()=>ADAGES[((dayNo())%ADAGES.length+ADAGES.length)%ADAGES.length];
 const lcText=x=>`${fmtDate(today())} · Field service\nScripture: ${x.r}${x.key?` (“${x.key}”)`:""}\nOpener: ${x.open||x.ask||""}\nQuestion left: ${x.follow||""}`;
-const fsPlain=x=>`*${x.r}* — “${x.key}”\n${x.angle}\n\nOpen: ${x.open}\nRead: ${x.read}\nThen ask: ${x.follow}`;
+const fsPlain=x=>`*${x.r}* — “${x.key}”\n${x.angle}\n\nOpen: ${x.open}\nRead: ${x.read}\nThen ask: ${x.follow}${x.root?"\n\nOriginal language: "+x.root:""}${x.pic?"\nGhana picture: "+x.pic:""}${x.video?"\nVideo: "+x.video:""}`;
+const isKept=x=>(S.kept||[]).some(k=>k.r===x.r&&k.open===x.open);
+const fsList=src=>src==="today"?todayThree():src==="kept"?(S.kept||[]):FS[src];
 const adPlain=a=>`*${a.tw}*\n(${a.en})\n\nAsk: ${a.ask}\nTwist: ${a.twist}\nScripture: ${a.r}`;
 function fsCard(x,src,i){
   return `<article class="ill">
@@ -738,7 +747,12 @@ function fsCard(x,src,i){
     <div class="block"><b>Open with</b>${esc(x.open)}</div>
     <div class="block"><b>Lead into the verse</b>${esc(x.read)}</div>
     <div class="block"><b>Then ask</b>${esc(x.follow)}</div>
+    ${x.root?`<div class="block"><b>In the original language</b>${esc(x.root)}</div>`:""}
+    ${x.pic?`<div class="block"><b>Ghana picture</b>${esc(x.pic)}</div>`:""}
+    <div class="scr">🎬 <a href="${jwSearch(x.vsearch||x.video||FS_VID[x.r]||x.key)}" target="_blank" rel="noopener">${x.video?esc(x.video):"Find a short video on this topic"}</a></div>
     <div class="row"><button class="btn primary" data-a="lc" data-v="${src}" data-i="${i}">Copy for Life Compass</button>
+    ${src==="kept"?`<button class="btn danger" data-a="unkeep" data-i="${i}">Remove</button>`:`<button class="btn" data-a="fskeep" data-v="${src}" data-i="${i}" ${isKept(x)?"disabled":""}>${isKept(x)?"Kept ✓":"Keep"}</button>`}
+    <button class="btn" data-a="deeper" data-v="${src}" data-i="${i}">Go deeper</button>
     <a class="btn wa" href="${wa(fsPlain(x))}" target="_blank" rel="noopener">WhatsApp</a></div>
   </article>`;
 }
@@ -756,7 +770,7 @@ function adageCard(a){
   </article>`;
 }
 function renderMinistry(){
-  const seg=[["today","Today"],["someone","I see someone"],["meeting","Service meeting"],["family","Family worship"]];
+  const seg=[["today","Today"],["someone","I see someone"],["kept","Kept"+((S.kept||[]).length?" ("+S.kept.length+")":"")],["meeting","Service meeting"],["family","Family worship"]];
   let body="";
   if(mtab==="today"){
     body=`<p class="sub">${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})} · three scriptures we rarely use, each with a fresh angle. They change every day.</p>
@@ -771,11 +785,14 @@ function renderMinistry(){
       <button class="btn primary big" data-a="msgo">Give me openers</button>
     </div>
     <div class="list" id="ms-out">${FS.someone.map((x,i)=>fsCard(x,"someone",i)).join("")}</div>`;
+  }else if(mtab==="kept"){
+    body=(S.kept||[]).length?`<p class="sub">Openers you kept. They work without internet.</p><div class="list">${S.kept.map((x,i)=>fsCard(x,"kept",i)).join("")}</div>`:`<div class="empty">No kept openers yet. Tap “Keep” on any scripture or opener you like.</div>`;
   }else if(mtab==="meeting"){
     body=`<p class="sub">Build a lively meeting for field service from the “Love People—Make Disciples” brochure.</p>
     <div class="panel">
       <label>Lesson or section<input id="mt-sec" placeholder="e.g. Lesson 4, point 3" value="${esc(MS.sec)}"></label>
       <label>Upload the material (PDF or text file from jw.org)<input id="mt-file" type="file" accept=".pdf,.txt,text/plain,application/pdf"></label>
+      <label>Other publications to draw from (optional)<input id="mt-other" placeholder="e.g. Enjoy Life Forever! lesson 5, a recent Watchtower article" value="${esc(MS.other||"")}"></label>
       <label>Or paste the material<textarea id="mt-text" placeholder="Copy the lesson's points from JW Library and paste here">${esc(FS.meetingText)}</textarea></label>
       <div class="two">
         <label>Today's ministry<select id="mt-focus">${["House-to-house","Public witnessing (cart)","Return visits","Bible studies","Business territory","Phone and letters"].map(s=>`<option ${s===MS.focus?"selected":""}>${s}</option>`).join("")}</select></label>
@@ -798,10 +815,10 @@ function renderMinistry(){
     ${savedPlans("family")}`;
   }
   view.innerHTML=`<h2>Ministry</h2>
-  <div class="chips wrapit">${seg.map(([k,l])=>`<button class="chip" data-a="mtab" data-v="${k}" aria-pressed="${k===mtab}">${l}</button>`).join("")}</div>${body}`;
+  <div class="chips">${seg.map(([k,l])=>`<button class="chip" data-a="mtab" data-v="${k}" aria-pressed="${k===mtab}">${l}</button>`).join("")}</div>${body}`;
   const bind=(id,k,obj)=>{const el=document.getElementById(id);if(el)el.oninput=el.onchange=e=>obj[k]=e.target.value};
   bind("ms-who","who",MS);bind("ms-style","style",MS);bind("mt-sec","sec",MS);bind("mt-focus","focus",MS);bind("mt-mins","mins",MS);
-  bind("mt-text","meetingText",FS);bind("fw-fam","fam",MS);bind("fw-face","face",MS);
+  bind("mt-text","meetingText",FS);bind("mt-other","other",MS);bind("fw-fam","fam",MS);bind("fw-face","face",MS);
   const fm=document.getElementById("fw-mins");if(fm)fm.onchange=e=>MS.fmins=e.target.value.split(" ")[0];
   const mf=document.getElementById("mt-file");if(mf)mf.onchange=e=>loadMaterial(e.target.files[0]);
 }
@@ -810,19 +827,28 @@ function savedPlans(kind){
   if(!ps.length)return "";
   return `<h4>Saved plans</h4><div class="list">${ps.map(p=>`<div class="talk"><button class="head" data-a="openplan" data-id="${p.id}"><div><h3>${esc(p.obj.title||p.obj.theme||"Plan")}</h3><div class="meta">${fmtDate(p.d)}</div></div><span>${openTalk===p.id?"▴":"▾"}</span></button>${openTalk===p.id?`<div class="body">${planInner(kind,p.obj)}<div class="row"><a class="btn wa" href="${wa(planText(kind,p.obj))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn danger" data-a="delplan" data-id="${p.id}">Delete</button></div></div>`:""}</div>`).join("")}</div>`;
 }
-function planInner(kind,o){
+function resLink(r){return `<a href="${jwSearch(r.search||r.title)}" target="_blank" rel="noopener">${r.type==="video"?"🎬":"📄"} ${esc(r.title)}</a>`}
+function resList(o,pickable){
+  const rs=o.resources||[];if(!rs.length)return "";
+  const picked=o.picked||[];
+  const items=pickable?rs.map((r,i)=>({r,i})):rs.map((r,i)=>({r,i})).filter(x=>!pickable&&(o.picked?picked.includes(x.i):true));
+  if(!items.length)return "";
+  return `<div class="block"><b>${pickable?"Pick the articles and videos to use":o.picked?"Chosen articles and videos":"Articles and videos"}</b><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">${items.map(({r,i})=>`<div>${pickable?`<button class="btn" style="padding:3px 9px" data-a="pickres" data-i="${i}" aria-pressed="${picked.includes(i)}">${picked.includes(i)?"✓ Chosen":"Choose"}</button> `:""}${resLink(r)}${r.why?`<div class="meta" style="font-family:var(--ui);font-size:13px;color:var(--muted)">${esc(r.why)}</div>`:""}</div>`).join("")}</div></div>`;
+}
+const resText=o=>{const rs=(o.resources||[]).filter((r,i)=>!o.picked||o.picked.includes(i));return rs.length?"\n\nArticles and videos:\n"+rs.map(r=>`• ${r.title}${r.why?" — "+r.why:""}\n  ${jwSearch(r.search||r.title)}`).join("\n"):""};
+function planInner(kind,o,pickable){
   const B=(l,v)=>v?`<div class="block"><b>${l}</b>${esc(v)}</div>`:"";
-  if(kind==="meeting")return B("Timing",o.timing)+B("Opening",o.opening)+(o.points&&o.points.length?`<div class="block"><b>Key points</b><ol class="steps">${o.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>`:"")+B("Scripture",o.scripture)+B("Demonstration",o.demo)+B("Video to mention or play",o.video)+B("Article to share",o.article)+B("Send-off",o.closing);
-  return B("Theme",o.theme)+B("Scripture",o.scripture)+B("Why this fits",o.why)+(o.plan&&o.plan.length?`<div class="block"><b>The evening</b><ol class="steps">${o.plan.map(p=>`<li><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14px;color:inherit">${esc(p.part)}</b>${p.minutes?` (${esc(p.minutes)} min)`:""}: ${esc(p.what)}</li>`).join("")}</ol></div>`:"")+B("Fresh activity",o.activity)+B("Question for everyone",o.question)+B("Tip for the head of the family",o.tip);
+  if(kind==="meeting")return B("Timing",o.timing)+B("Opening",o.opening)+(o.points&&o.points.length?`<div class="block"><b>Key points</b><ol class="steps">${o.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>`:"")+((o.sources||[]).length?`<div class="block"><b>From other publications</b><ul class="steps">${o.sources.map(s=>`<li><i>${esc(s.pub)}</i>: ${esc(s.point)}</li>`).join("")}</ul></div>`:"")+B("Scripture",o.scripture)+B("Demonstration",o.demo)+B("Video to mention or play",o.video)+B("Article to share",o.article)+resList(o,false)+B("Send-off",o.closing);
+  return B("Theme",o.theme)+B("Scripture",o.scripture)+B("Why this fits",o.why)+(o.plan&&o.plan.length?`<div class="block"><b>The evening</b><ol class="steps">${o.plan.map(p=>`<li><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14px;color:inherit">${esc(p.part)}</b>${p.minutes?` (${esc(p.minutes)} min)`:""}: ${esc(p.what)}</li>`).join("")}</ol></div>`:"")+B("Fresh activity",o.activity)+resList(o,pickable)+B("Question for everyone",o.question)+B("Tip for the head of the family",o.tip);
 }
 function planText(kind,o){
-  if(kind==="meeting")return `*${o.title||"Meeting for field service"}*\n${o.timing||""}\n\nOpening: ${o.opening||""}\n\nPoints:\n${(o.points||[]).map((p,i)=>(i+1)+". "+p).join("\n")}\n\nScripture: ${o.scripture||""}\nDemonstration: ${o.demo||""}\nVideo: ${o.video||""}\nArticle: ${o.article||""}\n\nSend-off: ${o.closing||""}`;
-  return `*Family worship: ${o.theme||""}*\nScripture: ${o.scripture||""}\n\n${(o.plan||[]).map(p=>`• ${p.part}${p.minutes?" ("+p.minutes+" min)":""}: ${p.what}`).join("\n")}\n\nActivity: ${o.activity||""}\nQuestion: ${o.question||""}\nTip: ${o.tip||""}`;
+  if(kind==="meeting")return `*${o.title||"Meeting for field service"}*\n${o.timing||""}\n\nOpening: ${o.opening||""}\n\nPoints:\n${(o.points||[]).map((p,i)=>(i+1)+". "+p).join("\n")}\n\nScripture: ${o.scripture||""}\nDemonstration: ${o.demo||""}${(o.sources||[]).length?"\n\nFrom other publications:\n"+o.sources.map(s=>`• ${s.pub}: ${s.point}`).join("\n"):""}${o.video?"\nVideo: "+o.video:""}${o.article?"\nArticle: "+o.article:""}${resText(o)}\n\nSend-off: ${o.closing||""}`;
+  return `*Family worship: ${o.theme||""}*\nScripture: ${o.scripture||""}\n\n${(o.plan||[]).map(p=>`• ${p.part}${p.minutes?" ("+p.minutes+" min)":""}: ${p.what}`).join("\n")}\n\nActivity: ${o.activity||""}${resText(o)}\nQuestion: ${o.question||""}\nTip: ${o.tip||""}`;
 }
 function planCard(kind,o){
   return `<article class="ill"><div class="tag">${kind==="meeting"?"Meeting for field service":"Family worship"}</div><h3>${esc(o.title||o.theme||"Your plan")}</h3>
-  ${planInner(kind,o)}
-  ${kind==="meeting"?`<p class="sub" style="font-size:13px">Find the video and article in JW Library. If a title doesn't come up, search the topic.</p>`:""}
+  ${planInner(kind,o,kind==="family")}
+  <p class="sub" style="font-size:13px">Links open a jw.org search for each title. If it doesn't come up, look for the topic in JW Library.</p>
   <div class="row"><button class="btn primary" data-a="saveplan" data-v="${kind}">Save plan</button><a class="btn wa" href="${wa(planText(kind,o))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-a="copyplan" data-v="${kind}">Copy</button></div></article>`;
 }
 
@@ -848,7 +874,7 @@ async function loadMaterial(file){
 
 /* ---------- Ministry: asking Claude ---------- */
 const COMMON="Revelation 21:3, 4; John 17:3; Psalm 37:29; Psalm 83:18; Matthew 24:14; 2 Timothy 3:1-5; John 3:16; Matthew 6:9, 10; Isaiah 2:4; Daniel 2:44; Acts 24:15; Genesis 1:28; Isaiah 35:5, 6; John 5:28, 29; 1 John 5:19";
-const FS_SHAPE=`Return ONLY a JSON array, no other text:\n[{"r":"Book chapter:verse","key":"the key word or phrase from the New World Translation","angle":"the surprising angle in 1-2 sentences","open":"natural opening question","read":"one short line to lead into reading the verse","follow":"follow-up question that leads toward a return visit or Bible study","who":"who this suits"}]`;
+const FS_SHAPE=`Return ONLY a JSON array, no other text:\n[{"r":"Book chapter:verse","key":"the key word or phrase from the New World Translation","angle":"the surprising angle in 1-2 sentences","root":"what the key word means in the original Hebrew or Greek, with the word itself, in 1-2 sentences","pic":"a quick everyday Ghana picture that makes the point land","open":"natural opening question","read":"one short line to lead into reading the verse","follow":"follow-up question that leads toward a return visit or Bible study","video":"a short jw.org video that fits (its title if you are sure it exists, otherwise the topic)","vsearch":"2 to 4 words to search for that video on jw.org","who":"who this suits"}]`;
 const FS_RULES=`You help a pioneer of Jehovah's Witnesses in Kasoa, Ghana start conversations in the field ministry.
 Choose verses that are RARELY used in the ministry. Avoid well-known ones such as ${COMMON}. Prefer books like Ecclesiastes, Proverbs, Nehemiah, Lamentations, Job, Ruth, Esther, Philemon and the minor prophets.
 For each verse, find a key word or phrase (New World Translation wording) that gives an unexpected "I never saw it that way" angle that touches the heart, like noticing that 2 Thessalonians 3:10 says "does not WANT to work".
@@ -875,12 +901,15 @@ async function mtGo(){
   const prompt=`Help a pioneer of Jehovah's Witnesses in Ghana conduct a meeting for field service of about ${MS.mins} minutes, based on the brochure "Love People—Make Disciples".
 Lesson or section: ${MS.sec||"see material"}
 ${FS.meetingText?`Material:\n"""\n${FS.meetingText.slice(0,9000)}\n"""\n`:""}Today's ministry: ${MS.focus}
+${MS.other?"Other publications the conductor wants to use: "+MS.other+"\n":""}
+Besides the brochure, also draw on other publications and tools of Jehovah's Witnesses that fit (for example the Enjoy Life Forever! book, The Watchtower and Awake!, the Life and Ministry Meeting Workbook, jw.org articles and videos), so the meeting feels fresh.
 
 Make it lively, practical and different from a lecture: involve the group, keep it short, and send them out encouraged. Keep everything in line with Jehovah's Witnesses' teachings and the material given.
 If you are not sure a particular jw.org video or article exists, describe the topic to search for instead of inventing a title.
 
 Return ONLY JSON, no other text:
-{"title":"short title","timing":"rough minutes for each part","opening":"a warm opening question or short experience","points":["2 or 3 key points from the material, in simple words"],"scripture":"one scripture to use today and how","demo":"a short demonstration: who plays whom and what they say","video":"a jw.org video (title or topic) to mention or play","article":"a jw.org article (title or topic) to offer people today","closing":"one clear goal for today and a short encouraging send-off"}`;
+{"title":"short title","timing":"rough minutes for each part","opening":"a warm opening question or short experience","points":["2 or 3 key points from the material, in simple words"],"scripture":"one scripture to use today and how","demo":"a short demonstration: who plays whom and what they say","sources":[{"pub":"another publication","point":"what to take from it"}],"resources":[{"type":"video or article","title":"jw.org title (or topic if unsure)","why":"how it helps today","search":"2 to 4 search words"}],"closing":"one clear goal for today and a short encouraging send-off"}
+Give 3 or 4 resources, mixing videos and articles.`;
   try{FS.meeting=await aiRun(prompt,true,"Making the meeting plan…");renderMinistry();document.getElementById("mt-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
 }
 async function fwGo(){
@@ -889,10 +918,10 @@ async function fwGo(){
 The family: ${MS.fam}
 Facing or interested in: ${MS.face||"nothing particular"}
 
-Make it warm, relaxed and enjoyable, with a fresh hands-on activity suited to the children's ages, not a lecture. Use the Bible and jw.org material (mention a video or article topic where it helps; describe the topic if you are not sure of a title). Keep everything in line with Jehovah's Witnesses' teachings.
+Make it warm, relaxed and enjoyable, with a fresh hands-on activity suited to the children's ages, not a lecture. Use the Bible and jw.org material. Offer 5 or 6 jw.org articles and videos the family can choose from (for children this age and for the parent), using real titles when you are sure, otherwise the topic. Keep everything in line with Jehovah's Witnesses' teachings.
 
 Return ONLY JSON, no other text:
-{"theme":"short theme","scripture":"main scripture","why":"why this suits this family, 1 sentence","plan":[{"part":"name of the part","minutes":"number","what":"what to do"}],"activity":"the fresh activity idea in detail","question":"one question for everyone to answer","tip":"one tip for the head of the family"}`;
+{"theme":"short theme","scripture":"main scripture","why":"why this suits this family, 1 sentence","plan":[{"part":"name of the part","minutes":"number","what":"what to do"}],"activity":"the fresh activity idea in detail","resources":[{"type":"video or article","title":"jw.org title (or topic if unsure)","why":"why it suits this family","search":"2 to 4 search words"}],"question":"one question for everyone to answer","tip":"one tip for the head of the family"}`;
   try{FS.family=await aiRun(prompt,true,"Making the family worship plan…");renderMinistry();document.getElementById("fw-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
 }
 function ministryAction(a,el){
@@ -904,13 +933,60 @@ function ministryAction(a,el){
     case "msgo":msGo();return true;
     case "mtgo":mtGo();return true;
     case "fwgo":fwGo();return true;
-    case "lc":{const x=v==="adage"?todayAdage():v==="today"?todayThree()[i]:FS[v][i];copy(lcText(x));toast("Copied. Paste it into the person's notes in Life Compass");return true}
-    case "saveplan":{const o=v==="meeting"?FS.meeting:FS.family;(S.plans=S.plans||[]).unshift({id:"p"+Date.now(),kind:v,d:today(),obj:o});save();el.textContent="Saved ✓";el.disabled=true;return true}
+    case "lc":{const x=v==="adage"?todayAdage():fsList(v)[i];copy(lcText(x));toast("Copied. Paste it into the person's notes in Life Compass");return true}
+    case "fskeep":{const x=fsList(v)[i];S.kept=S.kept||[];if(!isKept(x))S.kept.unshift({...x,keptOn:today()});save();el.textContent="Kept ✓";el.disabled=true;toast("Kept. Find it under Ministry → Kept");return true}
+    case "unkeep":if(el.dataset.sure){S.kept.splice(i,1);save();renderMinistry()}else{el.dataset.sure=1;el.textContent="Tap again to remove"}return true;
+    case "deeper":{const x=fsList(v)[i];insightSheet(x.r,x.key,null);return true}
+    case "pickres":{const o=FS.family;if(!o)return true;o.picked=o.picked||[];const k=o.picked.indexOf(i);k<0?o.picked.push(i):o.picked.splice(k,1);renderMinistry();return true}
+    case "saveplan":{const o=JSON.parse(JSON.stringify(v==="meeting"?FS.meeting:FS.family));(S.plans=S.plans||[]).unshift({id:"p"+Date.now(),kind:v,d:today(),obj:o});save();el.textContent="Saved ✓";el.disabled=true;return true}
     case "copyplan":copy(planText(v,v==="meeting"?FS.meeting:FS.family));return true;
     case "openplan":openTalk=openTalk===el.dataset.id?"":el.dataset.id;renderMinistry();return true;
     case "delplan":if(el.dataset.sure){S.plans=S.plans.filter(p=>p.id!==el.dataset.id);save();renderMinistry()}else{el.dataset.sure=1;el.textContent="Tap again to delete"}return true;
   }
   return false;
+}
+
+/* ---------- Word insight (talks and ministry) ---------- */
+const surePill=s=>{s=String(s||"").toLowerCase();return `<span class="pill ${s==="high"?"ok":"soon"}" ${s==="low"?'style="color:var(--bad)"':""}>${s==="high"?"Sure":s==="medium"?"Fairly sure":"Check first"}</span>`};
+function insightHtml(o){
+  const r=o.root||{};
+  return `${r.word?`<div class="block"><b>Original ${esc(r.lang||"language")}</b><span style="font-size:17px">${esc(r.word)}</span>${r.translit?` <i>(${esc(r.translit)})</i>`:""}<br>Literally: “${esc(r.meaning||"")}”<br>${esc(r.insight||"")}</div>`:""}
+  ${(o.langs||[]).map(l=>`<div class="block"><b>${esc(l.lang)}</b><div class="row" style="justify-content:space-between"><span>“${esc(l.says)}”</span>${surePill(l.sure)}</div>Literally: “${esc(l.literal||"")}”<br>${esc(l.insight||"")}</div>`).join("")}
+  ${o.ghana?`<div class="block"><b>Ghana picture</b>${esc(o.ghana)}</div>`:""}
+  ${o.use?`<div class="point"><b>Use it:</b> ${esc(o.use)}</div>`:""}`;
+}
+const insightText=(v,k,o)=>{const r=o.root||{};return `*Word insight: ${v}${k?" — “"+k+"”":""}*\n${r.word?`${r.lang}: ${r.word}${r.translit?" ("+r.translit+")":""} = “${r.meaning}”. ${r.insight}\n`:""}${(o.langs||[]).map(l=>`${l.lang}: “${l.says}” = “${l.literal}”. ${l.insight}`).join("\n")}${o.ghana?"\nGhana picture: "+o.ghana:""}${o.use?"\nUse it: "+o.use:""}`};
+function insightSheet(verse,key,talk){
+  let last=null;
+  const sh=openSheet(`<h3>Word insight</h3>
+    <p class="sub">Get the Hebrew or Greek meaning of a key word, and how other languages put it.</p>
+    <div class="two"><label>Verse<input id="wi-v" value="${esc(verse||"")}" placeholder="e.g. Proverbs 17:17"></label>
+    <label>Key word (optional)<input id="wi-k" value="${esc(key||"")}" placeholder="e.g. friend"></label></div>
+    <button class="btn primary" data-k="go">Get word insight</button>
+    <div id="wi-out"></div>
+    <div class="row" id="wi-acts" hidden>${talk?`<button class="btn primary" data-k="save">Save to this talk</button>`:""}<button class="btn" data-k="copy">Copy</button><button class="btn" data-close>Close</button></div>
+    <p class="sub" style="font-size:13px">Check other languages in JW Library, where the New World Translation is available in many languages. Don't use anything marked “Check first” until you have checked it.</p>`);
+  sh.addEventListener("click",async e=>{
+    const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
+    const v=sh.querySelector("#wi-v").value.trim(),kw=sh.querySelector("#wi-k").value.trim();
+    if(k==="copy"&&last){copy(insightText(v,kw,last));return}
+    if(k==="save"&&last){talk.insights=talk.insights||[];talk.insights.push({v,k:kw,o:last});save();sh.remove();rerender();toast("Saved to the talk");return}
+    if(k==="go"){
+      if(!v){toast("Type the verse first");return}
+      const prompt=`You help a Jehovah's Witness speaker in Ghana bring out the depth of a Bible verse.
+Verse: ${v} (New World Translation)
+Key word: ${kw||"choose the single most meaningful word in the verse"}
+
+1. Give the key word in the original Hebrew, Aramaic or Greek: the word, its transliteration, its literal meaning, and the insight it gives. Keep in line with the understanding of Jehovah's Witnesses (as in the New World Translation study notes) where it applies.
+2. Pick 2 to 4 languages (any language in the world, including less common ones) whose Bible translation puts this word in a striking or illuminating way. For each give how it is rendered, its literal English meaning, the insight, and how sure you are: "high", "medium" or "low". Only include renderings you actually know. Never invent one; if unsure, mark it "low".
+3. Give one quick everyday Ghana picture that makes the point land.
+4. One sentence on how to use this in a talk or at the door.
+
+Return ONLY JSON, no other text:
+{"root":{"lang":"Hebrew or Greek","word":"","translit":"","meaning":"","insight":""},"langs":[{"lang":"","says":"","literal":"","insight":"","sure":"high|medium|low"}],"ghana":"","use":""}`;
+      try{last=await aiRun(prompt,true,"Digging into the word…");sh.querySelector("#wi-out").innerHTML=insightHtml(last);sh.querySelector("#wi-acts").hidden=false}catch(err){aiError(err)}
+    }
+  });
 }
 
 /* ---------- Actions ---------- */
@@ -920,6 +996,8 @@ view.addEventListener("click",e=>{
   const t=id&&talkById(id);
   switch(a){
     case "opentimer":go("timer");break;
+    case "insight":insightSheet(t.scr||"","",t);break;
+    case "delinsight":t.insights.splice(+v,1);save();renderTalks();break;
     case "backtalks":go("talks");break;
     case "theme":theme=v;renderBank();break;
     case "fav":{const i=S.fav.indexOf(id);i<0?S.fav.push(id):S.fav.splice(i,1);save();renderBank();break}
