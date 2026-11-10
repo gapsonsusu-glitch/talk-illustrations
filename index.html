@@ -109,6 +109,7 @@ pre.prompt{white-space:pre-wrap;font-size:13px;background:var(--bg);border:1px s
 details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.spin{animation:none}.toast{transition:none}}
 /* Scripture Trail */
+.code{font:800 18px var(--display);letter-spacing:.06em;text-align:center;background:var(--mark-soft);color:var(--warn);border-radius:12px;padding:10px;word-break:break-all}
 .rankrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .rank{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:5px 12px;font:800 14px var(--display)}
 .seg4{grid-template-columns:repeat(5,1fr)!important}.seg4 button{font-size:12.5px!important}
@@ -215,7 +216,9 @@ body.questonly nav.tabs{display:none}body.questonly{padding-bottom:20px}
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const VERSION="5.1";
+const VERSION="5.3";
+const SHORT_TRAIL="https://tinyurl.com/gideon-scripture-trail";
+const SHORT_APK="https://tinyurl.com/gideon-trail-android";
 const questOnly=/^#(quest|trail|ch-)/.test(location.hash);
 const APK_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest/download/talk-illustrations.apk";
 const RELEASES_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest";
@@ -663,8 +666,8 @@ window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installEvt=
 const isInstalled=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone;
 function renderMore(){
   const lb=S.lastBackup?new Date(S.lastBackup).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"never";
-  const shareMsg=`Here is a helpful app for preparing talks: Talk Illustrations.\nIt has illustrations sorted by theme, a talk planner and a practice timer.\n\nAndroid app (APK): ${APK_URL}\nTap the link, open the downloaded file and tap Install. If the phone asks, allow installing from this source.\n\nOr use it in Chrome: ${appUrl()}`;
-  const iosMsg=`Here is a helpful app for preparing talks: Talk Illustrations.\nIt has illustrations by theme, a talk planner, ministry openers and a practice timer.\n\nOn iPhone:\n1. Open this link in *Safari* (not Chrome): ${appUrl()}\n2. Tap the Share button (the square with an arrow) at the bottom.\n3. Scroll down and tap “Add to Home Screen”, then “Add”.\n4. Open it from the new icon on your home screen.`;
+  const shareMsg=`Here is a helpful app for preparing talks: *Talk Illustrations*, from Gideon.\nIt has illustrations sorted by theme, a talk planner, ministry openers and Scripture Trail.\n\nAndroid app: ${SHORT_APK}\nTap the link, open the downloaded file and tap Install. If the phone asks, allow installing from this source.`;
+  const iosMsg=`Here is a helpful app for preparing talks: *Talk Illustrations*, from Gideon.\nIt has illustrations by theme, a talk planner, ministry openers and a practice timer.\n\nOn iPhone:\n1. Open this link in *Safari* (not Chrome): ${appUrl()}\n2. Tap the Share button (the square with an arrow) at the bottom.\n3. Scroll down and tap “Add to Home Screen”, then “Add”.\n4. Open it from the new icon on your home screen.`;
   view.innerHTML=`<h2>Add your own illustration</h2>
   <div class="panel">
     <label>Title<input id="m-h" placeholder="e.g. The tailor measures twice"></label>
@@ -694,7 +697,7 @@ function renderMore(){
     <h4>Share the app</h4>
     <p class="sub" style="margin:0">Anyone with the link can install it. Each person's talks stay private on their own phone.</p>
     <div class="row"><a class="btn wa" href="${wa(shareMsg)}" target="_blank" rel="noopener">Send to Android</a><a class="btn wa" href="${wa(iosMsg)}" target="_blank" rel="noopener">Send to iPhone</a><button class="btn" data-a="copylink">Copy link</button></div>
-    <div class="scr" style="word-break:break-all">APK: ${esc(APK_URL)}</div>
+    <div class="scr" style="word-break:break-all">Android: ${esc(SHORT_APK)}<br>Scripture Trail: ${esc(SHORT_TRAIL)}</div>
     <h4>Share only Scripture Trail</h4>
     <div class="row"><a class="btn wa" href="${wa(questShareMsg())}" target="_blank" rel="noopener">Send Scripture Trail</a></div>
   </div>`;
@@ -1510,7 +1513,7 @@ function qSpend(n){if(QG.coins<n){toast("Not enough coins. Answer more questions
 
 /* quiz engine */
 const QLIFE={verse:10,half:15,skip:20,time:10};
-function qQuiz({title,qs,level,pay,onDone}){
+function qQuiz({title,qs,level,pay,onDone,timers}){
   const L=QLEVEL[level]||QLEVEL.easy;pay=pay??L.pay;
   let i=0,score=0,results=[],timer=null;
   const sh=openSheet("");const box=sh.querySelector(".box");
@@ -1519,27 +1522,28 @@ function qQuiz({title,qs,level,pay,onDone}){
   function stop(){clearInterval(timer);try{speechSynthesis.cancel()}catch(_){}sh.remove()}
   function show(){
     clearInterval(timer);
+    const TT=timers?timers[i]||0:L.timer;
     const [q,...rest]=qs[i];const ref=rest[4],opts=rest.slice(0,4);
     const order=qShuffle(opts.map((o,k)=>({o,k})));
     const team=fam?QG.fam.teams[QG.fam.turn%QG.fam.teams.length]:null;
     box.innerHTML=`<div class="qtop"><b style="font:800 16px var(--display)">${esc(title)}</b><div class="dots">${qs.map((_,k)=>`<i class="${k<i?(results[k]?"ok":"no"):k===i?"now":""}"></i>`).join("")}</div></div>
       ${team?`<div class="turn">${esc(team.n)}'s turn</div>`:""}
-      ${L.timer?`<div class="timer"><i id="q-bar"></i></div>`:""}
+      ${(timers?timers[i]:L.timer)?`<div class="timer"><i id="q-bar"></i></div>`:""}
       <p class="qq">${esc(q)}</p>
       ${L.hint?`<div class="hint">Hint: <a href="${wol(ref)}" target="_blank" rel="noopener">${esc(ref)}</a></div>`:""}
       <div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${esc(x.o)}</button>`).join("")}</div>
       <div class="lifes">
         ${L.hint?"":`<button class="life" data-l="verse"><span class="coin"></span>${QLIFE.verse} Show the verse</button>`}
         <button class="life" data-l="half"><span class="coin"></span>${QLIFE.half} Remove two</button>
-        ${L.timer?`<button class="life" data-l="time"><span class="coin"></span>${QLIFE.time} +15 seconds</button>`:""}
+        ${TT?`<button class="life" data-l="time"><span class="coin"></span>${QLIFE.time} +15 seconds</button>`:""}
         <button class="life" data-l="skip"><span class="coin"></span>${QLIFE.skip} Skip</button>
         <button class="life plain" data-l="read">Read aloud</button>
       </div>
       <div id="q-fb"></div>
       <div style="display:flex;gap:8px"><button class="btn" data-x="quit" style="flex:1;justify-content:center">Stop</button><button class="btn primary" data-x="next" style="flex:2;justify-content:center" hidden>${i<qs.length-1?"Next question":"See result"}</button></div>`;
     qSay(q+". "+order.map(x=>x.o).join(". "));
-    let done=false,left=L.timer*10,total=left;
-    if(L.timer){timer=setInterval(()=>{left--;const b=document.getElementById("q-bar");if(b){b.style.width=(left/total*100)+"%";b.classList.toggle("low",left<60)}if(left%10===0&&left<=50&&left>0)QSFX.tick();if(left<=0){clearInterval(timer);if(!done){done=true;results[i]=false;QSFX.wrong();mark(null);fb(false,"Time's up!")}}},100)}
+    let done=false,left=TT*10,total=left;
+    if(TT){timer=setInterval(()=>{left--;const b=document.getElementById("q-bar");if(b){b.style.width=(left/total*100)+"%";b.classList.toggle("low",left<60)}if(left%10===0&&left<=50&&left>0)QSFX.tick();if(left<=0){clearInterval(timer);if(!done){done=true;results[i]=false;QSFX.wrong();mark(null);fb(false,"Time's up!")}}},100)}
     function fb(ok,pre){box.querySelector("#q-fb").innerHTML=`<div class="fb ${ok?"ok":"no"}">${pre||(ok?"Correct!":"Not quite.")} ${ok?"":`The answer is <b>${esc(opts[0])}</b>.`} Read it in <a href="${wol(ref)}" target="_blank" rel="noopener">${esc(ref)}</a>.</div>`}
     function mark(chosen){clearInterval(timer);box.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.dataset.k===0)b.classList.add("ok");else if(b===chosen)b.classList.add("no")});box.querySelectorAll(".life").forEach(b=>{if(b.dataset.l!=="read")b.disabled=true});box.querySelector("[data-x=next]").hidden=false;if(fam)QG.fam.turn++;save()}
     box.onclick=e=>{
@@ -1608,9 +1612,21 @@ function qHome(){
     <div class="row"><button class="btn" data-q="teamadd" ${f.teams.length>=4?"disabled":""}>Add team</button><button class="btn" data-q="teamdel" ${f.teams.length<=2?"disabled":""}>Remove team</button><button class="btn" data-q="teamreset">Reset scores</button></div>`:""}
   </div>
   <div class="panel">
+    <h3 style="margin:0;font:800 18px var(--display)">Challenge of the day</h3>
+    <p class="sub" style="margin:0">The same 5 questions for everyone today, getting harder as you go. Compare scores with friends.</p>
+    ${(QG.cotdBest||{})[today()]!==undefined?`<div class="row" style="justify-content:space-between"><b>Your best today: ${QG.cotdBest[today()]} of 5</b><a class="btn wa" href="${wa(`📖 I scored ${QG.cotdBest[today()]}/5 on today's Scripture Trail challenge! Can you beat me?\n${SHORT_TRAIL}\n— from ${QG.meName||"Gideon"}`)}" target="_blank" rel="noopener">Share score</a></div>`:""}
+    <button class="btn primary" data-q="cotdplay" style="justify-content:center">${(QG.cotdBest||{})[today()]!==undefined?"Play again":"Play today's challenge"}</button>
+  </div>
+  <div class="panel">
     <h3 style="margin:0;font:800 18px var(--display)">Challenge a friend</h3>
-    <p class="sub" style="margin:0">Play 5 questions, then send the same 5 on WhatsApp. Your friend sees your score and tries to beat it.</p>
+    <p class="sub" style="margin:0">Pick a level and play 5 questions that get harder as you go. Then send the same 5 on WhatsApp for your friend to beat.</p>
+    <div class="levels">${Object.entries(CH).map(([k,c])=>`<button class="lvl" data-q="chlv" data-v="${k}" aria-pressed="${(QG.chLv||"m")===k}"><b>${c.n}</b><small>${k==="e"?"no timer":k==="m"?"timer on the last 3":"timer gets faster"}</small></button>`).join("")}</div>
     <button class="btn primary" data-q="challenge" style="justify-content:center">Start a challenge</button>
+  </div>
+  <div class="panel">
+    <h3 style="margin:0;font:800 18px var(--display)">Enter a challenge code</h3>
+    <p class="sub" style="margin:0">Got a code from a friend? Type it here to play the same 5 questions.</p>
+    <div class="row"><input id="q-code" placeholder="e.g. 6EEX4-5674A-5X-GIDEON" autocapitalize="characters" style="flex:1;min-width:0;text-transform:uppercase"><button class="btn primary" data-q="chcode">Play</button></div>
   </div>
   <div class="panel">
     <h3 style="margin:0;font:800 18px var(--display)">Share Scripture Trail</h3>
@@ -1619,7 +1635,7 @@ function qHome(){
   </div>
   ${seasonsPanel()}`;
 }
-function questShareMsg(){return `Try *Scripture Trail*! Track your Bible reading as a journey, unlock Bible character cards, finish picture puzzles and earn coins. For children, teens and adults.\n\n${appUrl()}#trail\n\niPhone: open it in Safari, tap Share, then “Add to Home Screen”.\nAndroid: open it in Chrome, tap ⋮, then “Add to Home screen”.`}
+function questShareMsg(){return `Try *Scripture Trail*! Track your Bible reading as a journey, unlock Bible character cards, finish picture puzzles and earn coins. For children, teens and adults.\n\n${SHORT_TRAIL}\n\niPhone: open it in Safari, tap Share, then “Add to Home Screen”.\nAndroid: open it in Chrome, tap ⋮, then “Add to Home screen”.\n\n— from Gideon`}
 function qCards(){
   return `<p class="sub">Read the chapter on a card, then answer every question right to unlock it. Level: <b>${QLEVEL[QG.level].n}</b>. Collect a whole section to open its Expert bonus.</p>
   ${QGROUPS.map((g,gi)=>{const cs=QCHARS.filter(c=>c.g===gi),own=qOwned(gi),full=own===cs.length;
@@ -1736,7 +1752,7 @@ function questAction(el){
     case "teamadd":QG.fam.teams.push({n:"Team "+"ABCD"[QG.fam.teams.length],s:0});save();renderQuest();break;
     case "teamdel":QG.fam.teams.pop();save();renderQuest();break;
     case "teamreset":QG.fam.teams.forEach(t=>t.s=0);QG.fam.turn=0;save();renderQuest();break;
-    case "copygame":copy(appUrl()+"#trail");break;
+    case "copygame":copy(SHORT_TRAIL);break;
     case "card":{const c=QCHARS.find(x=>x.id===v);QG.cards[c.id]?qShowCard(c):qPlayCard(c);break}
     case "bonus":{const gi=+v;qQuiz({title:QGROUPS[gi].n+" · Expert bonus",qs:qShuffle(QB[gi]),level:"expert",pay:20,onDone:r=>{
       if(r.score===r.total){QG.bonus[gi]=true;save();renderQuest();QSFX.win();qAdd(100);toast(`🏅 ${QGROUPS[gi].n} master! +100 coins`)}else{renderQuest();toast(`${r.score} of ${r.total}. Try again for the badge!`)}}});break}
@@ -1920,7 +1936,7 @@ function qJourneyView(){
   <div class="row"><a class="btn wa" href="${wa(progressMsg())}" target="_blank" rel="noopener">Share my progress</a></div>`;
 }
 function progressMsg(){const j=QG.journey;if(!j)return "";const rt=ROUTES.find(r=>r.id===j.route),{total,done}=jTarget(),frac=done/total,N=rt.stops.length,at=rt.stops[Math.floor(frac*(N-1)+1e-9)];
-  return `📖 I've reached *${at}* on my Bible reading journey (${rt.n})!\n${done} of ${total} chapters read on Scripture Trail.\n\nJoin me: ${appUrl()}#trail`}
+  return `📖 I've reached *${at}* on my Bible reading journey (${rt.n})!\n${done} of ${total} chapters read on Scripture Trail.\n\nJoin me: ${SHORT_TRAIL}\n— from Gideon`}
 
 /* certificate */
 function makeCert(name){
@@ -1962,22 +1978,37 @@ function chapterQuestion(b){
 
 /* challenge a friend */
 let qIncoming=null;
-(function(){const m=location.hash.match(/^#ch-([0-9a-z]+(?:x[0-9a-z]+)*)-(\d)-([A-Za-z0-9]{0,16})$/);if(m){const ids=m[1].split("x").map(s=>parseInt(s,36)).filter(n=>n>=0&&n<ALLQ.length);if(ids.length===5)qIncoming={ids,score:+m[2],name:m[3]||"A friend"}}})();
-const chLink=(ids,score)=>`${appUrl()}#ch-${ids.map(i=>i.toString(36)).join("x")}-${score}-${(QG.meName||"Friend").replace(/[^A-Za-z0-9]/g,"").slice(0,16)||"Friend"}`;
-function playChallenge(ids,from){
-  qQuiz({title:from?`${from.name}'s challenge`:"Challenge",qs:ids.map(i=>ALLQ[i]),level:"medium",pay:3,onDone:r=>{
+const CH={e:{n:"Easy",easy:5,timers:[0,0,0,0,0],pay:3},m:{n:"Medium",easy:3,timers:[0,0,25,20,15],pay:5},x:{n:"Expert",easy:1,timers:[25,20,15,12,10],pay:10}};
+(function(){const m=location.hash.match(/^#ch-([0-9a-z]+(?:x[0-9a-z]+)*)-(\d)-([A-Za-z0-9]{0,16})(?:-([emx]))?$/);if(m){const ids=m[1].split("x").map(s=>parseInt(s,36)).filter(n=>n>=0&&n<ALLQ.length);if(ids.length===5)qIncoming={ids,score:+m[2],name:m[3]||"A friend",lv:m[4]||"m"}}})();
+/* challenge code, e.g. 6EEX4-5674A-5X-GIDEON: 5 question numbers, score + level, name */
+function chCode(ids,score,lv){const q=ids.map(i=>i.toString(36).toUpperCase().padStart(2,"0")).join("");const nm=(QG.meName||"Friend").replace(/[^A-Za-z0-9]/g,"").slice(0,12).toUpperCase()||"FRIEND";return `${q.slice(0,5)}-${q.slice(5)}-${score}${(lv||"m").toUpperCase()}-${nm}`}
+function chParse(code){
+  const p=String(code||"").toUpperCase().replace(/[^A-Z0-9-]/g,"").split("-").filter(Boolean);if(p.length<3)return null;
+  const q=(p[0]+p[1]);const m=p[2].match(/^([0-5])([EMX])$/);if(q.length!==10||!m)return null;
+  const ids=[];for(let i=0;i<10;i+=2){const n=parseInt(q.slice(i,i+2),36);if(isNaN(n)||n>=ALLQ.length)return null;ids.push(n)}
+  const nm=(p.slice(3).join("")||"A friend");return {ids,score:+m[1],lv:m[2].toLowerCase(),name:nm.charAt(0)+nm.slice(1).toLowerCase()}}
+const chLink=(ids,score,lv)=>`${appUrl()}#ch-${ids.map(i=>i.toString(36)).join("x")}-${score}-${(QG.meName||"Friend").replace(/[^A-Za-z0-9]/g,"").slice(0,16)||"Friend"}-${lv||"m"}`;
+function qRng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+/* questions get harder as you go: easier ones first (first 3 of each card), harder ones last */
+function chPick(lv,rnd){rnd=rnd||Math.random;const ez=[],hd=[];ALLQ.forEach((_,i)=>(i%5<3?ez:hd).push(i));
+  const take=(a,n)=>{const c=a.slice(),o=[];while(o.length<n){o.push(c.splice(Math.floor(rnd()*c.length),1)[0])}return o};
+  const n=CH[lv].easy;return [...take(ez,n),...take(hd,5-n)]}
+function playChallenge(ids,from,lv){
+  lv=lv||(from&&from.lv)||QG.chLv||"m";const C=CH[lv];
+  qQuiz({title:(from?`${from.name}'s challenge`:"Challenge")+" · "+C.n,qs:ids.map(i=>ALLQ[i]),level:"medium",pay:C.pay,timers:C.timers,onDone:r=>{
     let head=`You scored ${r.score} of 5`;
     if(from)head=r.score>from.score?`You win! ${r.score} to ${from.score}`:r.score===from.score?`It's a draw: ${r.score} each`:`${from.name} wins, ${from.score} to ${r.score}`;
     if(from&&r.score>from.score)QSFX.win();
     const sh=openSheet(`<h3>${esc(head)}</h3>
       <label>Your name (shown to your friend)<input id="chn" value="${esc(QG.meName||"")}" placeholder="e.g. Gideon"></label>
       <p class="sub">${from?"Send a challenge back with new questions, or send the same 5 to someone else.":"Send these same 5 questions to a friend. They see your score and try to beat it."}</p>
-      <div class="row"><a class="btn wa" id="chsend" target="_blank" rel="noopener">Send on WhatsApp</a>${from?`<button class="btn" data-k="new">New 5 questions</button>`:""}<button class="btn" data-k="copy">Copy link</button><button class="btn" data-close>Close</button></div>`);
-    const msg=()=>`📖 Scripture Trail challenge! I scored ${r.score}/5. Can you beat me?\n${chLink(ids,r.score)}`;
-    const upd=()=>{QG.meName=sh.querySelector("#chn").value.trim();save();sh.querySelector("#chsend").href=wa(msg())};upd();sh.querySelector("#chn").oninput=upd;
+      <div class="row"><a class="btn wa" id="chsend" target="_blank" rel="noopener">Send on WhatsApp</a>${from?`<button class="btn" data-k="new">New 5 questions</button>`:""}<button class="btn" data-k="copy">Copy message</button><button class="btn" data-k="code">Copy code only</button><button class="btn" data-close>Close</button></div><div class="code" id="chc"></div>`);
+    const msg=()=>`📖 Scripture Trail challenge (${C.n})! I scored ${r.score}/5. Can you beat me?\n\n1. Open Scripture Trail: ${SHORT_TRAIL}\n2. Tap *Play*, then *Enter a challenge code*\n3. Code: *${chCode(ids,r.score,lv)}*\n\n— from ${QG.meName||"Gideon"}`;
+    const upd=()=>{QG.meName=sh.querySelector("#chn").value.trim();save();sh.querySelector("#chsend").href=wa(msg());sh.querySelector("#chc").textContent="Code: "+chCode(ids,r.score,lv)};upd();sh.querySelector("#chn").oninput=upd;
     sh.addEventListener("click",e=>{const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
       if(k==="copy")copy(msg());
-      if(k==="new"){sh.remove();playChallenge(qShuffle(ALLQ.map((_,i)=>i)).slice(0,5),null)}});
+      if(k==="code")copy(chCode(ids,r.score,lv));
+      if(k==="new"){sh.remove();playChallenge(chPick(lv),null,lv)}});
   }});
 }
 
@@ -2055,7 +2086,13 @@ function trailAction(el){
     case "toggle":{const [b,c]=v.split("-").map(Number);setRead(b,c,!isRead(b,c));el.setAttribute("aria-pressed",isRead(b,c));QSFX.tap();return true}
     case "markbook":{const b=+v;for(let c=1;c<=BIBLE[b].c;c++)setRead(b,c,true);renderQuest();toast(BIBLE[b].n+" marked as read");return true}
     case "cert":certSheet();return true;
-    case "challenge":playChallenge(qShuffle(ALLQ.map((_,i)=>i)).slice(0,5),null);return true;
+    case "challenge":playChallenge(chPick(QG.chLv||"m"),null,QG.chLv||"m");return true;
+    case "chlv":QG.chLv=v;save();renderQuest();return true;
+    case "chcode":{const c=chParse(document.getElementById("q-code").value);if(!c){toast("That code doesn't look right. Check it and try again.");return true}
+      const sh=openSheet(`<h3>${esc(c.name)} challenged you!</h3><p class="sub" style="font-size:16px">${esc(c.name)} scored <b>${c.score} of 5</b> on ${CH[c.lv].n} level. Can you beat it?</p><button class="btn primary big" data-k="go">Play now</button><button class="btn" data-close>Later</button>`);
+      sh.addEventListener("click",e=>{if(e.target.closest("[data-k=go]")){sh.remove();playChallenge(c.ids,c)}});return true}
+    case "cotdplay":{const d=qDay();const ids=chPick("m",qRng(d*7919+17));
+      qQuiz({title:"Challenge of the day",qs:ids.map(i=>ALLQ[i]),level:"medium",pay:5,timers:CH.m.timers,onDone:r=>{QG.cotdBest=QG.cotdBest||{};const k=today();if((QG.cotdBest[k]??-1)<r.score)QG.cotdBest[k]=r.score;save();if(r.score===5)QSFX.win();renderQuest();toast(`You scored ${r.score} of 5 today`)}});return true}
     case "memopen":memSheet();return true;
     case "convopen":convPlay();return true;
     case "memmake":memMake();return true;
@@ -2204,7 +2241,7 @@ view.addEventListener("click",e=>{
     case "bkload":restore(document.getElementById("bk-in").value);break;
     case "install":installEvt.prompt();installEvt.userChoice.finally(()=>{installEvt=null;renderMore()});break;
     case "update":checkUpdate();break;
-    case "copylink":copy(APK_URL);break;
+    case "copylink":copy(SHORT_APK);break;
   }
 });
 view.addEventListener("input",e=>{const n=e.target.dataset.notes;if(n){const t=talkById(n);if(t){t.notes=e.target.value;save()}}});
@@ -2213,7 +2250,7 @@ function rerender(){({bank:renderBank,fresh:renderFresh,talks:renderTalks,timer:
 function go(t){tab=t;if(t!=="talks"&&t!=="ministry")openTalk="";const hi=t==="timer"||t==="library"?"talks":t;document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===hi?"page":"false"));rerender();window.scrollTo(0,0)}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>go(b.dataset.tab));
 if(questOnly){document.body.classList.add("questonly");document.getElementById("hdr-t").textContent="Scripture Trail";document.getElementById("hdr-s").textContent="Read, play and grow";document.title="Scripture Trail";go("quest");
-  if(qIncoming){const c=qIncoming;const sh=openSheet(`<h3>${esc(c.name)} challenged you!</h3><p class="sub" style="font-size:16px">${esc(c.name)} scored <b>${c.score} of 5</b>. Answer the same 5 Bible questions. Can you beat it?</p><button class="btn primary big" data-k="go">Play now</button><button class="btn" data-close>Later</button>`);
+  if(qIncoming){const c=qIncoming;const sh=openSheet(`<h3>${esc(c.name)} challenged you!</h3><p class="sub" style="font-size:16px">${esc(c.name)} scored <b>${c.score} of 5</b> on ${CH[c.lv].n} level. Answer the same 5 Bible questions. Can you beat it?</p><button class="btn primary big" data-k="go">Play now</button><button class="btn" data-close>Later</button>`);
     sh.addEventListener("click",e=>{if(e.target.closest("[data-k=go]")){sh.remove();playChallenge(c.ids,c)}})}}
 else go("bank");
 </script>
