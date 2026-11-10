@@ -88,7 +88,7 @@ textarea{min-height:90px;resize:vertical}
 .block{background:var(--bg);border-radius:10px;padding:10px 12px;font-size:14.5px;font-family:var(--read)}
 .block b{font-family:var(--ui);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
-nav.tabs .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs .wrap{display:grid;grid-template-columns:repeat(6,1fr)}
 nav.tabs button{border:none;background:none;color:var(--muted);font:600 11.5px var(--ui);padding:10px 2px 9px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
 nav.tabs button svg{width:22px;height:22px}
 nav.tabs button[aria-current="page"]{color:var(--accent)}
@@ -108,26 +108,115 @@ pre.prompt{white-space:pre-wrap;font-size:13px;background:var(--bg);border:1px s
 .clock-sub{text-align:center;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
 details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.spin{animation:none}.toast{transition:none}}
+/* Scripture Trail */
+.rankrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.rank{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:5px 12px;font:800 14px var(--display)}
+.seg4{grid-template-columns:repeat(5,1fr)!important}.seg4 button{font-size:12.5px!important}
+.routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.route{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.route.on{border-color:var(--accent);background:var(--accent-soft)}.route .ri{font-size:26px}.route b{font:800 15px var(--display)}.route small{color:var(--muted);font-size:12.5px}
+.jprog{height:12px;background:var(--line);border-radius:99px;overflow:hidden}.jprog i{display:block;height:100%;background:linear-gradient(90deg,#f2b705,#1d8a5b);border-radius:99px}
+.jwrap{max-width:420px;margin:0 auto;width:100%}.jmap{width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 1px 0 var(--line)}
+.chap{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:8px}.chap>span{flex:1;font-weight:600}
+.chgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;margin:10px 0}
+.chgrid button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 0;font:700 13px var(--ui);cursor:pointer;font-variant-numeric:tabular-nums}
+.chgrid button[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.season{border:none;border-radius:14px;padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:#fff;width:100%}
+.season.mem{background:linear-gradient(135deg,#6b2d5c,#a8456f)}.season.conv{background:linear-gradient(135deg,#1d6b42,#2f8f5b)}
+.season b{font:800 16px var(--display)}.season small{opacity:.9}
+
+body.questonly nav.tabs{display:none}body.questonly{padding-bottom:20px}
+.qbar{display:flex;align-items:center;gap:8px}
+.purse{display:flex;align-items:center;gap:6px;background:var(--mark-soft);color:var(--warn);border-radius:999px;padding:5px 14px 5px 6px;font:800 17px var(--display);font-variant-numeric:tabular-nums}
+.purse.bump{animation:bump .4s}@keyframes bump{40%{transform:scale(1.18)}}
+.coin{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe27a,#f2b705 60%,#c98f00);box-shadow:inset 0 0 0 2px #e0a800;display:inline-block;flex:none}
+.hbtn{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:10px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
+.hbtn[aria-pressed="false"]{opacity:.45}.hbtn svg{width:20px;height:20px}
+.seg4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--card);border:1px solid var(--line);padding:5px;border-radius:14px}
+.seg4 button{border:none;background:none;color:var(--muted);font:700 13.5px var(--ui);padding:9px 2px;border-radius:10px;cursor:pointer}
+.seg4 button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.qdaily{background:linear-gradient(135deg,#1f4fd1,#3b6cf0);color:#fff;border:none}
+.streak{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);border-radius:999px;padding:4px 10px;font:700 13px var(--ui);color:#fff}
+.qstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.qstats div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center;font-size:12.5px;color:var(--muted)}
+.qstats b{display:block;font:800 21px var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lvl{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.lvl b{font:800 15px var(--display)}.lvl small{font-size:11.5px;color:var(--muted);text-align:center}
+.lvl[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.score{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.team{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:12px;padding:6px 10px}
+.team.now{border-color:var(--accent)}.team input{border:none;background:none;padding:4px 0;font:700 14px var(--ui);min-width:0}
+.team b{font:800 20px var(--display);font-variant-numeric:tabular-nums}
+.qgroup{display:flex;flex-direction:column;gap:10px}
+.qgroup h3{margin:0;font:800 17px var(--display)}
+.badge{background:var(--mark-soft);color:var(--warn);border-radius:12px;padding:8px 12px;font:700 14px var(--ui);text-align:center}
+.album{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media(max-width:520px){.album{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.gcard{perspective:900px;aspect-ratio:3/4;border:none;background:none;padding:0;cursor:pointer;max-width:100%;width:100%}
+.gcard .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.gcard.open .in{transform:rotateY(180deg)}
+.gcard:not(.open) .front,.gcard.open .back{opacity:0;transition:opacity 0s .3s}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:8px;text-align:left}
+.back{background:repeating-linear-gradient(45deg,#1f4fd1 0 9px,#2a5ae0 9px 18px);color:#fff;justify-content:center;align-items:center;text-align:center;gap:6px;border:3px solid #fff;box-shadow:0 1px 0 var(--line)}
+.back .lock{width:26px;height:26px}.back small{font:600 10.5px/1.25 var(--ui);background:rgba(0,0,0,.25);border-radius:6px;padding:3px 5px}
+.front{transform:rotateY(180deg);color:#fff;border:3px solid #f2b705}
+.front .big{position:absolute;top:4px;right:8px;font:800 44px var(--display);opacity:.25;line-height:1}
+.front b{font:800 14px/1.15 var(--display)}.front span{font-size:10.5px;opacity:.9}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dots{display:flex;gap:5px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.dots i.ok{background:var(--ok)}.dots i.no{background:var(--bad)}.dots i.now{background:var(--accent)}
+.turn{align-self:flex-start;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:4px 12px;font:800 14px var(--display)}
+.timer{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.timer i{display:block;height:100%;width:100%;background:var(--ok);transition:width .1s linear}.timer i.low{background:var(--bad)}
+.qq{font:700 19px/1.35 var(--display);margin:0}
+.hint{font-size:13.5px;color:var(--muted)}.hint a{color:var(--accent)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font:600 15px var(--ui);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)}.opt.ok{border-color:var(--ok);background:var(--accent-soft)}.opt.no{border-color:var(--bad);background:var(--mark-soft)}.opt.gone{visibility:hidden}
+.lifes{display:flex;gap:6px;flex-wrap:wrap}
+.life{border:1px dashed var(--warn);background:var(--mark-soft);color:var(--warn);border-radius:10px;padding:6px 10px;font:700 12.5px var(--ui);cursor:pointer;display:flex;align-items:center;gap:5px}
+.life.plain{border-style:solid;background:var(--card);color:var(--ink);border-color:var(--line)}.life .coin{width:15px;height:15px}.life:disabled{opacity:.45;cursor:default}
+.fb{border-radius:12px;padding:10px 12px;font-size:14.5px}.fb.ok{background:var(--accent-soft)}.fb.no{background:var(--mark-soft)}.fb a{color:var(--accent)}
+.reveal{display:flex;flex-direction:column;gap:10px;align-items:center}
+.board{position:relative;width:100%;max-width:420px;aspect-ratio:1;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:3px;background:var(--line);border-radius:14px;overflow:hidden;border:3px solid var(--card);box-shadow:0 0 0 1px var(--line)}
+.tile{position:relative;background:var(--card);display:grid;place-items:center;overflow:hidden}
+.tile canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tile .qm{font:800 32px var(--display);color:var(--line)}
+.tile.pop canvas{animation:pop .6s cubic-bezier(.2,1.4,.4,1)}@keyframes pop{from{transform:scale(.3) rotate(-12deg);opacity:0}}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gtile{border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px;font:700 12px var(--ui);padding:6px;text-align:center;cursor:pointer;min-width:0}
+.gtile.active{border-color:var(--accent)}.gtile small{color:var(--muted);font-weight:600}
+.thumb{width:100%;aspect-ratio:1;border-radius:8px;height:auto}
+.price{display:flex;align-items:center;gap:4px;color:var(--warn)}.price .coin{width:14px;height:14px}
+.tl{display:flex;flex-direction:column;gap:8px}
+.ev{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 14px;font:600 15px var(--ui);text-align:left;cursor:pointer;display:flex;gap:10px;align-items:center}
+.ev .n{width:26px;height:26px;border-radius:50%;background:var(--line);display:grid;place-items:center;font:800 13px var(--display);flex:none;color:var(--muted)}
+.ev.set{border-color:var(--accent)}.ev.set .n{background:var(--accent);color:var(--on-accent)}
+.ev.right{border-color:var(--ok)}.ev.right .n{background:var(--ok);color:#fff}.ev.wrong{border-color:var(--bad)}.ev.wrong .n{background:var(--bad);color:#fff}
+.fly{position:fixed;z-index:40;pointer-events:none;font:800 18px var(--display);color:var(--warn);display:flex;align-items:center;gap:4px;animation:fly 1s ease-out forwards}@keyframes fly{to{transform:translateY(-70px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.gcard .in{transition:none}.tile.pop canvas,.purse.bump,.fly{animation:none}}
 </style>
 
-<header><div class="wrap">
+<header><div class="wrap" id="hdr">
   <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1f4fd1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg></div>
-  <div><h1>Talk Illustrations</h1><p>Make the point stick</p></div>
+  <div><h1 id="hdr-t">Talk Illustrations</h1><p id="hdr-s">Make the point stick</p></div>
 </div></header>
 
 <main><div class="wrap" id="view"></div></main>
 
 <nav class="tabs" aria-label="Sections"><div class="wrap">
   <button data-tab="bank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h6v14H4zM14 5h6v14h-6z"/></svg>Bank</button>
-  <button data-tab="fresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Fresh ideas</button>
+  <button data-tab="fresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Fresh</button>
   <button data-tab="talks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg>My talks</button>
   <button data-tab="ministry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM19 17H6"/><path d="M11.5 6.5v6M9 9h5"/></svg>Ministry</button>
+  <button data-tab="quest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="4"/><path d="M8 11v4M6 13h4"/><circle cx="15.5" cy="12" r="1"/><circle cx="17.5" cy="14.5" r="1"/></svg>Trail</button>
   <button data-tab="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</button>
 </div></nav>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const VERSION="4.1";
+const VERSION="5.1";
+const questOnly=/^#(quest|trail|ch-)/.test(location.hash);
 const APK_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest/download/talk-illustrations.apk";
 const RELEASES_URL="https://github.com/gapsonsusu-glitch/talk-illustrations/releases/latest";
 const isNative=()=>!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
@@ -454,7 +543,7 @@ function talkStatus(t){
 function renderTalks(){
   const pl=places();
   view.innerHTML=`<h2>My talks</h2>
-  <div class="row" style="justify-content:space-between"><p class="sub" style="flex:1;min-width:200px">Plan each assignment, pick illustrations, and get help with the introduction and conclusion.</p><button class="btn" data-a="opentimer">⏱ Practise timer</button></div>
+  <div class="row" style="justify-content:space-between"><p class="sub" style="flex:1;min-width:200px">Plan each assignment, pick illustrations, and get help with the introduction and conclusion.</p><div class="row"><button class="btn" data-a="opentimer">⏱ Practise timer</button><button class="btn" data-a="charstudy">👤 Bible character</button><button class="btn" data-a="openlib">📚 Insight library${S.lib.length?" ("+S.lib.length+")":""}</button></div></div>
   <details class="panel" ${S.talks.length?"":"open"}><summary>Add a talk</summary>
     <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
     <label>Talk title<input id="t-title" placeholder="e.g. Imitate Jehovah's patience"></label>
@@ -487,7 +576,7 @@ function talkCard(t){
     <div class="row">
       <button class="btn" data-a="findill" data-id="${t.id}">Find illustrations</button>
       <button class="btn" data-a="introconcl" data-id="${t.id}">Intro & conclusion</button>
-      <button class="btn" data-a="insight" data-id="${t.id}">Word insight</button>
+      <button class="btn" data-a="insight" data-id="${t.id}">Scripture insight</button>
       <button class="btn" data-a="practise" data-id="${t.id}">Practise</button>
     </div>
     <div class="row">
@@ -586,7 +675,7 @@ function renderMore(){
     <button class="btn primary" data-a="addmine">Save to my bank</button>
   </div>
   <h2>Backup</h2>
-  <p class="sub">Your talks, own illustrations, Twi versions, kept openers, saved plans and “used” records stay on this phone only. Save a backup file and keep it on WhatsApp or Google Drive. If you delete the app or change phones, restore it here. Last backup: <b>${lb}</b>.</p>
+  <p class="sub">Your talks, own illustrations, Twi versions, kept openers, saved plans, Insight library, game progress and “used” records stay on this phone only. Save a backup file and keep it on WhatsApp or Google Drive. If you delete the app or change phones, restore it here. Last backup: <b>${lb}</b>.</p>
   <div class="panel">
     <div class="row"><button class="btn primary" data-a="bkfile">Save backup file</button><button class="btn" data-a="bkshare">Send backup to WhatsApp / Drive</button></div>
     <label>Restore from a backup file<input id="bk-file" type="file" accept=".json,application/json,text/plain"></label>
@@ -606,6 +695,8 @@ function renderMore(){
     <p class="sub" style="margin:0">Anyone with the link can install it. Each person's talks stay private on their own phone.</p>
     <div class="row"><a class="btn wa" href="${wa(shareMsg)}" target="_blank" rel="noopener">Send to Android</a><a class="btn wa" href="${wa(iosMsg)}" target="_blank" rel="noopener">Send to iPhone</a><button class="btn" data-a="copylink">Copy link</button></div>
     <div class="scr" style="word-break:break-all">APK: ${esc(APK_URL)}</div>
+    <h4>Share only Scripture Trail</h4>
+    <div class="row"><a class="btn wa" href="${wa(questShareMsg())}" target="_blank" rel="noopener">Send Scripture Trail</a></div>
   </div>`;
   document.getElementById("bk-file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>restore(r.result);r.readAsText(f)};
 }
@@ -640,6 +731,8 @@ function restore(text){
     S.fav=[...new Set([...S.fav,...(d.fav||[])])];
     d.talks.forEach((t,i)=>{t.id=t.id||("t"+Date.now()+i);const j=S.talks.findIndex(x=>x.id===t.id);if(j<0)S.talks.push(t);else S.talks[j]=t});
     Object.entries(d.used||{}).forEach(([id,arr])=>{const cur=S.used[id]||[];arr.forEach(u=>{if(!cur.some(c=>c.d===u.d&&c.w===u.w))cur.push(u)});S.used[id]=cur});
+    (d.lib||[]).forEach(x=>{if(!S.lib.some(y=>y.id===x.id))S.lib.push(x)});
+    if(d.quest&&Object.keys(d.quest.cards||{}).length>=Object.keys(S.quest.cards||{}).length)Object.assign(S.quest,d.quest);
     (d.kept||[]).forEach(k=>{S.kept=S.kept||[];if(!S.kept.some(x=>x.r===k.r&&x.open===k.open))S.kept.push(k)});
     (d.plans||[]).forEach(p=>{S.plans=S.plans||[];if(!S.plans.some(x=>x.id===p.id))S.plans.push(p)});
     Object.entries(d.extra||{}).forEach(([id,x])=>S.extra[id]={...x,...(S.extra[id]||{})});
@@ -770,7 +863,7 @@ function adageCard(a){
   </article>`;
 }
 function renderMinistry(){
-  const seg=[["today","Today"],["someone","I see someone"],["kept","Kept"+((S.kept||[]).length?" ("+S.kept.length+")":"")],["meeting","Service meeting"],["family","Family worship"]];
+  const seg=[["today","Today"],["someone","I see someone"],["kept","Kept"+((S.kept||[]).length?" ("+S.kept.length+")":"")],["chars","Characters"],["meeting","Service meeting"],["family","Family worship"]];
   let body="";
   if(mtab==="today"){
     body=`<p class="sub">${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})} · three scriptures we rarely use, each with a fresh angle. They change every day.</p>
@@ -785,6 +878,10 @@ function renderMinistry(){
       <button class="btn primary big" data-a="msgo">Give me openers</button>
     </div>
     <div class="list" id="ms-out">${FS.someone.map((x,i)=>fsCard(x,"someone",i)).join("")}</div>`;
+  }else if(mtab==="chars"){
+    body=`<p class="sub">A lesser-known Bible character each day, and a study of any character for the ministry.</p>${cotdCard()}
+    <button class="btn primary big" data-a="charstudy">Study a Bible character</button>
+    <p class="sub" style="font-size:13px">You get questions people may ask, with where to continue in Enjoy Life Forever! or on jw.org. Saved studies go to your Insight library.</p>`;
   }else if(mtab==="kept"){
     body=(S.kept||[]).length?`<p class="sub">Openers you kept. They work without internet.</p><div class="list">${S.kept.map((x,i)=>fsCard(x,"kept",i)).join("")}</div>`:`<div class="empty">No kept openers yet. Tap “Keep” on any scripture or opener you like.</div>`;
   }else if(mtab==="meeting"){
@@ -841,9 +938,9 @@ function resList(o,pickable,kind){
 const resText=o=>{const rs=(o.resources||[]).filter((r,i)=>!o.picked||o.picked.includes(i));return rs.length?"\n\nArticles and videos:\n"+rs.map(r=>`• ${r.title}${r.why?" — "+r.why:""}\n  ${jwSearch(r.search||r.title)}`).join("\n"):""};
 function briefInner(o,pickable,kind){
   const L=(l,a)=>a&&a.length?`<div class="block" style="font-family:var(--ui)"><b>${l}</b><ul class="steps" style="padding-left:18px">${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
-  return L("Summary",o.summary)+L("Outline",o.outline)+((o.scriptures||[]).length?`<div class="scr">📖 ${o.scriptures.map(r=>`<a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a>`).join(" · ")}</div>`:"")+resList(o,pickable,kind);
+  return (o.use?`<div class="block" style="font-family:var(--ui)"><b>Publication to use</b>${esc(o.use)}</div>`:"")+L("Summary",o.summary)+L("Outline",o.outline)+((o.scriptures||[]).length?`<div class="scr">📖 ${o.scriptures.map(r=>`<a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a>`).join(" · ")}</div>`:"")+resList(o,pickable,kind);
 }
-function briefText(o,head){return `*${head}*\n\n${(o.summary||[]).map(x=>"• "+x).join("\n")}${(o.outline||[]).length?"\n\nOutline:\n"+o.outline.map((x,i)=>(i+1)+". "+x).join("\n"):""}${(o.scriptures||[]).length?"\n\nScriptures: "+o.scriptures.join("; "):""}${resText(o)}`}
+function briefText(o,head){return `*${head}*\n${o.use?"Publication: "+o.use+"\n":""}\n${(o.summary||[]).map(x=>"• "+x).join("\n")}${(o.outline||[]).length?"\n\nOutline:\n"+o.outline.map((x,i)=>(i+1)+". "+x).join("\n"):""}${(o.scriptures||[]).length?"\n\nScriptures: "+o.scriptures.join("; "):""}${resText(o)}`}
 function planInner(kind,o,pickable){
   if(o.summary)return briefInner(o,pickable,kind);
   const B=(l,v)=>v?`<div class="block"><b>${l}</b>${esc(v)}</div>`:"";
@@ -915,7 +1012,8 @@ async function mtGo(){
 Topic: ${MS.topic||"see the lesson"}
 ${MS.sec?"Lesson from the brochure Love People—Make Disciples: "+MS.sec+"\n":""}${MS.other?"Other publications he wants to use: "+MS.other+"\n":""}${FS.meetingText?`Lesson material:\n"""\n${FS.meetingText.slice(0,9000)}\n"""\n`:""}Today's ministry: ${MS.focus}
 Draw on publications and tools of Jehovah's Witnesses (Love People—Make Disciples, Enjoy Life Forever!, The Watchtower, Awake!, jw.org articles and videos). Keep everything in line with their teachings.
-${BRIEF_SHAPE("title")}`;
+${BRIEF_SHAPE("title")}
+Also add "use": the main publication to use and exactly where (lesson, chapter or article). Make sure the resources include at least one video to play and one article to read to the group.`;
   try{FS.meeting=await aiRun(prompt,true,"Finding notes and references…");renderMinistry();document.getElementById("mt-out")?.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){aiError(e)}
 }
 async function fwGo(){
@@ -955,25 +1053,27 @@ function insightHtml(o){
   const r=o.root||{};
   return `${r.word?`<div class="block"><b>Original ${esc(r.lang||"language")}</b><span style="font-size:17px">${esc(r.word)}</span>${r.translit?` <i>(${esc(r.translit)})</i>`:""}<br>Literally: “${esc(r.meaning||"")}”<br>${esc(r.insight||"")}</div>`:""}
   ${(o.langs||[]).map(l=>`<div class="block"><b>${esc(l.lang)}</b><div class="row" style="justify-content:space-between"><span>“${esc(l.says)}”</span>${surePill(l.sure)}</div>Literally: “${esc(l.literal||"")}”<br>${esc(l.insight||"")}</div>`).join("")}
+  ${(o.background||[]).length?`<div class="block" style="font-family:var(--ui)"><b>Background: customs and history</b><ul class="steps" style="padding-left:18px">${o.background.map(b=>`<li>${esc(b)}</li>`).join("")}</ul></div>`:""}
+  ${(o.quotes||[]).length?`<div class="block" style="font-family:var(--ui)"><b>Where to find what scholars said</b><ul class="steps" style="padding-left:18px">${o.quotes.map(q=>`<li><a href="${wolSearch(q.search||q.pub)}" target="_blank" rel="noopener">${esc(q.pub)}</a>${q.what?" — "+esc(q.what):""}</li>`).join("")}</ul></div>`:""}
   ${o.ghana?`<div class="block"><b>Ghana picture</b>${esc(o.ghana)}</div>`:""}
   ${o.use?`<div class="point"><b>Use it:</b> ${esc(o.use)}</div>`:""}`;
 }
-const insightText=(v,k,o)=>{const r=o.root||{};return `*Word insight: ${v}${k?" — “"+k+"”":""}*\n${r.word?`${r.lang}: ${r.word}${r.translit?" ("+r.translit+")":""} = “${r.meaning}”. ${r.insight}\n`:""}${(o.langs||[]).map(l=>`${l.lang}: “${l.says}” = “${l.literal}”. ${l.insight}`).join("\n")}${o.ghana?"\nGhana picture: "+o.ghana:""}${o.use?"\nUse it: "+o.use:""}`};
+const insightText=(v,k,o)=>{const r=o.root||{};return `*Word insight: ${v}${k?" — “"+k+"”":""}*\n${r.word?`${r.lang}: ${r.word}${r.translit?" ("+r.translit+")":""} = “${r.meaning}”. ${r.insight}\n`:""}${(o.langs||[]).map(l=>`${l.lang}: “${l.says}” = “${l.literal}”. ${l.insight}`).join("\n")}${(o.background||[]).length?"\nBackground:\n"+o.background.map(b=>"• "+b).join("\n"):""}${(o.quotes||[]).length?"\nScholar quotes: "+o.quotes.map(q=>q.pub).join("; "):""}${o.ghana?"\nGhana picture: "+o.ghana:""}${o.use?"\nUse it: "+o.use:""}`};
 function insightSheet(verse,key,talk){
   let last=null;
-  const sh=openSheet(`<h3>Word insight</h3>
-    <p class="sub">Get the Hebrew or Greek meaning of a key word, and how other languages put it.</p>
+  const sh=openSheet(`<h3>Scripture insight</h3>
+    <p class="sub">The key word's original meaning, how other languages put it, background customs and history, and where to find what scholars said.</p>
     <div class="two"><label>Verse<input id="wi-v" value="${esc(verse||"")}" placeholder="e.g. Proverbs 17:17"></label>
     <label>Key word (optional)<input id="wi-k" value="${esc(key||"")}" placeholder="e.g. friend"></label></div>
     <button class="btn primary" data-k="go">Get word insight</button>
     <div id="wi-out"></div>
-    <div class="row" id="wi-acts" hidden>${talk?`<button class="btn primary" data-k="save">Save to this talk</button>`:""}<button class="btn" data-k="copy">Copy</button><button class="btn" data-close>Close</button></div>
+    <div class="row" id="wi-acts" hidden><button class="btn primary" data-k="save">${talk?"Save to this talk":"Save to Insight library"}</button><button class="btn" data-k="copy">Copy</button><button class="btn" data-close>Close</button></div>
     <p class="sub" style="font-size:13px">Check other languages in JW Library, where the New World Translation is available in many languages. Don't use anything marked “Check first” until you have checked it.</p>`);
   sh.addEventListener("click",async e=>{
     const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
     const v=sh.querySelector("#wi-v").value.trim(),kw=sh.querySelector("#wi-k").value.trim();
     if(k==="copy"&&last){copy(insightText(v,kw,last));return}
-    if(k==="save"&&last){talk.insights=talk.insights||[];talk.insights.push({v,k:kw,o:last});save();sh.remove();rerender();toast("Saved to the talk");return}
+    if(k==="save"&&last){libAdd({kind:"word",title:v+(kw?" — “"+kw+"”":""),book:bookOf(v),v,k:kw,o:last});if(talk){talk.insights=talk.insights||[];talk.insights.push({v,k:kw,o:last})}save();sh.remove();rerender();toast(talk?"Saved to the talk and your Insight library":"Saved to your Insight library");return}
     if(k==="go"){
       if(!v){toast("Type the verse first");return}
       const prompt=`You help a Jehovah's Witness speaker in Ghana bring out the depth of a Bible verse.
@@ -982,20 +1082,1089 @@ Key word: ${kw||"choose the single most meaningful word in the verse"}
 
 1. Give the key word in the original Hebrew, Aramaic or Greek: the word, its transliteration, its literal meaning, and the insight it gives. Keep in line with the understanding of Jehovah's Witnesses (as in the New World Translation study notes) where it applies.
 2. Pick 2 to 4 languages (any language in the world, including less common ones) whose Bible translation puts this word in a striking or illuminating way. For each give how it is rendered, its literal English meaning, the insight, and how sure you are: "high", "medium" or "low". Only include renderings you actually know. Never invent one; if unsure, mark it "low".
-3. Give one quick everyday Ghana picture that makes the point land.
-4. One sentence on how to use this in a talk or at the door.
+3. Give 2 or 3 short background points: customs, history or what the setting was like then, that help the verse come alive.
+4. Name 2 or 3 publications of Jehovah's Witnesses where the speaker can likely find what scholars or historians said on this verse (for example the Insight on the Scriptures volumes, The Watchtower or Awake!), with search words. Do not invent quotations.
+5. Give one quick everyday Ghana picture that makes the point land.
+6. One sentence on how to use this in a talk or at the door.
 
 Return ONLY JSON, no other text:
-{"root":{"lang":"Hebrew or Greek","word":"","translit":"","meaning":"","insight":""},"langs":[{"lang":"","says":"","literal":"","insight":"","sure":"high|medium|low"}],"ghana":"","use":""}`;
+{"root":{"lang":"Hebrew or Greek","word":"","translit":"","meaning":"","insight":""},"langs":[{"lang":"","says":"","literal":"","insight":"","sure":"high|medium|low"}],"background":[""],"quotes":[{"pub":"","what":"what to look for","search":""}],"ghana":"","use":""}`;
       try{last=await aiRun(prompt,true,"Digging into the word…");sh.querySelector("#wi-out").innerHTML=insightHtml(last);sh.querySelector("#wi-acts").hidden=false}catch(err){aiError(err)}
     }
   });
+}
+
+/* ---------- Bible Quest: data ---------- */
+/* Each question: question|right answer|wrong|wrong|wrong|scripture. First 3 are easier, last 2 harder. */
+const QGROUPS=[
+ {n:"Beginnings",c:["#2f8f5b","#1d6b42"]},{n:"Out of Egypt",c:["#2b6cb0","#1e4e86"]},{n:"Judges and Ruth",c:["#b7791f","#8a5a12"]},
+ {n:"Kings",c:["#805ad5","#5b3aa6"]},{n:"Prophets",c:["#c05621","#933d12"]},{n:"Exile and Return",c:["#2c7a7b","#1d5455"]},
+ {n:"Jesus' day",c:["#d53f8c","#a52a6a"]},{n:"Early Christians",c:["#4a5568","#2d3748"]}];
+const QRAW=[
+["adam","Adam",0,"Genesis 2","Genesis 2:7-17","Jehovah formed Adam from the dust and placed him in Eden with meaningful work and one clear command.","Jehovah's guidance is for our good. Obeying shows we trust him.",
+`What did Jehovah form Adam from?|Dust of the ground|Clay from a river|A rock|A tree|Genesis 2:7
+What was the garden called?|Eden|Gilead|Goshen|Sharon|Genesis 2:8
+Which tree was Adam told not to eat from?|The tree of the knowledge of good and bad|The tree of life|The fig tree|The olive tree|Genesis 2:17
+What job did Jehovah give Adam with the animals?|He named them|He counted them|He fed them all|He built their homes|Genesis 2:19, 20
+How old was Adam when he died?|930|969|950|777|Genesis 5:5`],
+["eve","Eve",0,"Genesis 3","Genesis 3:1-6, 20","Eve listened to the serpent instead of to Jehovah, and sin entered the world. Yet Jehovah at once promised a way to undo the damage.","Listen to Jehovah first. Satan makes disobedience look attractive.",
+`Who really spoke to Eve through the serpent?|Satan|Michael|Adam|An angel of Jehovah|Revelation 12:9
+What did the serpent say would happen if she ate?|She would be like God, knowing good and bad|She would become an angel|She would rule the animals|She would live in heaven|Genesis 3:5
+Who was Eve's first son?|Cain|Abel|Seth|Enoch|Genesis 4:1
+Why did Adam call his wife Eve?|She would be the mother of everyone living|She was beautiful|She came from his rib|She was the first to sin|Genesis 3:20
+What did Jehovah make for Adam and Eve to wear?|Long garments of skin|Fig-leaf coverings|Linen robes|Wool cloaks|Genesis 3:21`],
+["abel","Abel",0,"Genesis 4","Genesis 4:2-10; Hebrews 11:4","Abel offered his best to Jehovah with faith. His jealous brother Cain killed him, but Abel's faith still speaks to us.","Jehovah notices worship that comes from real faith.",
+`What was Abel's work?|Shepherd|Farmer|Builder|Hunter|Genesis 4:2
+Who killed Abel?|Cain|Lamech|Seth|Esau|Genesis 4:8
+What did Abel offer to Jehovah?|Some firstlings of his flock|Fruit of the ground|Grain|Gold|Genesis 4:4
+Which Bible book says Abel offered his sacrifice by faith?|Hebrews|Romans|James|Jude|Hebrews 11:4
+Which son did Eve say was given “in place of Abel”?|Seth|Enosh|Enoch|Noah|Genesis 4:25`],
+["enoch","Enoch",0,"Genesis 5:18-24","Genesis 5:21-24; Jude 14, 15","In a world turning away from God, Enoch walked with the true God and boldly warned of Jehovah's judgment.","We can walk with Jehovah even when almost no one else does.",
+`Enoch walked with whom?|The true God|Noah|Adam|The angels|Genesis 5:24
+How many years did Enoch live?|365|969|120|500|Genesis 5:23
+Enoch's son lived longer than any other human. Who was he?|Methuselah|Lamech|Noah|Jared|Genesis 5:21, 27
+What did Enoch prophesy about?|Jehovah coming to judge the ungodly|The Flood's exact date|The birth of Jesus|The fall of Babylon|Jude 14, 15
+Enoch was in which generation from Adam?|The seventh|The third|The tenth|The fifth|Jude 14`],
+["noah","Noah",0,"Genesis 6 and 7","Genesis 6:9–7:16","In a violent world Noah walked with God, built the ark exactly as told and preached for years. Only his family of eight survived the Flood.","Doing what Jehovah says, even when others laugh, protects us and our family.",
+`How many sons did Noah have?|3|2|5|12|Genesis 6:10
+How long did it rain?|40 days and 40 nights|7 days|1 year|100 days|Genesis 7:12
+Which bird came back with an olive leaf?|A dove|A raven|An eagle|A sparrow|Genesis 8:11
+Where did the ark come to rest?|The mountains of Ararat|Mount Sinai|Mount Carmel|Mount Zion|Genesis 8:4
+The Bible calls Noah a preacher of what?|Righteousness|Repentance|Peace|The Law|2 Peter 2:5`],
+["abraham","Abraham",0,"Genesis 12 and 22","Genesis 12:1-4; 22:1-18","Abraham left his home when Jehovah called and later showed great faith with his son Isaac. Jehovah provided a ram instead.","Faith means trusting Jehovah's promises even when we can't see how things will work out.",
+`What did Jehovah tell Abram to do?|Leave his country|Build an ark|Build a temple|Go to Egypt|Genesis 12:1
+What was the name of Abraham's promised son?|Isaac|Ishmael|Jacob|Lot|Genesis 21:3
+What did Jehovah provide instead of Isaac?|A ram|A lamb|A goat|A dove|Genesis 22:13
+How old was Abram when he left Haran?|75|100|50|90|Genesis 12:4
+What special name does the Bible give Abraham?|Jehovah's friend|The faithful judge|The man of God|The great king|James 2:23`],
+["sarah","Sarah",0,"Genesis 18 and 21","Genesis 18:9-14; 21:1-3","Sarah left a comfortable life to live in tents. At 90 she gave birth to Isaac, just as Jehovah promised.","Nothing is too extraordinary for Jehovah.",
+`Who was Sarah's son?|Isaac|Ishmael|Jacob|Esau|Genesis 21:2, 3
+Why did Sarah laugh?|She thought she was too old to have a child|She heard a joke|Abraham fell|The angels sang|Genesis 18:12
+What was Sarah's name before Jehovah changed it?|Sarai|Sara|Milcah|Hagar|Genesis 17:15
+How old was Sarah when Isaac was born?|90|60|75|120|Genesis 17:17
+Peter holds Sarah up as an example of what?|Deep respect for her husband|Building skills|Prophecy|Wealth|1 Peter 3:6`],
+["isaac","Isaac",0,"Genesis 24","Genesis 24:62-67; 26:1-6","Isaac was the son of promise. He was a peaceful man who meditated, loved his wife Rebekah and passed on the promise to Jacob.","A quiet, peaceful spirit is strength, not weakness.",
+`Who was Isaac's father?|Abraham|Jacob|Lot|Terah|Genesis 21:3
+Who did Isaac marry?|Rebekah|Rachel|Leah|Sarah|Genesis 24:67
+What were the names of Isaac's twin sons?|Esau and Jacob|Cain and Abel|Ephraim and Manasseh|Perez and Zerah|Genesis 25:24-26
+How old was Isaac when he married?|40|25|60|30|Genesis 25:20
+What was Isaac doing in the field when Rebekah arrived?|Meditating|Plowing|Hunting|Building|Genesis 24:63`],
+["rebekah","Rebekah",0,"Genesis 24","Genesis 24:15-20, 58","Rebekah kindly watered a stranger's camels, a hard job, and then bravely chose to leave home to marry Isaac.","Hard-working kindness to strangers can change your life.",
+`What did Rebekah give the servant's camels?|Water|Grain|Bread|Figs|Genesis 24:19
+Who sent his servant to find a wife for Isaac?|Abraham|Isaac|Laban|Nahor|Genesis 24:2-4
+Who was Rebekah's brother?|Laban|Lot|Esau|Nahor|Genesis 24:29
+Which son did Rebekah love more?|Jacob|Esau|Joseph|Benjamin|Genesis 25:28
+What did Jehovah tell Rebekah about her twins?|The older would serve the younger|Both would be kings|Both would be priests|They would live in Egypt|Genesis 25:23`],
+["jacob","Jacob",0,"Genesis 28 and 32","Genesis 28:10-15; 32:24-28","Jacob valued Jehovah's promise. He wrestled all night with an angel for a blessing and received the name Israel.","Spiritual blessings are worth working hard for.",
+`What did Jacob see in his dream at Bethel?|A stairway to heaven with angels|A burning bush|Seven cows|A great statue|Genesis 28:12
+What new name did Jacob receive?|Israel|Abraham|Judah|Peniel|Genesis 32:28
+How many sons did Jacob have?|12|10|7|13|Genesis 35:22
+Who did Jacob wrestle with all night?|An angel|Esau|Laban|A lion|Hosea 12:4
+How many years in total did Jacob work for Rachel and Leah?|14|7|20|3|Genesis 29:27, 30`],
+["joseph","Joseph",0,"Genesis 37 and 41","Genesis 37; 39–41","Sold as a slave by jealous brothers, Joseph stayed loyal to Jehovah even in prison. Later he became a ruler who saved many lives.","Jehovah never forgets those who stay loyal, even when life is unfair.",
+`Why were Joseph's brothers jealous?|Their father loved him most|He was the oldest|He was rich|He was a king|Genesis 37:3, 4
+Where was Joseph taken as a slave?|Egypt|Babylon|Canaan|Assyria|Genesis 37:28
+What did Pharaoh dream about?|Seven fat cows and seven thin cows|Twelve stars|A great statue|A burning bush|Genesis 41:1-4
+For how many pieces of silver was Joseph sold?|20|30|10|50|Genesis 37:28
+What did Joseph say when Potiphar's wife tempted him?|How could I sin against God?|I will tell your husband|Leave me alone|Not today|Genesis 39:9`],
+["moses","Moses",1,"Exodus 2 and 3","Exodus 2:1-10; 3:1-15","Saved as a baby in a basket, Moses grew up in Pharaoh's house but chose to side with God's people. Jehovah used him to lead Israel out of Egypt.","Meekness and faith make a person useful to Jehovah.",
+`Where was baby Moses hidden?|In a basket among the reeds of the Nile|In a cave|In a tent|In the temple|Exodus 2:3
+Who found baby Moses?|Pharaoh's daughter|Miriam|His mother|A shepherd|Exodus 2:5
+What did Moses see burning without burning up?|A thornbush|A tree|A tent|An altar|Exodus 3:2
+Why could Moses not enter the Promised Land?|He did not sanctify Jehovah at Meribah|He was too old|He worshipped a calf|He lost his way|Numbers 20:12
+How old was Moses when he died?|120|80|100|140|Deuteronomy 34:7`],
+["aaron","Aaron",1,"Exodus 4 and 28","Exodus 4:14-16; 28:1","Aaron spoke for Moses before Pharaoh and became Israel's first high priest. He made mistakes but humbly accepted correction.","Humbly accepting correction keeps us in Jehovah's service.",
+`How was Aaron related to Moses?|Older brother|Father|Cousin|Servant|Exodus 7:7
+What role did Jehovah give Aaron?|High priest|King|Judge|Army chief|Exodus 28:1
+What idol did Aaron make while Moses was on the mountain?|A golden calf|A bronze serpent|A stone pillar|A silver bull|Exodus 32:4
+Whose rod budded, blossomed and bore almonds?|Aaron's|Moses'|Joshua's|Korah's|Numbers 17:8
+Which son became high priest after Aaron?|Eleazar|Nadab|Abihu|Phinehas|Numbers 20:28`],
+["miriam","Miriam",1,"Exodus 15","Exodus 15:20, 21; Numbers 12","Miriam watched over baby Moses and later led the women in praising Jehovah after the Red Sea. When she grew proud, Jehovah disciplined her.","Use your gifts to praise Jehovah, and stay humble.",
+`Miriam was the sister of whom?|Moses and Aaron|Joseph|Joshua|David|Numbers 26:59
+What did Miriam do after Israel crossed the Red Sea?|Led the women in song with tambourines|Built an altar|Wrote a book|Went back to Egypt|Exodus 15:20, 21
+What is Miriam called in Exodus 15:20?|A prophetess|A queen|A judge|A priestess|Exodus 15:20
+What happened when Miriam spoke against Moses?|She was struck with leprosy|She went blind|She lost her voice|Nothing|Numbers 12:10
+For how many days was Miriam kept outside the camp?|7|3|40|30|Numbers 12:15`],
+["joshua","Joshua",1,"Joshua 1 and 6","Joshua 1:7-9; 6:1-20; 24:15","Joshua led Israel into the Promised Land. He read God's Law, obeyed it and saw Jericho's walls fall.","Reading God's Word and doing it brings real success.",
+`Joshua led Israel after whom?|Moses|Aaron|Caleb|Samuel|Joshua 1:1, 2
+Which city's walls fell down?|Jericho|Ai|Jerusalem|Hebron|Joshua 6:20
+What did Joshua say about him and his household?|We will serve Jehovah|We will go back to Egypt|We will build a temple|We will fight forever|Joshua 24:15
+How many times did Israel march around Jericho on the seventh day?|7|1|3|12|Joshua 6:15
+What did Jehovah make stand still when Joshua fought?|The sun and the moon|The Jordan River|The wind|The enemy's army|Joshua 10:13`],
+["caleb","Caleb",1,"Numbers 13 and 14","Numbers 13:30; 14:6-9, 24; Joshua 14:10-12","When ten spies spread fear, Caleb said Israel could take the land. At 85 he was still strong and asked for a hard mountain region.","Faith sees Jehovah's power, not just the size of the problem.",
+`Caleb was one of how many spies?|12|2|7|40|Numbers 13:2
+What did Caleb say about taking the land?|We can surely conquer it|It's impossible|Let's go back to Egypt|Let's wait|Numbers 13:30
+Which other spy gave a good report with Caleb?|Joshua|Aaron|Korah|Eleazar|Numbers 14:6
+How did Jehovah say Caleb followed him?|Wholeheartedly|Sometimes|Secretly|With fear|Numbers 14:24
+How old was Caleb when he asked for Hebron?|85|40|70|120|Joshua 14:10`],
+["rahab","Rahab",2,"Joshua 2","Joshua 2:1-21; Hebrews 11:31","Rahab of Jericho hid Israel's spies because she believed in Jehovah. She and her family were saved when the city fell.","Faith is shown by what we do.",
+`Where did Rahab hide the spies?|On her roof under stalks of flax|In a cave|In a well|Under her bed|Joshua 2:6
+What did Rahab tie in her window?|A scarlet cord|A white cloth|A lamp|A palm branch|Joshua 2:18, 21
+Which city did Rahab live in?|Jericho|Ai|Gibeon|Bethel|Joshua 2:1
+Rahab became an ancestor of whom?|King David and Jesus|King Saul|Moses|Elijah|Matthew 1:5, 6
+Which Bible writer says Rahab was declared righteous by works?|James|Paul in Romans|Peter|John|James 2:25`],
+["deborah","Deborah",2,"Judges 4 and 5","Judges 4:4-9; 5:1-7","Deborah, a prophetess, encouraged Barak to fight Sisera's army. Jehovah gave the victory and they sang about it.","Courage spreads. Encourage others to trust Jehovah.",
+`Deborah was a prophetess and also a what?|Judge|Queen|Priestess|Soldier|Judges 4:4
+Which army commander did Deborah call?|Barak|Gideon|Sisera|Joshua|Judges 4:6
+Who killed the enemy commander Sisera?|Jael|Deborah|Barak|Gideon|Judges 4:21
+Where did Deborah sit to judge Israel?|Under a palm tree|In the temple|At the city gate|In a tent|Judges 4:5
+What did Deborah and Barak do after the victory?|Sang a song to Jehovah|Built a city|Went to Egypt|Made a calf|Judges 5:1`],
+["gideon","Gideon",2,"Judges 6 and 7","Judges 6:11-16; 7:2-22","Gideon felt he was the least in his family, but Jehovah used him with just 300 men to defeat the Midianites.","Jehovah's power, not our numbers, brings victory.",
+`Who visited Gideon while he was threshing wheat?|Jehovah's angel|Deborah|A prophet|Samuel|Judges 6:11, 12
+How many men did Gideon finally fight with?|300|32,000|10,000|3,000|Judges 7:7
+What did Gideon's men carry?|Horns and jars with torches|Swords and shields|Spears|Slings|Judges 7:16
+What did Gideon put on the threshing floor as a test?|A fleece of wool|A stone|A loaf|A sword|Judges 6:37
+Which enemy did Gideon defeat?|The Midianites|The Philistines|The Egyptians|The Babylonians|Judges 7:15`],
+["samson","Samson",2,"Judges 13 and 16","Judges 13:5; 16:4-30","Samson was a Nazirite with great strength from Jehovah. Bad company with Delilah cost him dearly, but he called on Jehovah at the end.","Bad company can rob us of our blessings.",
+`What was the secret of Samson's strength?|His Nazirite vow, shown by his uncut hair|Special food|Magic|His sword|Judges 16:17
+What animal did Samson kill with his bare hands?|A lion|A bear|A wolf|A bull|Judges 14:6
+Who tricked Samson?|Delilah|Jezebel|Ruth|Abigail|Judges 16:4-19
+With what did Samson strike down a thousand men?|The jawbone of a donkey|A club|His fists|A sword|Judges 15:15
+Whose temple did Samson bring down?|Dagon's|Baal's|Molech's|Chemosh's|Judges 16:23, 30`],
+["ruth","Ruth",2,"Ruth 1 and 2","Ruth 1:16, 17; 2:1-12","Ruth, a Moabite widow, stayed loyal to Naomi and chose Jehovah. She worked hard in Boaz's field and became an ancestor of King David.","Loyal love is precious to Jehovah.",
+`Who was Ruth's mother-in-law?|Naomi|Sarah|Hannah|Miriam|Ruth 1:4, 14
+In whose field did Ruth gather grain?|Boaz's|Saul's|David's|Jesse's|Ruth 2:3
+Ruth became an ancestor of which king?|King David|King Saul|King Solomon|King Hezekiah|Ruth 4:17
+Which land was Ruth from?|Moab|Edom|Egypt|Philistia|Ruth 1:4
+Under whose wings did Boaz say Ruth had come for refuge?|Jehovah's|Naomi's|Boaz's|Israel's|Ruth 2:12`],
+["hannah","Hannah",3,"1 Samuel 1","1 Samuel 1:9-20; 2:1, 19","Hannah poured out her heart to Jehovah in prayer for a son. She gave Samuel to serve at the tabernacle and kept loving him from afar.","Pour out your heart to Jehovah, then leave it with him.",
+`What did Hannah pray for?|A son|Rain|Riches|A husband|1 Samuel 1:11
+What was Hannah's son's name?|Samuel|Saul|David|Eli|1 Samuel 1:20
+What did Hannah promise?|To give her son to Jehovah for life|To build an altar|To go to Egypt|To give gold|1 Samuel 1:11
+Which priest thought Hannah was drunk?|Eli|Samuel|Phinehas|Zadok|1 Samuel 1:13
+What did Hannah make for Samuel each year?|A little sleeveless coat|Sandals|A harp|A scroll|1 Samuel 2:19`],
+["samuel","Samuel",3,"1 Samuel 3","1 Samuel 3:1-10; 16:1-13","Samuel served Jehovah from childhood and stayed faithful all his life, even when his own sons and the people disappointed him.","Children can serve Jehovah too, and keep going for life.",
+`Who did young Samuel think was calling him at night?|Eli|His father|David|An angel|1 Samuel 3:5
+What did Samuel finally say?|Speak, for your servant is listening|Who are you?|Go away|I am tired|1 Samuel 3:10
+Which king did Samuel anoint first?|Saul|David|Solomon|Jeroboam|1 Samuel 10:1
+Which of Jesse's sons did Samuel anoint as king?|David, the youngest|Eliab, the oldest|Abinadab|Shammah|1 Samuel 16:11-13
+What did Samuel tell Saul is better than sacrifice?|Obeying|Fasting|Gold|Singing|1 Samuel 15:22`],
+["saul","Saul",3,"1 Samuel 9 and 15","1 Samuel 9:1-3; 15:22, 23","Saul started as a modest young man, but pride and disobedience led Jehovah to reject him as king.","A good start is not enough. Keep humble and obedient.",
+`Saul was Israel's first what?|King|Priest|Judge|Prophet|1 Samuel 10:24
+What was Saul looking for when he met Samuel?|His father's lost donkeys|A wife|A sword|Water|1 Samuel 9:3
+Which tribe was Saul from?|Benjamin|Judah|Levi|Ephraim|1 Samuel 9:1, 2
+Why did Jehovah reject Saul as king?|He disobeyed Jehovah|He was too tall|He lost a battle|He was poor|1 Samuel 15:23
+Whom did Saul consult in Endor against God's Law?|A spirit medium|A prophet|A priest|A king|1 Samuel 28:7`],
+["jonathan","Jonathan",3,"1 Samuel 18 and 20","1 Samuel 18:1-4; 20:35-42","Jonathan, King Saul's son, loved David like himself. He supported Jehovah's choice of David even though it cost him the throne.","True friendship puts Jehovah's will first.",
+`Jonathan was the son of whom?|King Saul|David|Samuel|Eli|1 Samuel 14:1
+Who was Jonathan's close friend?|David|Goliath|Abner|Absalom|1 Samuel 18:1
+What did Jonathan give David?|His robe, sword, bow and belt|A crown|A horse|Gold|1 Samuel 18:4
+How did Jonathan warn David of danger?|By shooting arrows in a field|By letter|Through a servant|With a song|1 Samuel 20:35-37
+Which son of Jonathan did David later care for?|Mephibosheth|Ish-bosheth|Absalom|Amnon|2 Samuel 9:6, 7`],
+["david","David",3,"1 Samuel 17","1 Samuel 16:11-13; 17:45-50","Young David faced Goliath in Jehovah's name. Later as king he made serious mistakes but always repented sincerely.","Courage comes from trusting Jehovah, and true repentance brings forgiveness.",
+`What was David's work as a boy?|Shepherd|Fisherman|Carpenter|Soldier|1 Samuel 16:11
+Which giant did David defeat?|Goliath|Og|Sisera|Agag|1 Samuel 17:49, 50
+What did David use?|A sling and a stone|A spear|A sword|A bow|1 Samuel 17:49
+Which instrument did David play for Saul?|The harp|The flute|The trumpet|Drums|1 Samuel 16:23
+Who was David's father?|Jesse|Obed|Boaz|Saul|1 Samuel 17:12`],
+["abigail","Abigail",3,"1 Samuel 25","1 Samuel 25:3, 18-35","Abigail acted quickly and humbly to stop David from taking revenge on her foolish husband Nabal.","Wise, humble words can prevent great harm.",
+`Who was Abigail's husband?|Nabal|David|Uriah|Saul|1 Samuel 25:3
+What did Abigail bring to David's men?|Food and wine|Swords|Gold|Horses|1 Samuel 25:18
+What did Abigail stop David from doing?|Taking revenge and shedding blood|Becoming king|Leaving Israel|Fighting Goliath|1 Samuel 25:33
+How does the Bible describe Abigail?|Sensible and beautiful|A prophetess|A judge|A queen of Egypt|1 Samuel 25:3
+What does the name Nabal mean?|Senseless|Rich|Strong|Happy|1 Samuel 25:25`],
+["solomon","Solomon",3,"1 Kings 3","1 Kings 3:5-12; 11:4","Solomon asked Jehovah for wisdom, not riches, and built the temple. Sadly, in old age his many foreign wives turned his heart away.","Keep guarding your heart, all your life.",
+`What did Solomon ask Jehovah for?|Wisdom and an obedient heart|Riches|Long life|Victory|1 Kings 3:9
+What did Solomon build in Jerusalem?|Jehovah's temple|A tower|Only a wall|A palace for Pharaoh|1 Kings 6:1
+Who was Solomon's father?|David|Saul|Jesse|Absalom|1 Kings 2:12
+Which queen came to test Solomon with questions?|The queen of Sheba|Jezebel|Esther|Bathsheba|1 Kings 10:1
+Why did Solomon's heart turn away in old age?|His many foreign wives|Sickness|War|Poverty|1 Kings 11:4`],
+["elijah","Elijah",4,"1 Kings 17 and 18","1 Kings 17:1-6; 18:20-39","Elijah stood alone against 450 prophets of Baal on Mount Carmel. Jehovah answered with fire. Later, afraid and tired, he was comforted by Jehovah.","Even strong servants of God get discouraged, and Jehovah cares for them.",
+`Who fed Elijah by the stream?|Ravens|Doves|Angels|A widow's son|1 Kings 17:6
+On which mountain did Elijah challenge the prophets of Baal?|Mount Carmel|Mount Sinai|Mount Zion|Mount Hermon|1 Kings 18:19
+How did Jehovah answer Elijah at the altar?|Fire came down|Rain fell|An earthquake|A voice spoke|1 Kings 18:38
+Who threatened Elijah's life after Carmel?|Queen Jezebel|King Ahab|Obadiah|Naaman|1 Kings 19:2
+How was Elijah taken away?|In a windstorm|On a camel|In a boat|He walked into the desert|2 Kings 2:11`],
+["elisha","Elisha",4,"2 Kings 2 and 4","2 Kings 2:9-15; 4:32-37","Elisha left his farm to serve Elijah, stayed loyal to the end and then did many miracles, including raising a boy to life.","Loyal service in small things prepares us for bigger ones.",
+`Which prophet did Elisha serve?|Elijah|Samuel|Isaiah|Jeremiah|1 Kings 19:21
+What did Elisha ask Elijah for?|Two parts of his spirit|His house|His staff|Gold|2 Kings 2:9
+What did Elisha do for the Shunammite woman's son?|Brought him back to life|Healed his eyes|Gave him land|Taught him to read|2 Kings 4:32-35
+What did Elisha make float on water?|An axe head|A stone|A crown|A shield|2 Kings 6:6
+What did Elisha tell Naaman to do?|Bathe seven times in the Jordan|Go to the temple|Pay gold|Fast for 40 days|2 Kings 5:10`],
+["naaman","Naaman",4,"2 Kings 5","2 Kings 5:1-17","Naaman, a proud Syrian army chief with leprosy, was healed when he humbly obeyed and dipped seven times in the Jordan.","Humility opens the way to Jehovah's blessing.",
+`Naaman was army chief of which nation?|Syria|Egypt|Babylon|Assyria|2 Kings 5:1
+What sickness did Naaman have?|Leprosy|Blindness|Fever|A lame leg|2 Kings 5:1
+Who told about the prophet in Israel?|A little Israelite girl|A soldier|A king|A priest|2 Kings 5:2, 3
+How many times did Naaman dip in the Jordan?|7|3|1|10|2 Kings 5:14
+What did Naaman ask to take home after he was healed?|Soil, to worship Jehovah|Gold|Water from the Jordan|Elisha's staff|2 Kings 5:17`],
+["josiah","Josiah",4,"2 Kings 22","2 Kings 22:1-13; 23:21-25","Josiah became king at eight. When God's Law was found in the temple, he humbly acted on it and cleaned out false worship.","When we learn what God wants, act on it quickly.",
+`How old was Josiah when he became king?|8|18|12|25|2 Kings 22:1
+What was found in the temple during Josiah's rule?|The book of the Law|A golden ark|A sword|A crown|2 Kings 22:8
+What did Josiah do when he heard the Law read?|He ripped his garments|He laughed|He hid it|He burned it|2 Kings 22:11
+Which prophetess did Josiah's men consult?|Huldah|Deborah|Miriam|Anna|2 Kings 22:14
+What festival did Josiah hold like none since the judges?|The Passover|Booths|Weeks|Purim|2 Kings 23:22`],
+["hezekiah","Hezekiah",4,"2 Kings 18 and 19","2 Kings 19:14-19, 35","When Assyria threatened Jerusalem, King Hezekiah spread the threatening letter before Jehovah and prayed. In one night Jehovah's angel struck down the attackers.","Take your problems to Jehovah in prayer.",
+`What did Hezekiah do with Assyria's threatening letter?|Spread it out before Jehovah and prayed|Burned it|Sent it back|Hid it|2 Kings 19:14, 15
+Which Assyrian king threatened Jerusalem?|Sennacherib|Nebuchadnezzar|Cyrus|Darius|2 Kings 18:13
+How many Assyrians did Jehovah's angel strike down?|185,000|10,000|1,000|50,000|2 Kings 19:35
+How many years did Jehovah add to Hezekiah's life?|15|10|5|40|2 Kings 20:6
+What sign did Jehovah give Hezekiah?|The shadow on the stairway went back|A rainbow|Fire from heaven|A dove|2 Kings 20:11`],
+["jonah","Jonah",4,"Jonah 1 to 3","Jonah 1:1-3; 3:1-10; 4:10, 11","Jonah ran from his assignment, was swallowed by a big fish, then preached in Nineveh. Jehovah patiently taught him to care about people.","Jehovah gives second chances and wants us to care about people.",
+`Which city did Jehovah send Jonah to?|Nineveh|Tarshish|Babylon|Jerusalem|Jonah 1:2
+Where did Jonah try to run to?|Tarshish|Egypt|Babylon|Damascus|Jonah 1:3
+How long was Jonah inside the fish?|3 days and 3 nights|1 day|7 days|40 days|Jonah 1:17
+What did the people of Nineveh do after Jonah preached?|They repented|They attacked him|They laughed|They left the city|Jonah 3:5, 10
+What plant gave Jonah shade?|A bottle-gourd plant|A palm tree|A fig tree|A vine|Jonah 4:6`],
+["jeremiah","Jeremiah",4,"Jeremiah 1 and 38","Jeremiah 1:6-8; 20:9; 38:6-13","Jeremiah felt too young, yet preached for over 40 years to people who hated his message. Jehovah's word was like fire in his bones.","Jehovah gives courage to those who feel inadequate.",
+`What did Jeremiah say when Jehovah called him?|I am just a boy|Here I am|Send someone else|I am too old|Jeremiah 1:6
+Where was Jeremiah thrown?|Into a muddy cistern|Into a lions' pit|Into a fire|Into the sea|Jeremiah 38:6
+Who rescued Jeremiah from the cistern?|Ebed-melech|Baruch|Zedekiah|Gedaliah|Jeremiah 38:7-13
+Who was Jeremiah's secretary?|Baruch|Ezra|Shaphan|Seraiah|Jeremiah 36:4
+Jeremiah said God's word was like what in his bones?|A burning fire|Cold water|A heavy stone|A sharp sword|Jeremiah 20:9`],
+["job","Job",4,"Job 1 and 42","Job 1:1-12; 42:10-17","Satan claimed Job served God only for blessings. Job lost almost everything but kept his integrity, and Jehovah blessed him double.","Our integrity answers Satan's lie and makes Jehovah's heart glad.",
+`Which land did Job live in?|Uz|Ur|Egypt|Moab|Job 1:1
+Who challenged Job's faithfulness?|Satan|His wife|His friends|Elihu|Job 1:9-11
+How many friends came to comfort Job?|3|2|7|10|Job 2:11
+Which young man spoke after Job's three friends?|Elihu|Eliphaz|Bildad|Zophar|Job 32:2
+In the end, how much did Jehovah give Job?|Double what he had before|The same|Half|Ten times|Job 42:10`],
+["daniel","Daniel",5,"Daniel 1 and 6","Daniel 1:8-17; 6:10-22","As a youth in Babylon, Daniel refused the king's food. Years later he kept praying when it was banned and was thrown to the lions, but Jehovah's angel shut their mouths.","Daily closeness to Jehovah gives courage for big tests.",
+`What did Daniel and his friends ask to eat?|Vegetables|Meat from the king's table|Only bread|Fish|Daniel 1:12
+Why was Daniel thrown to the lions?|He kept praying to his God|He stole from the king|He ran away|He refused to work|Daniel 6:10, 16
+Who shut the lions' mouths?|Jehovah's angel|Daniel himself|The king|A shepherd|Daniel 6:22
+What Babylonian name was Daniel given?|Belteshazzar|Shadrach|Abednego|Meshach|Daniel 1:7
+How many times a day did Daniel pray?|Three|Once|Seven|Twice|Daniel 6:10`],
+["esther","Esther",5,"Esther 4 and 5","Esther 4:13-16; 5:1-3; 7:3-6","Esther, a Jewish orphan who became queen, risked her life to go before the king and save her people from Haman's plot.","Courage and wise timing can protect many.",
+`Who was the cousin who raised Esther?|Mordecai|Haman|Nehemiah|Ezra|Esther 2:7
+Esther became queen of which king?|Ahasuerus|Darius|Cyrus|Nebuchadnezzar|Esther 2:16, 17
+Who plotted to destroy the Jews?|Haman|Mordecai|Hegai|Zeresh|Esther 3:6
+What did Esther ask the Jews to do before she went to the king?|Fast for three days|Pray at the temple|Hide|Leave the city|Esther 4:16
+What festival celebrates the Jews' rescue?|Purim|Passover|Booths|Dedication|Esther 9:26`],
+["mordecai","Mordecai",5,"Esther 3 and 6","Esther 2:7; 3:2-6; 6:10, 11","Mordecai raised Esther, refused to bow to Haman and encouraged Esther to act. In the end he was honoured by the king.","Stand firm for what is right; Jehovah sees.",
+`Why was Haman angry with Mordecai?|He would not bow down to Haman|He stole from him|He was rich|He laughed at him|Esther 3:2, 5
+Mordecai uncovered a plot to kill whom?|The king|Esther|Haman|Himself|Esther 2:21, 22
+What did Haman prepare for Mordecai?|A stake|A prison|A tower|A boat|Esther 5:14
+Who had to lead Mordecai through the city in honour?|Haman|The king|Esther|A servant|Esther 6:10, 11
+What position did Mordecai receive at the end?|Second to the king|High priest|Governor of Judah|Army chief|Esther 10:3`],
+["nehemiah","Nehemiah",5,"Nehemiah 2 and 4","Nehemiah 2:1-8; 4:1-17; 6:15","Nehemiah, the king's cupbearer, prayed quickly and asked to rebuild Jerusalem's walls. Despite enemies' mockery, the wall was finished in 52 days.","Pray, plan and keep working; Jehovah backs his work.",
+`What was Nehemiah's job for the king?|Cupbearer|Baker|Soldier|Scribe|Nehemiah 1:11
+What did Nehemiah rebuild?|The walls of Jerusalem|The temple|A palace|Babylon|Nehemiah 2:17
+What did Nehemiah do before answering the king?|Prayed to God|Ran away|Asked friends|Wrote a letter|Nehemiah 2:4
+How long did it take to finish the wall?|52 days|7 days|1 year|40 days|Nehemiah 6:15
+Who mocked the builders?|Sanballat and Tobiah|Haman and Zeresh|Ahab and Jezebel|Korah and Dathan|Nehemiah 4:1-3`],
+["mary","Mary",6,"Luke 1 and 2","Luke 1:26-38; 2:1-19","Mary, a humble young woman, accepted the privilege of becoming Jesus' mother and treasured everything she learned about him.","Humble people are happy to say “Let it happen to me as you said.”",
+`Which angel visited Mary?|Gabriel|Michael|Raphael|An unnamed angel|Luke 1:26
+Where was Jesus born?|Bethlehem|Nazareth|Jerusalem|Jericho|Luke 2:4-7
+Why was baby Jesus laid in a manger?|There was no room for them in the lodging|Mary wanted it|It was warm|The shepherds asked|Luke 2:7
+Which relative did Mary visit?|Elizabeth|Anna|Martha|Salome|Luke 1:39, 40
+Where did Mary and Joseph find 12-year-old Jesus?|In the temple|At the market|In Nazareth|At a well|Luke 2:46`],
+["johnb","John the Baptist",6,"Matthew 3","Matthew 3:1-17; Luke 1:13-17","John prepared the way for the Messiah, lived simply, baptized Jesus and fearlessly spoke the truth even to a king.","Point people to Jesus, not to yourself.",
+`What did John wear?|Clothing of camel's hair|Fine linen|A purple robe|Armor|Matthew 3:4
+What did John eat?|Locusts and wild honey|Bread and fish|Figs|Manna|Matthew 3:4
+Whom did John baptize in the Jordan River?|Jesus|Peter|Paul|Herod|Matthew 3:13
+Who was John's mother?|Elizabeth|Mary|Anna|Salome|Luke 1:57, 60
+Which ruler had John beheaded?|Herod|Pilate|Caesar|Agrippa|Matthew 14:10`],
+["peter","Peter",6,"Matthew 14 and Luke 22","Matthew 14:28-31; Luke 22:54-62; John 21:15-17","Peter, a fisherman, was bold and sometimes too quick to speak. He denied Jesus three times but repented and became a pillar of the congregation.","Failure is not the end if we repent and keep going.",
+`What was Peter's work before following Jesus?|Fisherman|Tax collector|Carpenter|Tentmaker|Matthew 4:18
+What did Peter walk on?|Water|Fire|A wall|Clouds|Matthew 14:29
+How many times did Peter deny Jesus?|3|1|7|2|Luke 22:61
+Which Roman army officer did Peter preach to?|Cornelius|Pilate|Felix|Julius|Acts 10:24-34
+What other name did Jesus give Peter?|Cephas|Thomas|Levi|Barnabas|John 1:42`],
+["zacchaeus","Zacchaeus",6,"Luke 19","Luke 19:1-10","Zacchaeus, a rich chief tax collector, climbed a tree to see Jesus. After Jesus visited him, he promised to give generously and repay those he had cheated.","Real repentance shows in what we do.",
+`What was Zacchaeus' job?|Chief tax collector|Fisherman|Priest|Soldier|Luke 19:2
+Why did he climb a tree?|He was short|To hide|To pick fruit|To see the river|Luke 19:3, 4
+What kind of tree did he climb?|A sycamore|An olive|A palm|A fig|Luke 19:4
+What did he promise to give the poor?|Half his belongings|All his money|One coin|His house|Luke 19:8
+How much did he promise to give back to those he cheated?|Four times as much|Double|The same|Ten times|Luke 19:8`],
+["martha","Martha",6,"Luke 10 and John 11","Luke 10:38-42; John 11:20-27","Martha was a hard-working hostess who loved Jesus. Jesus gently helped her see what matters most, and she made a strong statement of faith.","Busy service is good, but spiritual things come first.",
+`Who was Martha's sister?|Mary|Salome|Joanna|Dorcas|Luke 10:39
+Which brother of Martha did Jesus raise?|Lazarus|Simon|John|Andrew|John 11:1, 43, 44
+In which village did Martha live?|Bethany|Nazareth|Capernaum|Cana|John 11:1
+What did Jesus say Martha was anxious about?|Many things|Lazarus|Money|The Romans|Luke 10:41
+What did Martha say she believed about Jesus?|He is the Christ, the Son of God|He is Elijah|He is only a prophet|He is an angel|John 11:27`],
+["stephen","Stephen",7,"Acts 6 and 7","Acts 6:1-8; 7:55-60","Stephen was chosen to help distribute food fairly. Full of faith and holy spirit, he bore witness boldly and forgave those who stoned him.","Faithful in small tasks, courageous in big ones.",
+`Stephen was chosen to help distribute what?|Food|Money|Scrolls|Clothes|Acts 6:1-5
+How did Stephen die?|He was stoned|In prison|By the sword|In a fire|Acts 7:58
+What did Stephen see before he died?|Jesus standing at God's right hand|An angel with a sword|A burning bush|A stairway|Acts 7:55, 56
+Who guarded the garments of those stoning Stephen?|Saul|Peter|Barnabas|Gamaliel|Acts 7:58
+What did Stephen pray for his killers?|Jehovah, do not charge this sin against them|Destroy them|Save me|Let me live|Acts 7:60`],
+["paul","Paul",7,"Acts 9","Acts 9:1-20; 2 Timothy 4:7","Saul persecuted Christians until Jesus stopped him on the road to Damascus. As the apostle Paul he preached tirelessly and finished the race.","No one is beyond Jehovah's mercy. Keep running to the end.",
+`What was Paul's name before?|Saul|Silas|Simon|Stephen|Acts 13:9
+On the road to which city did Jesus stop him?|Damascus|Jerusalem|Rome|Antioch|Acts 9:3
+What happened to Saul's eyes?|He was blinded|Nothing|He saw angels|He wept blood|Acts 9:8
+What was Paul's trade?|Tentmaker|Fisherman|Carpenter|Doctor|Acts 18:3
+Who restored Saul's sight?|Ananias|Peter|Barnabas|Philip|Acts 9:17, 18`],
+["dorcas","Dorcas",7,"Acts 9:36-42","Acts 9:36-42","Dorcas, also called Tabitha, was loved for her kindness and the garments she made for widows. Peter raised her back to life.","Quiet acts of kindness make a big difference.",
+`What was Dorcas' other name?|Tabitha|Lydia|Priscilla|Phoebe|Acts 9:36
+What was she known for?|Good deeds and gifts of mercy|Singing|Teaching in the temple|Being rich|Acts 9:36
+What did the widows show Peter?|Garments she had made|Money|Letters|Her house|Acts 9:39
+Who raised her back to life?|Peter|Paul|John|Philip|Acts 9:40
+In which city did she live?|Joppa|Lydda|Corinth|Philippi|Acts 9:36`],
+["lydia","Lydia",7,"Acts 16:11-15","Acts 16:11-15, 40","Lydia, a seller of purple, listened to Paul by a river, was baptized with her household and opened her home to the brothers.","Hospitality is a beautiful way to show love.",
+`What did Lydia sell?|Purple|Pottery|Fish|Bread|Acts 16:14
+Where did Paul meet Lydia?|By a river outside the city|In the synagogue|In the market|In prison|Acts 16:13
+In which city did Paul meet her?|Philippi|Thyatira|Rome|Ephesus|Acts 16:12
+Which city did Lydia come from?|Thyatira|Philippi|Corinth|Antioch|Acts 16:14
+What did Lydia insist on after her baptism?|That Paul's group stay in her house|Going with Paul|Building a synagogue|Paying them|Acts 16:15`],
+["timothy","Timothy",7,"Acts 16 and 2 Timothy 1","Acts 16:1-3; 2 Timothy 1:5; 3:14, 15","Timothy learned the Scriptures from his mother and grandmother. As a young man he travelled with Paul and became a trusted helper.","Faith taught at home can last a lifetime.",
+`Who taught Timothy the Scriptures as a child?|His mother and grandmother|His father|Paul|Peter|2 Timothy 1:5; 3:15
+What was the name of Timothy's grandmother?|Lois|Eunice|Lydia|Priscilla|2 Timothy 1:5
+Which apostle took Timothy on his travels?|Paul|Peter|John|James|Acts 16:1-3
+What was the name of Timothy's mother?|Eunice|Lois|Mary|Dorcas|2 Timothy 1:5
+Where did Paul meet Timothy?|Lystra|Rome|Jerusalem|Corinth|Acts 16:1`]
+];
+const QBONUS=[
+`Genesis 3:15 is the first prophecy. Who is the main part of the “offspring” who crushes the serpent's head?|Jesus Christ|Abel|Noah|Moses|Galatians 3:16
+Who said “Am I my brother's guardian?”|Cain|Esau|Laban|Lot|Genesis 4:9
+Who was king of Salem and priest who blessed Abraham?|Melchizedek|Abimelech|Nimrod|Pharaoh|Genesis 14:18
+Which city's tower led Jehovah to confuse human language?|Babel|Ur|Sodom|Haran|Genesis 11:9`,
+`What did the Passover lamb picture?|Jesus' sacrifice|The Law|Israel's kings|The temple|1 Corinthians 5:7
+Who said “Who is Jehovah, that I should obey his voice?”|Pharaoh|Korah|Balaam|Goliath|Exodus 5:2
+How many years did Israel wander in the wilderness?|40|7|70|12|Numbers 14:33
+Whose donkey spoke to him?|Balaam's|Samuel's|Elijah's|Gideon's|Numbers 22:28`,
+`Who said “Where you go I will go”?|Ruth|Naomi|Orpah|Deborah|Ruth 1:16
+Which judge made a rash vow about his daughter?|Jephthah|Gideon|Samson|Ehud|Judges 11:30, 31
+Which left-handed judge killed King Eglon?|Ehud|Othniel|Shamgar|Tola|Judges 3:15-21
+What did the scarlet cord in Rahab's window mean?|Her household would be spared|She would be queen|The walls would stay up|The spies would return|Joshua 2:18, 19`,
+`What did Jehovah's covenant with David promise?|A kingdom lasting forever through his line|Endless rain|A temple of gold|Victory over Egypt|2 Samuel 7:16
+To whom did Jehovah say “man sees what appears to the eyes, but Jehovah sees into the heart”?|Samuel|David|Saul|Nathan|1 Samuel 16:7
+Which prophet confronted David about Bathsheba?|Nathan|Gad|Samuel|Elijah|2 Samuel 12:1-7
+How many years did David rule as king?|40|20|33|50|1 Kings 2:11`,
+`Which prophet named Cyrus about 200 years before his conquest?|Isaiah|Jeremiah|Daniel|Ezekiel|Isaiah 45:1
+How many years did Jeremiah say the land would be desolate and serve Babylon?|70|40|7|100|Jeremiah 25:11
+Who said “Here I am! Send me!”?|Isaiah|Jeremiah|Jonah|Samuel|Isaiah 6:8
+To whom did Elijah say “How long will you be limping between two different opinions?”|The people of Israel|Ahab|Jezebel|Obadiah|1 Kings 18:21`,
+`Whose dream showed a statue of gold, silver, copper, iron and clay?|Nebuchadnezzar's|Darius'|Cyrus'|Belshazzar's|Daniel 2:31-33
+According to Daniel 2:44, what will God's Kingdom do to the other kingdoms?|Crush them and put an end to them|Join them|Serve them|Copy them|Daniel 2:44
+Which Persian king allowed the Jews to return and rebuild the temple?|Cyrus|Ahasuerus|Darius the Mede|Artaxerxes|Ezra 1:1-3
+Who said “Who knows whether it is for a time like this that you have become queen?”|Mordecai|Esther|Haman|Hegai|Esther 4:14`,
+`Which prophet foretold that the Messiah would be born in Bethlehem?|Micah|Isaiah|Malachi|Zechariah|Micah 5:2
+Which prophet foretold the king riding into Jerusalem on a donkey?|Zechariah|Micah|Joel|Hosea|Zechariah 9:9
+Who said “Lord, whom shall we go away to? You have sayings of everlasting life”?|Peter|John|Thomas|Martha|John 6:68
+For how many pieces of silver was Jesus betrayed?|30|20|50|10|Matthew 26:15`,
+`At which festival was holy spirit poured out on the disciples?|Pentecost|Passover|Booths|Dedication|Acts 2:1-4
+Who said “We must obey God as ruler rather than men”?|Peter and the apostles|Paul|Stephen|Gamaliel|Acts 5:29
+To whom did Paul appeal when on trial?|Caesar|Pilate|Herod|Felix|Acts 25:11
+Which Pharisee advised the Sanhedrin to leave the apostles alone?|Gamaliel|Caiaphas|Annas|Nicodemus|Acts 5:34-39`];
+const QPARADISE=`What will God wipe out from people's eyes?|Every tear|Only some tears|Sleep|Light|Revelation 21:4
+What will no resident say in Paradise?|I am sick|I am happy|I am home|I am busy|Isaiah 33:24
+Who will possess the earth and live forever on it?|The righteous|The rich|The strong|Only kings|Psalm 37:29
+What will people do with the houses they build?|Live in them|Sell them|Rent them out|Leave them|Isaiah 65:21
+Which animal will live peacefully with the lamb?|The wolf|The shark|The crocodile|The snake|Isaiah 11:6
+Who will hear Jesus' voice and come out of the memorial tombs?|All those in the memorial tombs|Only kings|Only angels|No one|John 5:28, 29
+What will nations beat their swords into?|Plowshares|Crowns|Coins|Shields|Isaiah 2:4
+What did Jesus teach us to pray would come?|God's Kingdom|More money|A new king of Israel|The end of work|Matthew 6:10
+Where will each one sit with no one to make them afraid?|Under his own vine and fig tree|In a palace|In the temple|On a mountain|Micah 4:4`;
+const QNOAH=`How many people were saved in the ark?|8|2|12|40|1 Peter 3:20
+What kind of wood was the ark made of?|Resinous wood|Cedar|Olive wood|Bamboo|Genesis 6:14
+How many sons did Noah have?|3|4|2|7|Genesis 6:10
+Who shut the door of the ark?|Jehovah|Noah|Ham|An angel|Genesis 7:16
+How long did it rain?|40 days and 40 nights|7 days|150 days|1 year|Genesis 7:12
+Where did the ark come to rest?|The mountains of Ararat|Mount Sinai|Mount Hermon|Mount Zion|Genesis 8:4
+Which bird did Noah send out first?|A raven|A dove|An eagle|A swallow|Genesis 8:7
+What did the dove bring back?|An olive leaf|A fig|A stick|A flower|Genesis 8:11
+What sign did Jehovah give that he would never again flood the earth?|A rainbow|A star|A cloud|Thunder|Genesis 9:13`;
+const QTIMELINE=[
+["Jehovah creates Adam","4026 B.C.E."],["The Flood in Noah's day","2370 B.C.E."],["Abraham crosses the Euphrates","1943 B.C.E."],
+["Joseph is sold into Egypt","1750 B.C.E."],["Israel leaves Egypt","1513 B.C.E."],["Israel enters Canaan with Joshua","1473 B.C.E."],
+["David becomes king","1077 B.C.E."],["Solomon completes the temple","1027 B.C.E."],["Babylon destroys Jerusalem","607 B.C.E."],
+["The Jews return from Babylon","537 B.C.E."],["Jesus is born","2 B.C.E."],["Jesus is baptized","29 C.E."],["Holy spirit poured out at Pentecost","33 C.E."]];
+/* Character of the day — lesser-known people */
+const COTD=[
+["Ebed-melech","Jeremiah 38:7-13; 39:15-18","An Ethiopian palace official who boldly asked the king to rescue Jeremiah from a muddy cistern, and even thought to send rags so the ropes wouldn't hurt him.","Have you ever been helped by someone you didn't expect to help you?"],
+["Shiphrah and Puah","Exodus 1:15-21","Two Hebrew midwives who feared God more than Pharaoh and refused his order to kill baby boys. Jehovah blessed them with families of their own.","Is it ever right to disobey a powerful person?"],
+["Jehosheba","2 Kings 11:1-3","A princess who secretly rescued baby Joash from a murderous queen and hid him for six years, saving the royal line leading to the Messiah.","What makes someone brave enough to take a big risk for a child?"],
+["Obadiah (Ahab's steward)","1 Kings 18:3, 4","Though he worked in wicked King Ahab's palace, he hid 100 of Jehovah's prophets in caves and fed them.","Can a person stay faithful while working for people who don't share their values?"],
+["Huldah","2 Kings 22:14-20","A prophetess in Jerusalem whom King Josiah's officials consulted about the newly found book of the Law.","Where do you go when you need reliable guidance?"],
+["Ittai the Gittite","2 Samuel 15:19-22","A foreigner who stayed loyal to King David when even David's own son turned against him.","Why do you think some friends stay loyal when others leave?"],
+["Barzillai","2 Samuel 17:27-29; 19:31-39","An 80-year-old man who generously supplied David in hard times, then modestly declined a royal reward.","What makes generosity without wanting reward so rare today?"],
+["Rhoda","Acts 12:12-16","A servant girl so excited that Peter was at the door that she ran to tell everyone and forgot to let him in!","What news would make you that excited?"],
+["Anna","Luke 2:36-38","An 84-year-old widow who never missed being at the temple and spoke about the child Jesus to all who were waiting for deliverance.","What keeps a person spiritually strong into old age?"],
+["Epaphroditus","Philippians 2:25-30","Sent to care for Paul, he became so sick he almost died, and was worried because his friends had heard he was ill.","How do you feel when you can't do as much as you want for others?"],
+["Onesiphorus","2 Timothy 1:16-18","He searched Rome diligently to find Paul in chains and was not ashamed of him, often refreshing him.","What does a real friend do when you're in trouble?"],
+["Apollos","Acts 18:24-28","An eloquent speaker who humbly accepted correction from Aquila and Priscilla, then became even more helpful to others.","Is it easy to accept correction when you are already good at something?"],
+["Phoebe","Romans 16:1, 2","A sister from Cenchreae, praised by Paul as a defender of many, who likely delivered the letter to the Romans.","Who are the quiet helpers that keep things running in your life?"],
+["Achsah","Joshua 15:16-19","Caleb's daughter who confidently asked her father for springs of water to go with her dry land, and he gave her both.","Is it wrong to ask for what you really need?"],
+["Mephibosheth","2 Samuel 9:1-13; 19:24-30","Jonathan's lame son whom King David showed loyal love by inviting him to eat at the king's table always.","How would you feel if someone kept a promise made to your father?"],
+["Jehoiada","2 Chronicles 23:1-11; 24:15, 16","A faithful high priest who protected young King Joash and was buried among the kings because of the good he did.","Who is a good older person who guided you?"]];
+
+/* ---------- Bible Quest: engine ---------- */
+const QPARSE=t=>t.trim().split("\n").map(l=>l.split("|"));
+const QCHARS=QRAW.map(c=>({id:c[0],name:c[1],g:c[2],clue:c[3],ref:c[4],story:c[5],lesson:c[6],qs:QPARSE(c[7])}));
+const QB=QBONUS.map(QPARSE);
+const QLEVEL={easy:{n:"Easy",pay:5,hint:true,timer:0,count:3,who:"Children"},medium:{n:"Medium",pay:8,hint:false,timer:0,count:4,who:"Teens"},expert:{n:"Expert",pay:15,hint:false,timer:20,count:5,who:"Adults"}};
+const QPUZ=[
+ {id:"noah",n:"Noah's Ark",price:0,qs:()=>QPARSE(QNOAH),draw:drawNoah},
+ {id:"daniel",n:"Daniel and the lions",price:80,qs:()=>[...QCHARS.find(c=>c.id==="daniel").qs,...QB[5]],draw:drawDaniel},
+ {id:"redsea",n:"Crossing the Red Sea",price:120,qs:()=>[...QCHARS.find(c=>c.id==="moses").qs,...QCHARS.find(c=>c.id==="miriam").qs.slice(0,2),...QCHARS.find(c=>c.id==="aaron").qs.slice(0,2)],draw:drawRedSea},
+ {id:"paradise",n:"Paradise earth",price:150,qs:()=>QPARSE(QPARADISE),draw:drawParadise}];
+S.quest=Object.assign({coins:30,cards:{},level:"easy",owned:{noah:true},pieces:{},done:{},bonus:{},streak:0,lastDaily:"",sound:true,voice:false,custom:null,fam:{on:false,teams:[{n:"Team A",s:0},{n:"Team B",s:0}],turn:0},tl:0},S.quest||{});
+const QG=S.quest;
+let qview="journey",qPuzzle="noah",qArt={};
+const qShuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* sound & voice */
+let qAC=null;
+function qTone(seq){if(!QG.sound)return;try{qAC=qAC||new (window.AudioContext||window.webkitAudioContext)();const t0=qAC.currentTime;
+  seq.forEach(([f,d,st,type,vol])=>{const o=qAC.createOscillator(),g=qAC.createGain();o.type=type||"sine";o.frequency.setValueAtTime(f,t0+st);g.gain.setValueAtTime(0,t0+st);g.gain.linearRampToValueAtTime(vol||.18,t0+st+.01);g.gain.exponentialRampToValueAtTime(.001,t0+st+d);o.connect(g).connect(qAC.destination);o.start(t0+st);o.stop(t0+st+d+.02)})}catch(e){}}
+const QSFX={right:()=>qTone([[523,.15,0],[659,.15,.1],[784,.25,.2]]),wrong:()=>qTone([[180,.3,0,"square",.08],[150,.35,.12,"square",.08]]),
+  coin:()=>qTone([[988,.08,0,"square",.07],[1319,.25,.07,"square",.07]]),flip:()=>qTone([[300,.12,0,"triangle"],[600,.12,.08,"triangle"],[900,.2,.16,"triangle"]]),
+  win:()=>qTone([[523,.15,0],[659,.15,.12],[784,.15,.24],[1047,.4,.36]]),tick:()=>qTone([[880,.04,0,"square",.04]]),tap:()=>qTone([[660,.05,0,"triangle",.08]])};
+function qSay(text,force){if(!(QG.voice||force)||!("speechSynthesis" in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=.95;u.lang="en-GB";speechSynthesis.speak(u)}catch(e){}}
+
+/* coins */
+function qAdd(n,el){
+  QG.coins+=n;save();const p=document.getElementById("q-purse");if(p){p.querySelector("b").textContent=QG.coins;p.classList.remove("bump");void p.offsetWidth;p.classList.add("bump")}QSFX.coin();
+  if(el&&el.getBoundingClientRect){const r=el.getBoundingClientRect(),f=document.createElement("div");f.className="fly";f.innerHTML=`<span class="coin"></span>+${n}`;f.style.left=(r.left+r.width/2-20)+"px";f.style.top=r.top+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1000)}
+}
+function qSpend(n){if(QG.coins<n){toast("Not enough coins. Answer more questions to earn some.");QSFX.wrong();return false}QG.coins-=n;save();const p=document.getElementById("q-purse");if(p)p.querySelector("b").textContent=QG.coins;return true}
+
+/* quiz engine */
+const QLIFE={verse:10,half:15,skip:20,time:10};
+function qQuiz({title,qs,level,pay,onDone}){
+  const L=QLEVEL[level]||QLEVEL.easy;pay=pay??L.pay;
+  let i=0,score=0,results=[],timer=null;
+  const sh=openSheet("");const box=sh.querySelector(".box");
+  sh.addEventListener("click",e=>{if(e.target===sh)stop()});
+  const fam=QG.fam.on;
+  function stop(){clearInterval(timer);try{speechSynthesis.cancel()}catch(_){}sh.remove()}
+  function show(){
+    clearInterval(timer);
+    const [q,...rest]=qs[i];const ref=rest[4],opts=rest.slice(0,4);
+    const order=qShuffle(opts.map((o,k)=>({o,k})));
+    const team=fam?QG.fam.teams[QG.fam.turn%QG.fam.teams.length]:null;
+    box.innerHTML=`<div class="qtop"><b style="font:800 16px var(--display)">${esc(title)}</b><div class="dots">${qs.map((_,k)=>`<i class="${k<i?(results[k]?"ok":"no"):k===i?"now":""}"></i>`).join("")}</div></div>
+      ${team?`<div class="turn">${esc(team.n)}'s turn</div>`:""}
+      ${L.timer?`<div class="timer"><i id="q-bar"></i></div>`:""}
+      <p class="qq">${esc(q)}</p>
+      ${L.hint?`<div class="hint">Hint: <a href="${wol(ref)}" target="_blank" rel="noopener">${esc(ref)}</a></div>`:""}
+      <div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${esc(x.o)}</button>`).join("")}</div>
+      <div class="lifes">
+        ${L.hint?"":`<button class="life" data-l="verse"><span class="coin"></span>${QLIFE.verse} Show the verse</button>`}
+        <button class="life" data-l="half"><span class="coin"></span>${QLIFE.half} Remove two</button>
+        ${L.timer?`<button class="life" data-l="time"><span class="coin"></span>${QLIFE.time} +15 seconds</button>`:""}
+        <button class="life" data-l="skip"><span class="coin"></span>${QLIFE.skip} Skip</button>
+        <button class="life plain" data-l="read">Read aloud</button>
+      </div>
+      <div id="q-fb"></div>
+      <div style="display:flex;gap:8px"><button class="btn" data-x="quit" style="flex:1;justify-content:center">Stop</button><button class="btn primary" data-x="next" style="flex:2;justify-content:center" hidden>${i<qs.length-1?"Next question":"See result"}</button></div>`;
+    qSay(q+". "+order.map(x=>x.o).join(". "));
+    let done=false,left=L.timer*10,total=left;
+    if(L.timer){timer=setInterval(()=>{left--;const b=document.getElementById("q-bar");if(b){b.style.width=(left/total*100)+"%";b.classList.toggle("low",left<60)}if(left%10===0&&left<=50&&left>0)QSFX.tick();if(left<=0){clearInterval(timer);if(!done){done=true;results[i]=false;QSFX.wrong();mark(null);fb(false,"Time's up!")}}},100)}
+    function fb(ok,pre){box.querySelector("#q-fb").innerHTML=`<div class="fb ${ok?"ok":"no"}">${pre||(ok?"Correct!":"Not quite.")} ${ok?"":`The answer is <b>${esc(opts[0])}</b>.`} Read it in <a href="${wol(ref)}" target="_blank" rel="noopener">${esc(ref)}</a>.</div>`}
+    function mark(chosen){clearInterval(timer);box.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(+b.dataset.k===0)b.classList.add("ok");else if(b===chosen)b.classList.add("no")});box.querySelectorAll(".life").forEach(b=>{if(b.dataset.l!=="read")b.disabled=true});box.querySelector("[data-x=next]").hidden=false;if(fam)QG.fam.turn++;save()}
+    box.onclick=e=>{
+      const o=e.target.closest(".opt"),l=e.target.closest(".life"),x=e.target.closest("[data-x]");
+      if(x&&x.dataset.x==="quit"){stop();return}
+      if(x&&x.dataset.x==="next"){i++;if(i<qs.length)show();else finish();return}
+      if(l&&!done){
+        const t=l.dataset.l;
+        if(t==="read"){qSay(q+". "+order.map(x=>x.o).join(". "),true);return}
+        if(!qSpend(QLIFE[t]))return;l.disabled=true;
+        if(t==="verse")box.querySelector("#q-fb").innerHTML=`<div class="fb ok">The answer is in <a href="${wol(ref)}" target="_blank" rel="noopener">${esc(ref)}</a>. Open it and read.</div>`;
+        if(t==="half"){let n=0;box.querySelectorAll(".opt").forEach(b=>{if(+b.dataset.k!==0&&n<2){b.classList.add("gone");n++}})}
+        if(t==="time"){left+=150;total+=150}
+        if(t==="skip"){done=true;results[i]=true;score++;mark(null);box.querySelector("#q-fb").innerHTML=`<div class="fb ok">Skipped. The answer: <b>${esc(opts[0])}</b> (${esc(ref)})</div>`}
+        return}
+      if(o&&!done){done=true;const ok=+o.dataset.k===0;results[i]=ok;
+        if(ok){score++;QSFX.right();if(pay)qAdd(pay,o);if(team){team.s+=pay||5}}else QSFX.wrong();mark(o);fb(ok)}
+    };
+  }
+  function finish(){stop();onDone({score,total:qs.length,results})}
+  show();
+}
+
+/* views */
+function qOwned(g){return QCHARS.filter(c=>(g===undefined||c.g===g)&&QG.cards[c.id]).length}
+function qHeader(){
+  return `<div class="qbar">
+    <div class="purse" id="q-purse"><span class="coin"></span><b>${QG.coins}</b></div>
+    <div style="flex:1"></div>
+    <button class="hbtn" data-q="snd" aria-pressed="${QG.sound}" aria-label="Sound on or off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+    <button class="hbtn" data-q="voice" aria-pressed="${QG.voice}" aria-label="Read questions aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 10h7M4 14h5M16 10a3 3 0 0 1 0 6M19 7a7 7 0 0 1 0 12"/></svg></button>
+  </div>
+  <div class="rankrow"><span class="rank">🎓 ${esc(qRank().name)}</span>${qRank().next?`<span class="count">${qRank().next[0]-qRank().p} points to ${esc(qRank().next[1])}</span>`:`<span class="count">Top rank!</span>`}</div>
+  <div class="seg4">${[["journey","Journey"],["home","Play"],["cards","Cards"],["puzzle","Puzzles"],["timeline","Timeline"]].map(([k,l])=>`<button data-q="view" data-v="${k}" aria-pressed="${qview===k}">${l}</button>`).join("")}</div>`;
+}
+function renderQuest(){
+  let body="";
+  if(qview==="journey")body=qJourneyView();else if(qview==="home")body=qHome();else if(qview==="cards")body=qCards();else if(qview==="puzzle")body=qPuzzleView();else body=qTimelineView();
+  view.innerHTML=`${questOnly?`<div class="row" style="justify-content:space-between"><h2 style="margin:0">Scripture Trail</h2></div>`:`<h2>Scripture Trail</h2>`}${qHeader()}${body}`;
+  if(qview==="puzzle")qPaintBoard();
+}
+const qDay=()=>Math.floor((new Date(today()+"T00:00")-new Date("2026-01-01T00:00"))/864e5);
+function qDailyQ(){const all=QCHARS.flatMap(c=>c.qs);return all[((qDay()*37)%all.length+all.length)%all.length]}
+function qHome(){
+  const done=QG.lastDaily===today(),f=QG.fam;
+  return `${qSeasonBanner()}<div class="panel qdaily">
+    <div class="row" style="justify-content:space-between"><h3 style="margin:0;font:800 20px var(--display);color:#fff">Daily challenge</h3><span class="streak">🔥 ${QG.streak} day${QG.streak===1?"":"s"}</span></div>
+    <p style="margin:0;color:rgba(255,255,255,.88)">One question a day. Keep your streak for bonus coins.</p>
+    ${done?`<b>Done for today. Come back tomorrow!</b>`:`<button class="btn" data-q="daily" style="background:#fff;color:#1f4fd1;border:none;justify-content:center">Play today's question</button>`}
+  </div>
+  <div class="qstats">
+    <div><b>${qOwned()}/${QCHARS.length}</b>cards</div>
+    <div><b>${Object.keys(QG.done).length}/${QPUZ.length}</b>pictures</div>
+    <div><b>${Object.keys(QG.bonus).length}/${QGROUPS.length}</b>book badges</div>
+  </div>
+  <div class="panel">
+    <h3 style="margin:0;font:800 18px var(--display)">Choose your level</h3>
+    <div class="levels">${Object.entries(QLEVEL).map(([k,L])=>`<button class="lvl" data-q="level" data-v="${k}" aria-pressed="${QG.level===k}"><b>${L.n}</b><small>${L.who} · ${L.pay} coins</small></button>`).join("")}</div>
+    <p class="sub" style="margin:0">${QG.level==="easy"?"Easy: 3 questions per card, with a hint verse.":QG.level==="medium"?"Medium: 4 questions per card, no hints.":"Expert: 5 questions per card, no hints, 20 seconds each."}</p>
+  </div>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><h3 style="margin:0;font:800 18px var(--display)">Family mode</h3>
+    <button class="btn" data-q="famtoggle">${f.on?"Turn off":"Turn on"}</button></div>
+    <p class="sub" style="margin:0">Pass the phone around. Teams take turns and the scoreboard keeps count.</p>
+    ${f.on?`<div class="score">${f.teams.map((t,i)=>`<div class="team ${f.turn%f.teams.length===i?"now":""}"><input data-q="teamname" data-i="${i}" value="${esc(t.n)}" aria-label="Team name"><b>${t.s}</b></div>`).join("")}</div>
+    <div class="row"><button class="btn" data-q="teamadd" ${f.teams.length>=4?"disabled":""}>Add team</button><button class="btn" data-q="teamdel" ${f.teams.length<=2?"disabled":""}>Remove team</button><button class="btn" data-q="teamreset">Reset scores</button></div>`:""}
+  </div>
+  <div class="panel">
+    <h3 style="margin:0;font:800 18px var(--display)">Challenge a friend</h3>
+    <p class="sub" style="margin:0">Play 5 questions, then send the same 5 on WhatsApp. Your friend sees your score and tries to beat it.</p>
+    <button class="btn primary" data-q="challenge" style="justify-content:center">Start a challenge</button>
+  </div>
+  <div class="panel">
+    <h3 style="margin:0;font:800 18px var(--display)">Share Scripture Trail</h3>
+    <p class="sub" style="margin:0">Send a link that opens straight into Scripture Trail. Your talks stay private.</p>
+    <div class="row"><a class="btn wa" href="${wa(questShareMsg())}" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn" data-q="copygame">Copy link</button></div>
+  </div>
+  ${seasonsPanel()}`;
+}
+function questShareMsg(){return `Try *Scripture Trail*! Track your Bible reading as a journey, unlock Bible character cards, finish picture puzzles and earn coins. For children, teens and adults.\n\n${appUrl()}#trail\n\niPhone: open it in Safari, tap Share, then “Add to Home Screen”.\nAndroid: open it in Chrome, tap ⋮, then “Add to Home screen”.`}
+function qCards(){
+  return `<p class="sub">Read the chapter on a card, then answer every question right to unlock it. Level: <b>${QLEVEL[QG.level].n}</b>. Collect a whole section to open its Expert bonus.</p>
+  ${QGROUPS.map((g,gi)=>{const cs=QCHARS.filter(c=>c.g===gi),own=qOwned(gi),full=own===cs.length;
+    return `<div class="qgroup"><div class="row" style="justify-content:space-between"><h3>${esc(g.n)}</h3><span class="count">${own}/${cs.length}${QG.bonus[gi]?" · 🏅":""}</span></div>
+    <div class="album">${cs.map(c=>qCardHtml(c,g)).join("")}</div>
+    ${full&&!QG.bonus[gi]?`<button class="btn primary" data-q="bonus" data-v="${gi}" style="justify-content:center">Expert bonus: ${esc(g.n)} (+100)</button>`:QG.bonus[gi]?`<div class="badge">🏅 ${esc(g.n)} master</div>`:""}</div>`}).join("")}`;
+}
+function qCardHtml(c,g){
+  const open=QG.cards[c.id];
+  return `<button class="gcard ${open?"open":""}" data-q="card" data-v="${c.id}" aria-label="${open?esc(c.name):"Locked card: "+esc(c.clue)}"><div class="in">
+    <div class="face back"><svg class="lock" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><small>Read ${esc(c.clue)}</small></div>
+    <div class="face front" style="background:linear-gradient(160deg,${g.c[0]},${g.c[1]})"><div class="big">${esc(c.name[0])}</div><b>${esc(c.name)}</b><span>${esc(c.clue)}</span></div>
+  </div></button>`;
+}
+function qPlayCard(c){
+  const L=QLEVEL[QG.level];
+  const qs=QG.level==="easy"?c.qs.slice(0,3):QG.level==="medium"?qShuffle([...c.qs.slice(0,3),c.qs[3]]):qShuffle(c.qs);
+  qQuiz({title:c.name+" · "+L.n,qs,level:QG.level,onDone:r=>{
+    if(r.score===r.total){QG.cards[c.id]=true;save();renderQuest();QSFX.flip();setTimeout(()=>{QSFX.win();qAdd(20);qShowCard(c,true)},350)}
+    else{renderQuest();toast(`${r.score} of ${r.total} right. Read ${c.clue} and try again!`)}
+  }});
+}
+function qShowCard(c,isNew){
+  const g=QGROUPS[c.g];
+  const sh=openSheet(`<div class="reveal">${isNew?`<b style="font:800 20px var(--display);color:var(--ok)">New card unlocked! +20</b>`:""}
+    <div class="gcard open" style="pointer-events:none;width:170px"><div class="in"><div class="face back"></div><div class="face front" style="background:linear-gradient(160deg,${g.c[0]},${g.c[1]})"><div class="big">${esc(c.name[0])}</div><b>${esc(c.name)}</b><span>${esc(c.clue)}</span></div></div></div>
+    <p class="story">${esc(c.story)}</p>
+    <div class="point" style="width:100%;text-align:left"><b>Lesson:</b> ${esc(c.lesson)}</div>
+    <div class="row" style="justify-content:center"><a class="btn" href="${wol(c.ref)}" target="_blank" rel="noopener">Read ${esc(c.ref)}</a><a class="btn wa" href="${wa(`*${c.name}* (${c.ref})\n${c.story}\n\nLesson: ${c.lesson}`)}" target="_blank" rel="noopener">WhatsApp</a></div>
+    <button class="btn primary" data-close style="width:100%;justify-content:center">Close</button></div>`);
+  qSay(c.name+". "+c.story);
+}
+
+/* puzzles */
+function qPuzList(){return QG.custom?[...QPUZ,{id:"custom",n:"My picture",price:0,qs:()=>QG.custom.qs,draw:null}]:QPUZ}
+function qArtFor(p){
+  if(p.id==="custom")return qArt.custom||null;
+  if(!qArt[p.id]){const cv=document.createElement("canvas");cv.width=cv.height=600;p.draw(cv.getContext("2d"),600);qArt[p.id]=cv}
+  return qArt[p.id];
+}
+function qPuzzleView(){
+  const list=qPuzList(),p=list.find(x=>x.id===qPuzzle)||list[0];qPuzzle=p.id;
+  const got=QG.pieces[p.id]||[],done=QG.done[p.id];
+  return `<div><h3 style="margin:0;font:800 19px var(--display)">${esc(p.n)}</h3><p class="sub" style="margin:0">Each right answer adds a piece. Finish all 9 to complete the picture.</p></div>
+  <div class="board" id="q-board">${Array.from({length:9},(_,k)=>`<div class="tile" data-t="${k}">${got.includes(k)?"":`<span class="qm">?</span>`}</div>`).join("")}</div>
+  ${done?`<div class="panel" style="text-align:center"><b style="font:800 18px var(--display);color:var(--ok)">Picture complete!</b><button class="btn" data-q="replay" style="justify-content:center">Play it again (no coins)</button></div>`:`<button class="btn primary big" data-q="piece">Answer question ${got.length+1} of 9</button>`}
+  <h3 style="margin:0;font:800 18px var(--display)">Gallery</h3>
+  <div class="gallery">${list.map(x=>{const own=QG.owned[x.id]||x.price===0;return `<button class="gtile ${x.id===p.id?"active":""}" data-q="${own?"pick":"buy"}" data-v="${x.id}">
+    <canvas class="thumb" data-thumb="${x.id}" width="120" height="120" ${own?"":'style="filter:grayscale(1) blur(3px);opacity:.5"'}></canvas>
+    <span>${esc(x.n)}</span>${own?`<small>${QG.done[x.id]?"Complete ✓":(QG.pieces[x.id]||[]).length+"/9"}</small>`:`<span class="price"><span class="coin"></span>${x.price}</span>`}</button>`}).join("")}</div>
+  <div class="panel"><b>Use your own picture</b><p class="sub" style="margin:0">Make a picture with Gemini or ChatGPT (use “Picture idea” on any illustration), then load it here. The app turns it into a puzzle.</p>
+  <label class="btn" style="justify-content:center;cursor:pointer">Choose a picture<input id="q-own" type="file" accept="image/*" hidden></label></div>
+  <p class="sub" style="font-size:13px">The pictures are drawn for this app, not taken from any publication.</p>`;
+}
+function qPaintBoard(){
+  const p=qPuzList().find(x=>x.id===qPuzzle);const art=qArtFor(p);
+  (QG.pieces[p.id]||[]).forEach(k=>qPaintTile(k,art,false));
+  document.querySelectorAll("[data-thumb]").forEach(c=>{const x=qPuzList().find(y=>y.id===c.dataset.thumb);const a=qArtFor(x);if(a)c.getContext("2d").drawImage(a,0,0,120,120)});
+  const inp=document.getElementById("q-own");if(inp)inp.onchange=e=>qOwnPicture(e.target.files[0]);
+}
+function qPaintTile(k,art,anim){
+  const t=document.querySelector(`#q-board .tile[data-t="${k}"]`);if(!t||!art)return;
+  const c=document.createElement("canvas");c.width=c.height=200;const s=art.width/3;
+  c.getContext("2d").drawImage(art,(k%3)*s,Math.floor(k/3)*s,s,s,0,0,200,200);
+  t.innerHTML="";t.appendChild(c);if(anim)t.classList.add("pop");
+}
+function qNextPiece(){
+  const p=qPuzList().find(x=>x.id===qPuzzle);const got=QG.pieces[p.id]||[];
+  QG.noPay=QG.noPay||{};const free=QG.noPay[p.id];
+  const k=got.length;const all=p.qs();const q=all[k%all.length];
+  qQuiz({title:p.n+" · piece "+(k+1),qs:[q],level:QG.level==="expert"?"expert":"easy",pay:free?0:(QG.level==="expert"?15:5),onDone:r=>{
+    if(!r.score){toast("Read the verse and try again");return}
+    got.push(k);QG.pieces[p.id]=got;
+    if(got.length===9){QG.done[p.id]=true;setTimeout(()=>{QSFX.win();if(!free)qAdd(50);toast(free?"Picture complete again!":"Picture complete! +50 coins")},500)}
+    save();renderQuest();qPaintTile(k,qArtFor(p),true);QSFX.flip();
+  }});
+}
+function qOwnPicture(file){
+  if(!file)return;const r=new FileReader();
+  r.onload=()=>{const img=new Image();img.onload=()=>{
+    const cv=document.createElement("canvas");cv.width=cv.height=600;const x=cv.getContext("2d");const s=Math.min(img.width,img.height);
+    x.drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,600,600);
+    const all=QCHARS.flatMap(c=>c.qs);const qs=qShuffle(all).slice(0,9);
+    QG.custom={img:cv.toDataURL("image/jpeg",.82),qs};QG.owned.custom=true;QG.pieces.custom=[];delete QG.done.custom;qArt.custom=null;qLoadCustom(()=>{qPuzzle="custom";save();renderQuest();toast("Your picture is ready. Answer questions to build it!")});
+  };img.src=r.result};r.readAsDataURL(file);
+}
+function qLoadCustom(cb){if(!QG.custom){cb&&cb();return}const img=new Image();img.onload=()=>{const cv=document.createElement("canvas");cv.width=cv.height=600;cv.getContext("2d").drawImage(img,0,0,600,600);qArt.custom=cv;cb&&cb()};img.src=QG.custom.img}
+
+/* timeline */
+let qTl=null,qPicks=[],qChecked=false;
+function qTimelineView(){
+  if(!qTl){qTl=qShuffle(QTIMELINE.map((e,i)=>i)).slice(0,QG.level==="easy"?5:QG.level==="medium"?6:8);qPicks=[];qChecked=false}
+  const right=qTl.slice().sort((a,b)=>a-b);
+  const shown=qChecked?right:qTl;
+  return `<p class="sub">Tap the events from the earliest to the latest.</p>
+  <div class="tl">${shown.map(i=>{const p=qPicks.indexOf(i);const cls=qChecked?(right[p]===i?"right":"wrong"):p>=0?"set":"";return `<button class="ev ${cls}" data-q="ev" data-v="${i}"><span class="n">${p>=0?p+1:""}</span><span style="flex:1">${esc(QTIMELINE[i][0])}</span>${qChecked?`<small class="count">${QTIMELINE[i][1]}</small>`:""}</button>`}).join("")}</div>
+  <div style="display:flex;gap:8px"><button class="btn" data-q="tlnew" style="flex:1;justify-content:center">New round</button><button class="btn primary" data-q="tlcheck" style="flex:2;justify-content:center" ${qPicks.length===qTl.length&&!qChecked?"":"disabled"}>Check my order</button></div>
+  ${qChecked?`<p class="sub" style="font-size:13px">Shown in the right order, with dates from Bible chronology. Your number shows where you put each one.</p>`:""}`;
+}
+
+/* actions */
+function questAction(el){
+  if(trailAction(el))return;
+  const a=el.dataset.q,v=el.dataset.v;
+  switch(a){
+    case "view":qview=v;QSFX.tap();if(v==="timeline"&&qChecked)qTl=null;renderQuest();break;
+    case "snd":QG.sound=!QG.sound;save();renderQuest();if(QG.sound)QSFX.coin();break;
+    case "voice":QG.voice=!QG.voice;save();renderQuest();toast(QG.voice?"Questions will be read aloud":"Read aloud is off");break;
+    case "level":QG.level=v;save();QSFX.tap();renderQuest();break;
+    case "daily":qQuiz({title:"Daily challenge",qs:[qDailyQ()],level:QG.level,pay:10,onDone:r=>{
+      const y=new Date(Date.now()-864e5).toISOString().slice(0,10);QG.streak=QG.lastDaily===y?QG.streak+1:1;QG.lastDaily=today();
+      if(QG.streak>1)qAdd(QG.streak*2);save();renderQuest();if(r.score)QSFX.win();toast(QG.streak>1?`Streak ${QG.streak}! Bonus ${QG.streak*2} coins`:"Streak started!")}});break;
+    case "famtoggle":QG.fam.on=!QG.fam.on;save();renderQuest();break;
+    case "teamadd":QG.fam.teams.push({n:"Team "+"ABCD"[QG.fam.teams.length],s:0});save();renderQuest();break;
+    case "teamdel":QG.fam.teams.pop();save();renderQuest();break;
+    case "teamreset":QG.fam.teams.forEach(t=>t.s=0);QG.fam.turn=0;save();renderQuest();break;
+    case "copygame":copy(appUrl()+"#trail");break;
+    case "card":{const c=QCHARS.find(x=>x.id===v);QG.cards[c.id]?qShowCard(c):qPlayCard(c);break}
+    case "bonus":{const gi=+v;qQuiz({title:QGROUPS[gi].n+" · Expert bonus",qs:qShuffle(QB[gi]),level:"expert",pay:20,onDone:r=>{
+      if(r.score===r.total){QG.bonus[gi]=true;save();renderQuest();QSFX.win();qAdd(100);toast(`🏅 ${QGROUPS[gi].n} master! +100 coins`)}else{renderQuest();toast(`${r.score} of ${r.total}. Try again for the badge!`)}}});break}
+    case "piece":qNextPiece();break;
+    case "replay":QG.pieces[qPuzzle]=[];delete QG.done[qPuzzle];QG.noPay=QG.noPay||{};QG.noPay[qPuzzle]=true;save();renderQuest();break;
+    case "pick":qPuzzle=v;renderQuest();break;
+    case "buy":{const p=QPUZ.find(x=>x.id===v);if(!p)break;if(el.dataset.sure){if(qSpend(p.price)){QG.owned[v]=true;qPuzzle=v;save();QSFX.win();renderQuest();toast(p.n+" unlocked!")}}else{el.dataset.sure=1;el.querySelector("span").textContent=`Tap again to unlock`;}break}
+    case "ev":{if(qChecked)break;const i=+v,p=qPicks.indexOf(i);if(p>=0)qPicks.splice(p,1);else qPicks.push(i);qTone([[440+qPicks.length*60,.08,0,"triangle"]]);renderQuest();break}
+    case "tlnew":qTl=null;renderQuest();break;
+    case "tlcheck":{qChecked=true;const right=qTl.slice().sort((a,b)=>a-b);const ok=qPicks.filter((e,i)=>right[i]===e).length;
+      if(ok===qTl.length){QSFX.win();qAdd(QG.level==="expert"?40:25,el);toast("Perfect order!")}else{QSFX.wrong();if(ok)qAdd(ok*2,el);toast(`${ok} of ${qTl.length} in the right place`)}renderQuest();break}
+  }
+}
+view.addEventListener("click",e=>{const el=e.target.closest("[data-q]");if(el&&tab==="quest"&&el.tagName!=="INPUT")questAction(el)});
+view.addEventListener("input",e=>{if(e.target.dataset.q==="teamname"){QG.fam.teams[+e.target.dataset.i].n=e.target.value||"Team";save()}});
+qLoadCustom();
+
+/* ---------- puzzle pictures, drawn in code ---------- */
+function qPerson(x,X,Y,h,robe,skin,head){
+  x.fillStyle=robe;x.beginPath();x.moveTo(X-h*.18,Y);x.lineTo(X-h*.1,Y-h*.62);x.quadraticCurveTo(X,Y-h*.7,X+h*.1,Y-h*.62);x.lineTo(X+h*.18,Y);x.closePath();x.fill();
+  x.fillStyle=skin;x.beginPath();x.arc(X,Y-h*.77,h*.12,0,7);x.fill();
+  if(head){x.fillStyle=head;x.beginPath();x.arc(X,Y-h*.8,h*.13,Math.PI,0);x.fill()}
+}
+function qGlow(x,X,Y,r,col){const g=x.createRadialGradient(X,Y,0,X,Y,r);g.addColorStop(0,col);g.addColorStop(1,"rgba(255,255,255,0)");x.fillStyle=g;x.beginPath();x.arc(X,Y,r,0,7);x.fill()}
+function qHill(x,pts,c1,c2,yTop,yBot){const g=x.createLinearGradient(0,yTop,0,yBot);g.addColorStop(0,c1);g.addColorStop(1,c2);x.fillStyle=g;x.beginPath();x.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)x.lineTo(pts[i][0],pts[i][1]);x.closePath();x.fill()}
+function drawNoah(x,S){
+  let g=x.createLinearGradient(0,0,0,S);g.addColorStop(0,"#5d8fd6");g.addColorStop(.45,"#f5c99b");g.addColorStop(.62,"#fde4c1");x.fillStyle=g;x.fillRect(0,0,S,S);
+  qGlow(x,470,170,170,"rgba(255,226,150,.9)");x.fillStyle="#fff1c9";x.beginPath();x.arc(470,170,38,0,7);x.fill();
+  x.globalAlpha=.55;["#e53e3e","#ed8936","#ecc94b","#48bb78","#4299e1","#805ad5"].forEach((c,i)=>{x.strokeStyle=c;x.lineWidth=11;x.beginPath();x.arc(300,420,330-i*11,Math.PI*1.08,Math.PI*1.92);x.stroke()});x.globalAlpha=1;
+  for(let i=0;i<6;i++){x.fillStyle="rgba(255,255,255,.55)";x.beginPath();x.ellipse(90+i*95,70+(i%2)*30,60,16,0,0,7);x.fill()}
+  qHill(x,[[-20,430],[110,250],[180,300],[280,430]],"#7f8f7a","#4d5e4b",250,430);
+  qHill(x,[[330,430],[470,270],[540,320],[640,430]],"#6f7f6a","#3f4f3d",270,430);
+  x.fillStyle="#fff";x.globalAlpha=.6;x.beginPath();x.moveTo(110,250);x.lineTo(130,272);x.lineTo(95,268);x.fill();x.globalAlpha=1;
+  g=x.createLinearGradient(0,410,0,S);g.addColorStop(0,"#3d7bbf");g.addColorStop(1,"#163a63");x.fillStyle=g;x.fillRect(0,410,S,190);
+  x.strokeStyle="rgba(255,255,255,.35)";x.lineWidth=3;for(let r=0;r<5;r++){x.beginPath();x.moveTo(0,440+r*34);for(let k=0;k<=S;k+=40)x.quadraticCurveTo(k+20,432+r*34,k+40,440+r*34);x.stroke()}
+  x.fillStyle="rgba(0,0,0,.25)";x.beginPath();x.ellipse(300,470,220,22,0,0,7);x.fill();
+  g=x.createLinearGradient(0,350,0,460);g.addColorStop(0,"#9a5a2c");g.addColorStop(1,"#4e2a10");x.fillStyle=g;x.beginPath();x.moveTo(70,355);x.lineTo(530,355);x.lineTo(485,458);x.lineTo(115,458);x.closePath();x.fill();
+  x.strokeStyle="rgba(40,20,5,.6)";x.lineWidth=2;for(let y=370;y<458;y+=15){x.beginPath();x.moveTo(78+(y-355)*.43,y);x.lineTo(522-(y-355)*.43,y);x.stroke()}
+  g=x.createLinearGradient(0,270,0,360);g.addColorStop(0,"#b8763c");g.addColorStop(1,"#7c4a1e");x.fillStyle=g;x.fillRect(160,282,280,76);
+  g=x.createLinearGradient(0,215,0,290);g.addColorStop(0,"#6e3a12");g.addColorStop(1,"#4a250a");x.fillStyle=g;x.beginPath();x.moveTo(138,288);x.lineTo(300,218);x.lineTo(462,288);x.fill();
+  [195,265,335].forEach(wx=>{qGlow(x,wx+18,316,34,"rgba(255,210,120,.6)");x.fillStyle="#ffd98a";x.fillRect(wx,302,36,28)});
+  x.fillStyle="#d9a441";x.fillRect(378,196,12,92);x.beginPath();x.ellipse(392,192,19,10,-.35,0,7);x.fill();x.fillStyle="#8a5512";[[381,214],[385,238],[380,262]].forEach(([a,b])=>{x.beginPath();x.arc(a,b,3.5,0,7);x.fill()});
+  x.fillStyle="#7d8796";x.beginPath();x.ellipse(232,282,28,20,0,0,7);x.fill();x.fillRect(200,280,10,30);
+  x.fillStyle="#fff";x.beginPath();x.ellipse(150,150,22,10,-.1,0,7);x.fill();x.beginPath();x.moveTo(140,148);x.lineTo(160,122);x.lineTo(166,150);x.fill();x.beginPath();x.arc(172,146,8,0,7);x.fill();
+  x.fillStyle="#3f8f3f";x.beginPath();x.ellipse(186,150,9,4,.4,0,7);x.fill();
+}
+function drawDaniel(x,S){
+  let g=x.createLinearGradient(0,0,0,S);g.addColorStop(0,"#3a2f2a");g.addColorStop(1,"#1a1411");x.fillStyle=g;x.fillRect(0,0,S,S);
+  for(let i=0;i<60;i++){x.fillStyle=`rgba(${120+Math.random()*40},${95+Math.random()*30},${70+Math.random()*20},.35)`;const bx=(i%8)*80+(Math.floor(i/8)%2)*40-20,by=Math.floor(i/8)*70;x.fillRect(bx,by,74,64)}
+  x.fillStyle="#8fb7e8";x.beginPath();x.ellipse(300,20,120,40,0,0,7);x.fill();
+  const beam=x.createLinearGradient(0,0,0,S);beam.addColorStop(0,"rgba(255,236,170,.75)");beam.addColorStop(1,"rgba(255,236,170,.05)");x.fillStyle=beam;x.beginPath();x.moveTo(200,20);x.lineTo(400,20);x.lineTo(500,600);x.lineTo(100,600);x.closePath();x.fill();
+  qGlow(x,300,330,200,"rgba(255,248,220,.5)");
+  g=x.createLinearGradient(0,480,0,S);g.addColorStop(0,"#5b4636");g.addColorStop(1,"#2e2219");x.fillStyle=g;x.fillRect(0,480,S,120);
+  qGlow(x,300,190,90,"rgba(255,255,255,.85)");qPerson(x,300,290,190,"rgba(255,255,255,.85)","rgba(255,240,220,.9)");
+  qPerson(x,300,500,170,"#2f5f9e","#b07a4e","#2b1d14");x.fillStyle="#264d82";x.fillRect(255,470,90,30);
+  [[130,490,1],[470,495,-1]].forEach(([X,Y,d])=>{
+    x.fillStyle="#c8913f";x.beginPath();x.ellipse(X,Y,70,28,0,0,7);x.fill();
+    const m=x.createRadialGradient(X+d*55,Y-28,4,X+d*55,Y-28,40);m.addColorStop(0,"#d69b45");m.addColorStop(1,"#7a4a17");x.fillStyle=m;x.beginPath();x.arc(X+d*55,Y-28,38,0,7);x.fill();
+    x.fillStyle="#d9a24e";x.beginPath();x.arc(X+d*58,Y-26,22,0,7);x.fill();x.fillStyle="#2b1a0b";x.beginPath();x.arc(X+d*52,Y-31,2.5,0,7);x.arc(X+d*64,Y-31,2.5,0,7);x.fill();
+    x.strokeStyle="#c8913f";x.lineWidth=7;x.beginPath();x.moveTo(X-d*65,Y);x.quadraticCurveTo(X-d*100,Y-10,X-d*95,Y+20);x.stroke()});
+}
+function drawRedSea(x,S){
+  let g=x.createLinearGradient(0,0,0,S);g.addColorStop(0,"#25304f");g.addColorStop(.5,"#d18f63");g.addColorStop(.6,"#e9b98a");x.fillStyle=g;x.fillRect(0,0,S,S);
+  qGlow(x,300,140,120,"rgba(255,170,90,.7)");
+  x.fillStyle="rgba(255,140,60,.85)";x.beginPath();x.moveTo(285,330);x.quadraticCurveTo(270,200,300,60);x.quadraticCurveTo(330,200,315,330);x.fill();qGlow(x,300,200,80,"rgba(255,180,100,.55)");
+  g=x.createLinearGradient(0,330,0,S);g.addColorStop(0,"#d9b27c");g.addColorStop(1,"#a37b48");x.fillStyle=g;x.beginPath();x.moveTo(250,330);x.lineTo(350,330);x.lineTo(470,S);x.lineTo(130,S);x.fill();
+  [[0,250,1],[S,350,-1]].forEach(([X0,X1,d])=>{const w=x.createLinearGradient(X0,0,X1,0);w.addColorStop(0,"#0d4a6b");w.addColorStop(.75,"#1f7fa3");w.addColorStop(1,"#7fd0e6");x.fillStyle=w;
+    x.beginPath();x.moveTo(X0,170);x.quadraticCurveTo((X0+X1)/2,140,X1,190);x.lineTo(X1+d*-0,330);x.lineTo(d>0?130:470,S);x.lineTo(X0,S);x.closePath();x.fill();
+    x.strokeStyle="rgba(255,255,255,.35)";x.lineWidth=2;for(let k=0;k<8;k++){x.beginPath();x.moveTo(X0,220+k*45);x.quadraticCurveTo((X0+X1)/2,200+k*45,X1-d*(k*12),230+k*45);x.stroke()}
+    x.fillStyle="rgba(255,255,255,.7)";for(let k=0;k<14;k++){x.beginPath();x.arc(X1-d*Math.random()*20,180+k*30,3+Math.random()*4,0,7);x.fill()}});
+  const cols=["#7b3f2a","#2f5f9e","#8a6d3b","#5a3e7a","#a0522d","#3d6b4f"];
+  for(let r=0;r<4;r++)for(let k=0;k<4+r;k++){const y=400+r*55,w=(130+r*80),X=300-w/2+(k+.5)*w/(4+r);qPerson(x,X,y,40+r*14,cols[(r+k)%6],"#a8754a","#3b2a1d")}
+}
+function drawParadise(x,S){
+  let g=x.createLinearGradient(0,0,0,S);g.addColorStop(0,"#7ab8f0");g.addColorStop(.5,"#d6ecfb");x.fillStyle=g;x.fillRect(0,0,S,S);
+  qGlow(x,480,110,140,"rgba(255,240,180,.95)");x.fillStyle="#fff6d5";x.beginPath();x.arc(480,110,34,0,7);x.fill();
+  for(let i=0;i<4;i++){x.fillStyle="rgba(255,255,255,.75)";x.beginPath();x.ellipse(80+i*150,80+(i%2)*40,55,15,0,0,7);x.fill()}
+  qHill(x,[[-20,330],[150,220],[320,300],[460,230],[640,320],[640,600],[-20,600]],"#8fbf6a","#4f8a3a",220,600);
+  g=x.createLinearGradient(0,330,0,420);g.addColorStop(0,"#5fa8d8");g.addColorStop(1,"#3a7fb5");x.fillStyle=g;x.beginPath();x.ellipse(170,370,170,38,0,0,7);x.fill();
+  x.strokeStyle="rgba(255,255,255,.5)";x.lineWidth=2;for(let k=0;k<3;k++){x.beginPath();x.moveTo(60+k*40,365+k*10);x.lineTo(160+k*40,365+k*10);x.stroke()}
+  g=x.createLinearGradient(0,400,0,S);g.addColorStop(0,"#79b552");g.addColorStop(1,"#3f7a2c");x.fillStyle=g;x.fillRect(0,410,S,190);
+  [[60,330,1],[520,300,1.2],[420,350,.8],[300,280,.7]].forEach(([X,Y,s])=>{x.fillStyle="#6b4423";x.fillRect(X-6*s,Y,12*s,60*s);const t=x.createRadialGradient(X-10*s,Y-30*s,5,X,Y-20*s,55*s);t.addColorStop(0,"#9ad46a");t.addColorStop(1,"#2f6b2a");x.fillStyle=t;x.beginPath();x.arc(X,Y-20*s,50*s,0,7);x.fill()});
+  x.fillStyle="#efe1c4";x.fillRect(360,330,90,60);x.fillStyle="#a2542f";x.beginPath();x.moveTo(350,334);x.lineTo(405,295);x.lineTo(460,334);x.fill();x.fillStyle="#6b4423";x.fillRect(395,355,18,35);
+  for(let i=0;i<70;i++){x.fillStyle=["#f56565","#f6e05e","#fff","#ed64a6","#9f7aea"][i%5];x.beginPath();x.arc(Math.random()*S,430+Math.random()*165,3,0,7);x.fill()}
+  x.fillStyle="#c8913f";x.beginPath();x.ellipse(200,505,55,24,0,0,7);x.fill();const m=x.createRadialGradient(150,480,4,150,480,32);m.addColorStop(0,"#d69b45");m.addColorStop(1,"#7a4a17");x.fillStyle=m;x.beginPath();x.arc(150,480,30,0,7);x.fill();x.fillStyle="#d9a24e";x.beginPath();x.arc(148,482,17,0,7);x.fill();
+  x.fillStyle="#fafafa";x.beginPath();x.ellipse(250,520,30,18,0,0,7);x.fill();x.beginPath();x.arc(276,510,12,0,7);x.fill();x.fillStyle="#333";x.fillRect(236,530,4,12);x.fillRect(260,530,4,12);
+  qPerson(x,420,540,95,"#2f5f9e","#7a4a2a","#1d140e");qPerson(x,470,545,85,"#c05621","#7a4a2a","#1d140e");qPerson(x,445,555,50,"#d69e2e","#7a4a2a","#1d140e");qPerson(x,350,550,70,"#6b46c1","#e0b48c","#5a3a1a");
+}
+
+/* ---------- Scripture Trail: reading journeys, challenges, ranks, seasons ---------- */
+const BIBLE="Genesis 50,Exodus 40,Leviticus 27,Numbers 36,Deuteronomy 34,Joshua 24,Judges 21,Ruth 4,1 Samuel 31,2 Samuel 24,1 Kings 22,2 Kings 25,1 Chronicles 29,2 Chronicles 36,Ezra 10,Nehemiah 13,Esther 10,Job 42,Psalms 150,Proverbs 31,Ecclesiastes 12,Song of Solomon 8,Isaiah 66,Jeremiah 52,Lamentations 5,Ezekiel 48,Daniel 12,Hosea 14,Joel 3,Amos 9,Obadiah 1,Jonah 4,Micah 7,Nahum 3,Habakkuk 3,Zephaniah 3,Haggai 2,Zechariah 14,Malachi 4,Matthew 28,Mark 16,Luke 24,John 21,Acts 28,Romans 16,1 Corinthians 16,2 Corinthians 13,Galatians 6,Ephesians 6,Philippians 4,Colossians 4,1 Thessalonians 5,2 Thessalonians 3,1 Timothy 6,2 Timothy 4,Titus 3,Philemon 1,Hebrews 13,James 5,1 Peter 5,2 Peter 3,1 John 5,2 John 1,3 John 1,Jude 1,Revelation 22".split(",").map(x=>{const i=x.lastIndexOf(" ");return {n:x.slice(0,i),c:+x.slice(i+1)}});
+const ROUTES=[
+ {id:"accra",n:"Road to Accra",d:"From Kasoa to the heart of Accra",stops:["Kasoa","Old Barrier","Weija","Mallam Junction","Kaneshie","Circle","Accra"],bg:["#cfe8b8","#8fbf6a"],path:"#6b6f78",dash:"#ffd34d",icon:"🚌"},
+ {id:"tree",n:"Climb the giant tree",d:"Branch by branch to the very top",stops:["Roots","Trunk","First branch","Middle branches","Upper branches","Canopy","Treetop"],bg:["#d9f0ff","#a7d8a0"],path:"#7a4a22",dash:"#a8703e",icon:"🧗"},
+ {id:"israel",n:"Walk through Israel",d:"From Dan to Beersheba",stops:["Dan","Sea of Galilee","Nazareth","Samaria","Jerusalem","Bethlehem","Hebron","Beersheba"],bg:["#f6e7c8","#d9c08f"],path:"#a9875a",dash:"#fff4d8",icon:"🚶"},
+ {id:"exodus",n:"The Exodus",d:"From Egypt to the Promised Land",stops:["Rameses","Succoth","Red Sea","Marah","Elim","Mount Sinai","Kadesh","Plains of Moab","Jordan River"],bg:["#f3d9a8","#d6a960"],path:"#9b6b33",dash:"#ffe9b8",icon:"🐪"},
+ {id:"paul",n:"Paul's journeys",d:"Sailing city to city to Rome",stops:["Antioch","Cyprus","Lystra","Troas","Philippi","Thessalonica","Athens","Corinth","Ephesus","Jerusalem","Malta","Rome"],bg:["#bfe3f5","#6fb2d9"],path:"#ffffff",dash:"#1f4fd1",icon:"⛵"},
+ {id:"ark",n:"Build Noah's Ark",d:"A plank for every chapter",stops:["Cut the trees","Lay the frame","Three decks","Make the rooms","Cover with tar","Roof and window","Fit the door","Animals enter","Afloat!"],bg:["#d7e9f7","#9cc3e0"],path:"#8b4a1c",dash:"#c98a4b",icon:"🔨"}];
+const PACES={y1:{n:"Whole Bible in 1 year",per:4},y2:{n:"Whole Bible in 2 years",per:2},book:{n:"One book at a time",per:1}};
+const RANKS=[[0,"Learner"],[60,"Reader"],[180,"Bible Student"],[400,"Teacher"],[800,"Scholar"]];
+Object.assign(QG,Object.assign({read:{},journey:null,mem:null,conv:null,badges:{},meName:""},QG));
+QG.read=QG.read||{};QG.badges=QG.badges||{};
+const ALLQ=QCHARS.flatMap(c=>c.qs);
+
+/* reading data */
+const isRead=(b,c)=>(QG.read[b]||[]).includes(c);
+function setRead(b,c,on){const a=QG.read[b]=QG.read[b]||[];const i=a.indexOf(c);if(on&&i<0)a.push(c);if(!on&&i>=0)a.splice(i,1);save()}
+const readCount=b=>b===undefined?Object.values(QG.read).reduce((s,a)=>s+a.length,0):(QG.read[b]||[]).length;
+function jTarget(){const j=QG.journey;if(!j)return {total:1189,done:readCount()};if(j.pace==="book")return {total:BIBLE[j.book].c,done:readCount(j.book)};return {total:1189,done:readCount()}}
+function nextChapters(n){
+  const j=QG.journey,out=[];const books=j&&j.pace==="book"?[j.book]:BIBLE.map((_,i)=>i);
+  for(const b of books){for(let c=1;c<=BIBLE[b].c;c++){if(!isRead(b,c)){out.push([b,c]);if(out.length>=n)return out}}}
+  return out;
+}
+const jwOpen=(b,c)=>`https://www.jw.org/finder?wtlocale=E&prefer=lang&pub=nwtsty&bible=${String(b+1).padStart(2,"0")}${String(c).padStart(3,"0")}000-${String(b+1).padStart(2,"0")}${String(c).padStart(3,"0")}999`;
+const chName=(b,c)=>BIBLE[b].n+" "+c;
+
+/* ranks */
+function qPoints(){return readCount()+Object.keys(QG.cards).length*10+Object.keys(QG.bonus).length*40+Object.keys(QG.done).length*25+Object.keys(QG.badges).length*40}
+function qRank(){const p=qPoints();let r=RANKS[0],nx=null;for(let i=0;i<RANKS.length;i++){if(p>=RANKS[i][0]){r=RANKS[i];nx=RANKS[i+1]||null}}return {p,name:r[1],next:nx}}
+
+/* journey map, drawn as SVG */
+function journeyMap(rt,frac){
+  const N=rt.stops.length,W=360,H=Math.max(460,N*64),pad=46;
+  const pts=rt.stops.map((_,i)=>{const y=H-pad-(H-2*pad)*i/(N-1);const x=rt.id==="tree"?W/2+(i%2?28:-28):(i%2?W-90:90);return [x,y]});
+  let d=`M${pts[0][0]},${pts[0][1]}`;for(let i=1;i<N;i++){const [x0,y0]=pts[i-1],[x1,y1]=pts[i];d+=` C${x0},${(y0+y1)/2} ${x1},${(y0+y1)/2} ${x1},${y1}`}
+  const seg=frac*(N-1),si=Math.min(N-2,Math.floor(seg)),t=seg-si;
+  const bez=(p0,p1,u)=>{const c0=[p0[0],(p0[1]+p1[1])/2],c1=[p1[0],(p0[1]+p1[1])/2];const m=1-u;return [m*m*m*p0[0]+3*m*m*u*c0[0]+3*m*u*u*c1[0]+u*u*u*p1[0],m*m*m*p0[1]+3*m*m*u*c0[1]+3*m*u*u*c1[1]+u*u*u*p1[1]]};
+  const [mx,my]=frac>=1?pts[N-1]:bez(pts[si],pts[si+1],t);
+  const reached=Math.floor(seg+1e-9);
+  let deco="";
+  if(rt.id==="accra"){for(let i=0;i<14;i++){const x=(i*53)%W,y=30+(i*71)%(H-60);deco+=`<rect x="${x}" y="${y}" width="22" height="${16+(i%3)*8}" rx="2" fill="${["#e8d5b5","#f2c6a0","#d9e4f2"][i%3]}" opacity=".9"/><rect x="${x+4}" y="${y+4}" width="5" height="5" fill="#7a8aa0"/>`}}
+  if(rt.id==="tree"){deco+=`<rect x="${W/2-40}" y="40" width="80" height="${H-60}" rx="30" fill="#8b5a2b"/>`;for(let i=0;i<9;i++){const y=60+i*(H-120)/8,s=i%2?1:-1;deco+=`<path d="M${W/2},${y+20} q${s*90},-30 ${s*140},-10" stroke="#7a4a22" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="${W/2+s*140}" cy="${y+8}" r="34" fill="#4f9a4a" opacity=".85"/>`}deco+=`<circle cx="${W/2}" cy="50" r="70" fill="#5aa84f" opacity=".9"/>`}
+  if(rt.id==="israel"||rt.id==="exodus"){for(let i=0;i<7;i++){const x=(i*97)%W,y=40+(i*83)%(H-80);deco+=`<path d="M${x-40},${y+30} q40,-50 80,0 z" fill="${rt.id==="israel"?"#c9b07a":"#d9b06a"}" opacity=".8"/>`}if(rt.id==="exodus")deco+=`<rect x="0" y="${H*0.62}" width="${W}" height="26" fill="#3d7bbf" opacity=".7"/>`;if(rt.id==="israel")deco+=`<ellipse cx="${W-60}" cy="${H*0.18}" rx="40" ry="24" fill="#5fa8d8" opacity=".85"/>`}
+  if(rt.id==="paul"){for(let i=0;i<8;i++){const x=(i*113)%W,y=30+(i*97)%(H-60);deco+=`<ellipse cx="${x}" cy="${y}" rx="${26+(i%3)*10}" ry="14" fill="#e8d9a8"/><ellipse cx="${x}" cy="${y-4}" rx="${14+(i%3)*6}" ry="8" fill="#7fb069"/>`}}
+  if(rt.id==="ark"){for(let i=0;i<Math.round(frac*24);i++){deco+=`<rect x="20" y="${H-30-i*((H-60)/24)}" width="${W-40}" height="${(H-60)/24-3}" rx="3" fill="#9a5a2c" opacity=".55"/>`}}
+  return `<svg class="jmap" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(rt.n)} progress map">
+    <defs><linearGradient id="jbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${rt.bg[0]}"/><stop offset="1" stop-color="${rt.bg[1]}"/></linearGradient></defs>
+    <rect width="${W}" height="${H}" rx="18" fill="url(#jbg)"/>${deco}
+    <path d="${d}" stroke="${rt.path}" stroke-width="${rt.id==="paul"?4:18}" fill="none" stroke-linecap="round" ${rt.id==="paul"?'stroke-dasharray="2 10"':""} opacity=".95"/>
+    ${rt.id==="paul"?"":`<path d="${d}" stroke="${rt.dash}" stroke-width="3" fill="none" stroke-dasharray="10 10"/>`}
+    <g><circle cx="${mx}" cy="${my}" r="22" fill="#1f4fd1" stroke="#fff" stroke-width="3"/><text x="${mx}" y="${my+7}" font-size="20" text-anchor="middle">${rt.icon}</text></g>
+    ${pts.map(([x,y],i)=>{const on=i<=reached;const right=x<W/2;return `<g><circle cx="${x}" cy="${y}" r="13" fill="${on?"#f2b705":"#fff"}" stroke="#14213d" stroke-width="2.5"/>${on?`<path d="M${x-5},${y} l4,4 l7,-8" stroke="#14213d" stroke-width="2.5" fill="none"/>`:""}
+      <rect x="${right?x+18:x-18-(rt.stops[i].length*7.2+14)}" y="${y-12}" width="${rt.stops[i].length*7.2+14}" height="24" rx="12" fill="rgba(255,255,255,.92)"/>
+      <text x="${right?x+25:x-25}" y="${y+5}" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#14213d" text-anchor="${right?"start":"end"}">${esc(rt.stops[i])}</text></g>`}).join("")}
+  </svg>`;
+}
+
+/* journey view */
+function qJourneyView(){
+  const j=QG.journey;
+  if(!j||j.choosing){
+    return `<div><h3 style="margin:0;font:800 19px var(--display)">Choose your journey</h3><p class="sub" style="margin:0">Every chapter you read moves you along. Reach every stop to finish.</p></div>
+    <div class="routes">${ROUTES.map(r=>`<button class="route ${j&&j.route===r.id?"on":""}" data-q="route" data-v="${r.id}"><span class="ri">${r.icon}</span><b>${esc(r.n)}</b><small>${esc(r.d)}</small></button>`).join("")}</div>
+    <div class="panel"><b>Your pace</b>
+      <div class="levels">${Object.entries(PACES).map(([k,p])=>`<button class="lvl" data-q="pace" data-v="${k}" aria-pressed="${(QG.pendPace||"y1")===k}"><b style="font-size:13px">${p.n}</b><small>${k==="y1"?"about 4 chapters a day":k==="y2"?"about 2 chapters a day":"pick a book"}</small></button>`).join("")}</div>
+      ${(QG.pendPace||"y1")==="book"?`<label>Book<select id="q-book">${BIBLE.map((b,i)=>`<option value="${i}" ${i===(QG.pendBook??0)?"selected":""}>${esc(b.n)} (${b.c})</option>`).join("")}</select></label>`:""}
+      <button class="btn primary big" data-q="startj">Start the journey</button>
+      ${j?`<button class="btn" data-q="canceljourney" style="justify-content:center">Keep my current journey</button>`:""}
+    </div>`;
+  }
+  const rt=ROUTES.find(r=>r.id===j.route),{total,done}=jTarget(),frac=Math.min(1,done/total);
+  const N=rt.stops.length,reached=Math.floor(frac*(N-1)+1e-9),nextStop=reached<N-1?rt.stops[reached+1]:null;
+  const toNext=nextStop?Math.ceil(((reached+1)/(N-1))*total)-done:0;
+  const today=nextChapters(PACES[j.pace].per);
+  return `${qSeasonBanner()}
+  <div class="row" style="justify-content:space-between"><div><h3 style="margin:0;font:800 19px var(--display)">${esc(rt.n)}</h3><span class="count">${esc(PACES[j.pace].n)}${j.pace==="book"?": "+esc(BIBLE[j.book].n):""}</span></div><button class="btn" data-q="changej">Change</button></div>
+  <div class="jprog"><i style="width:${(frac*100).toFixed(1)}%"></i></div>
+  <div class="row" style="justify-content:space-between"><b style="font-variant-numeric:tabular-nums">${done} of ${total} chapters · ${Math.floor(frac*100)}%</b><span class="count">${nextStop?`${toNext} to ${esc(nextStop)}`:"Journey complete!"}</span></div>
+  <div class="jwrap">${journeyMap(rt,frac)}</div>
+  ${frac>=1?`<div class="panel" style="text-align:center"><b style="font:800 20px var(--display);color:var(--ok)">You finished the ${esc(rt.n)}!</b><button class="btn primary big" data-q="cert">Get my certificate</button></div>`:`
+  <div class="panel"><b>Today's reading</b>
+    ${today.map(([b,c])=>`<div class="chap"><span>${esc(chName(b,c))}</span><a class="btn" href="${jwOpen(b,c)}" target="_blank" rel="noopener">Open</a><button class="btn primary" data-q="readdone" data-v="${b}-${c}">Done</button></div>`).join("")}
+    <p class="sub" style="margin:0;font-size:13px">“Open” goes to JW Library or jw.org. Come back and tap Done for a quick question and coins.</p>
+  </div>`}
+  <details class="panel"><summary>Mark chapters you've already read</summary>
+    <label style="margin-top:10px">Book<select id="q-gridbook">${BIBLE.map((b,i)=>`<option value="${i}" ${i===(QG.gridBook??0)?"selected":""}>${esc(b.n)} · ${readCount(i)}/${b.c}</option>`).join("")}</select></label>
+    <div class="chgrid">${Array.from({length:BIBLE[QG.gridBook??0].c},(_,k)=>`<button data-q="toggle" data-v="${QG.gridBook??0}-${k+1}" aria-pressed="${isRead(QG.gridBook??0,k+1)}">${k+1}</button>`).join("")}</div>
+    <button class="btn" data-q="markbook" data-v="${QG.gridBook??0}">Mark the whole book as read</button>
+  </details>
+  <div class="row"><a class="btn wa" href="${wa(progressMsg())}" target="_blank" rel="noopener">Share my progress</a></div>`;
+}
+function progressMsg(){const j=QG.journey;if(!j)return "";const rt=ROUTES.find(r=>r.id===j.route),{total,done}=jTarget(),frac=done/total,N=rt.stops.length,at=rt.stops[Math.floor(frac*(N-1)+1e-9)];
+  return `📖 I've reached *${at}* on my Bible reading journey (${rt.n})!\n${done} of ${total} chapters read on Scripture Trail.\n\nJoin me: ${appUrl()}#trail`}
+
+/* certificate */
+function makeCert(name){
+  const j=QG.journey,rt=ROUTES.find(r=>r.id===j.route);const cv=document.createElement("canvas");cv.width=1200;cv.height=850;const x=cv.getContext("2d");
+  x.fillStyle="#fffdf6";x.fillRect(0,0,1200,850);x.strokeStyle="#1f4fd1";x.lineWidth=16;x.strokeRect(30,30,1140,790);x.strokeStyle="#f2b705";x.lineWidth=4;x.strokeRect(56,56,1088,738);
+  x.textAlign="center";x.fillStyle="#1f4fd1";x.font="800 30px system-ui,sans-serif";x.fillText("SCRIPTURE TRAIL",600,140);
+  x.fillStyle="#14213d";x.font="700 64px Georgia,serif";x.fillText("Certificate of Completion",600,230);
+  x.font="28px Georgia,serif";x.fillStyle="#5b6782";x.fillText("This is to certify that",600,310);
+  x.font="italic 700 60px Georgia,serif";x.fillStyle="#14213d";x.fillText(name||"A faithful reader",600,395);
+  x.strokeStyle="#d9e0ef";x.lineWidth=2;x.beginPath();x.moveTo(330,420);x.lineTo(870,420);x.stroke();
+  x.font="28px Georgia,serif";x.fillStyle="#14213d";
+  x.fillText(j.pace==="book"?`has read the whole book of ${BIBLE[j.book].n}`:"has read the entire Bible, all 1,189 chapters,",600,480);
+  x.fillText(`completing the journey “${rt.n}”.`,600,525);
+  x.font="italic 24px Georgia,serif";x.fillStyle="#5b6782";x.fillText("“Your word is a lamp to my foot, and a light for my path.” Psalm 119:105",600,615);
+  x.font="700 22px system-ui,sans-serif";x.fillStyle="#14213d";x.fillText(new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}),600,700);
+  x.fillStyle="#f2b705";x.beginPath();x.arc(1030,690,60,0,7);x.fill();x.fillStyle="#fff";x.font="44px system-ui";x.fillText(rt.icon,1030,706);
+  return cv;
+}
+async function certSheet(){
+  const sh=openSheet(`<h3>Your certificate</h3><label>Name on the certificate<input id="ct-n" value="${esc(QG.meName||"")}" placeholder="Your name"></label>
+    <canvas id="ct-c" style="width:100%;height:auto;border-radius:10px;border:1px solid var(--line)"></canvas>
+    <div class="row"><button class="btn primary" data-k="save">Save picture</button><button class="btn" data-k="share">Send on WhatsApp / share</button><button class="btn" data-close>Close</button></div>
+    <p class="sub" style="font-size:13px">Save the picture, then print it from your phone's Gallery or Photos.</p>`);
+  const draw=()=>{QG.meName=sh.querySelector("#ct-n").value.trim();save();const c=makeCert(QG.meName),t=sh.querySelector("#ct-c");t.width=c.width;t.height=c.height;t.getContext("2d").drawImage(c,0,0);return c};
+  draw();sh.querySelector("#ct-n").oninput=draw;
+  sh.addEventListener("click",async e=>{const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;const c=draw();
+    const blob=await new Promise(r=>c.toBlob(r,"image/png"));const fname="scripture-trail-certificate.png";
+    if(k==="share"){try{const f=new File([blob],fname,{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Scripture Trail certificate"});return}}catch(err){if(err&&err.name==="AbortError")return}toast("Sharing isn't possible here. Use Save picture.");return}
+    if(k==="save"){try{const d=window.claude&&window.claude.use?await window.claude.use("downloads"):null;if(d){await d.save({filename:fname,data:blob});return}}catch(err){if(err&&err.code&&err.code!=="unavailable"){toast("Not saved");return}}
+      const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=fname;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast("Saved to Downloads")}});
+}
+
+/* quick question after a chapter */
+function chapterQuestion(b){
+  const book=BIBLE[b].n;const pool=ALLQ.filter(q=>String(q[5]).startsWith(book+" "));
+  const q=(pool.length?pool:ALLQ)[Math.floor(Math.random()*(pool.length||ALLQ.length))];
+  qQuiz({title:"Quick question · +5",qs:[q],level:"medium",pay:5,onDone:()=>renderQuest()});
+}
+
+/* challenge a friend */
+let qIncoming=null;
+(function(){const m=location.hash.match(/^#ch-([0-9a-z]+(?:x[0-9a-z]+)*)-(\d)-([A-Za-z0-9]{0,16})$/);if(m){const ids=m[1].split("x").map(s=>parseInt(s,36)).filter(n=>n>=0&&n<ALLQ.length);if(ids.length===5)qIncoming={ids,score:+m[2],name:m[3]||"A friend"}}})();
+const chLink=(ids,score)=>`${appUrl()}#ch-${ids.map(i=>i.toString(36)).join("x")}-${score}-${(QG.meName||"Friend").replace(/[^A-Za-z0-9]/g,"").slice(0,16)||"Friend"}`;
+function playChallenge(ids,from){
+  qQuiz({title:from?`${from.name}'s challenge`:"Challenge",qs:ids.map(i=>ALLQ[i]),level:"medium",pay:3,onDone:r=>{
+    let head=`You scored ${r.score} of 5`;
+    if(from)head=r.score>from.score?`You win! ${r.score} to ${from.score}`:r.score===from.score?`It's a draw: ${r.score} each`:`${from.name} wins, ${from.score} to ${r.score}`;
+    if(from&&r.score>from.score)QSFX.win();
+    const sh=openSheet(`<h3>${esc(head)}</h3>
+      <label>Your name (shown to your friend)<input id="chn" value="${esc(QG.meName||"")}" placeholder="e.g. Gideon"></label>
+      <p class="sub">${from?"Send a challenge back with new questions, or send the same 5 to someone else.":"Send these same 5 questions to a friend. They see your score and try to beat it."}</p>
+      <div class="row"><a class="btn wa" id="chsend" target="_blank" rel="noopener">Send on WhatsApp</a>${from?`<button class="btn" data-k="new">New 5 questions</button>`:""}<button class="btn" data-k="copy">Copy link</button><button class="btn" data-close>Close</button></div>`);
+    const msg=()=>`📖 Scripture Trail challenge! I scored ${r.score}/5. Can you beat me?\n${chLink(ids,r.score)}`;
+    const upd=()=>{QG.meName=sh.querySelector("#chn").value.trim();save();sh.querySelector("#chsend").href=wa(msg())};upd();sh.querySelector("#chn").oninput=upd;
+    sh.addEventListener("click",e=>{const k=e.target.closest("[data-k]")?.dataset.k;if(!k)return;
+      if(k==="copy")copy(msg());
+      if(k==="new"){sh.remove();playChallenge(qShuffle(ALLQ.map((_,i)=>i)).slice(0,5),null)}});
+  }});
+}
+
+/* seasons: Memorial and convention */
+const daysTo=d=>Math.round((new Date(d+"T00:00")-new Date(today()+"T00:00"))/864e5);
+function qSeasonBanner(){
+  let h="";const m=QG.mem;
+  if(m&&m.date){const n=daysTo(m.date);if(n>=0&&n<=45)h+=`<button class="season mem" data-q="memopen"><b>Memorial season</b><span>${n===0?"The Memorial is today":n+" day"+(n===1?"":"s")+" to the Memorial"}</span><small>${m.days?(Object.keys(m.done||{}).length+"/"+m.days.length+" days read"):"Set up the reading"}</small></button>`}
+  const c=QG.conv;if(c&&c.theme)h+=`<button class="season conv" data-q="convopen"><b>Convention: ${esc(c.theme)}</b><small>${c.qs?c.qs.length+" question"+(c.qs.length===1?"":"s"):"Make the questions"}${QG.badges.conv?" · 🏅":""}</small></button>`;
+  return h;
+}
+function seasonsPanel(){
+  const m=QG.mem||{},c=QG.conv||{};
+  return `<details class="panel"><summary>Seasons: Memorial and convention</summary><div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">
+    <b>Memorial</b>
+    <label>Memorial date<input id="mem-d" type="date" value="${esc(m.date||"")}"></label>
+    <label>Paste the Memorial Bible reading schedule<textarea id="mem-t" placeholder="Copy the Memorial Bible reading from JW Library and paste it here">${esc(m.text||"")}</textarea></label>
+    <button class="btn primary" data-q="memmake">${m.days?"Make the questions again":"Make the day-by-day quizzes"}</button>
+    ${m.days?`<span class="count">${m.days.length} days ready, saved for offline use.</span>`:""}
+    <b>Convention</b>
+    <label>This year's convention theme<input id="cv-t" value="${esc(c.theme||"")}" placeholder="Type the theme when it's announced"></label>
+    <label>Key scriptures or notes (optional)<textarea id="cv-s" placeholder="e.g. the theme scripture and main texts">${esc(c.notes||"")}</textarea></label>
+    <button class="btn primary" data-q="convmake">${c.qs?"Make the questions again":"Make convention questions"}</button>
+    ${m.date||c.theme?`<button class="btn danger" data-q="seasonclear">Clear seasons</button>`:""}
+  </div></details>`;
+}
+async function memMake(){
+  const d=document.getElementById("mem-d").value,t=document.getElementById("mem-t").value.trim();
+  if(!d){toast("Enter the Memorial date");return}QG.mem=Object.assign(QG.mem||{},{date:d,text:t});save();
+  if(!t){toast("Paste the Memorial Bible reading first");return}
+  const prompt=`Below is the Memorial Bible reading schedule of Jehovah's Witnesses, pasted by the user. Split it into days exactly as given. For each day write 3 multiple-choice questions based ONLY on that day's Bible passages (New World Translation), each with the right answer, 3 wrong but believable answers, and the verse where the answer is found. Keep everything in line with the teachings of Jehovah's Witnesses.
+Return ONLY JSON, no other text:
+{"days":[{"label":"the day or date as given","reading":"the passages","qs":[{"q":"","a":"","w":["","",""],"ref":""}]}]}
+Schedule:
+"""
+${t.slice(0,8000)}
+"""`;
+  try{const o=await aiRun(prompt,true,"Making the Memorial quizzes…");QG.mem.days=(o.days||[]).map(x=>({label:x.label,reading:x.reading,qs:(x.qs||[]).map(q=>[q.q,q.a,...(q.w||[]).slice(0,3),q.ref])}));QG.mem.done={};save();renderQuest();toast("Memorial quizzes saved")}catch(e){aiError(e)}
+}
+async function convMake(){
+  const th=document.getElementById("cv-t").value.trim(),n=document.getElementById("cv-s").value.trim();
+  if(!th){toast("Type the convention theme");return}QG.conv=Object.assign(QG.conv||{},{theme:th,notes:n});save();
+  const prompt=`Write 15 multiple-choice Bible questions for the convention of Jehovah's Witnesses with the theme "${th}".${n?`\nUse these key scriptures and notes:\n"""\n${n.slice(0,6000)}\n"""`:""}
+Base the questions on the theme scripture and the scriptures given (New World Translation). Mix easy and harder ones. Each with the right answer, 3 wrong but believable answers and the verse. Keep everything in line with the teachings of Jehovah's Witnesses.
+Return ONLY JSON, no other text: {"qs":[{"q":"","a":"","w":["","",""],"ref":""}]}`;
+  try{const o=await aiRun(prompt,true,"Making convention questions…");QG.conv.qs=(o.qs||[]).map(q=>[q.q,q.a,...(q.w||[]).slice(0,3),q.ref]);save();renderQuest();toast("Convention questions saved")}catch(e){aiError(e)}
+}
+function memSheet(){
+  const m=QG.mem;if(!m||!m.days){qview="home";renderQuest();toast("Open “Seasons” below to set up the Memorial reading");return}
+  const sh=openSheet(`<h3>Memorial Bible reading</h3><p class="sub">Read each day's portion, then answer its quiz.</p>
+    ${m.days.map((d,i)=>`<div class="chap"><span><b>${esc(d.label)}</b><br><small>${esc(d.reading||"")}</small></span>${(m.done||{})[i]?`<span class="pill ok">Done ✓</span>`:`<button class="btn primary" data-k="${i}">Quiz</button>`}</div>`).join("")}
+    ${QG.badges.mem?`<div class="badge">🏅 Memorial reading complete</div>`:""}<button class="btn" data-close>Close</button>`);
+  sh.addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(!b)return;const i=+b.dataset.k;sh.remove();
+    qQuiz({title:m.days[i].label,qs:m.days[i].qs,level:"medium",pay:8,onDone:r=>{m.done=m.done||{};if(r.score>=2){m.done[i]=true;if(Object.keys(m.done).length===m.days.length&&!QG.badges.mem){QG.badges.mem=true;qAdd(50);QSFX.win();toast("🏅 Memorial badge earned!")}}else toast("Read the passage again and retry");save();renderQuest();memSheet()}})});
+}
+function convPlay(){
+  const c=QG.conv;if(!c||!c.qs||!c.qs.length){qview="home";renderQuest();toast("Open “Seasons” below to make the convention questions");return}
+  qQuiz({title:"Convention: "+c.theme,qs:qShuffle(c.qs).slice(0,5),level:QG.level,onDone:r=>{if(r.score===r.total&&!QG.badges.conv){QG.badges.conv=true;qAdd(40);QSFX.win();toast("🏅 Convention badge earned!")}renderQuest()}});
+}
+
+/* trail actions */
+function trailAction(el){
+  const a=el.dataset.q,v=el.dataset.v;
+  switch(a){
+    case "route":QG.pendRoute=v;document.querySelectorAll(".route").forEach(b=>b.classList.toggle("on",b.dataset.v===v));QSFX.tap();return true;
+    case "pace":QG.pendPace=v;save();renderQuest();return true;
+    case "startj":{const r=QG.pendRoute||(QG.journey&&QG.journey.route);if(!r){toast("Choose a journey first");return true}
+      const pace=QG.pendPace||"y1";const bk=document.getElementById("q-book");QG.journey={route:r,pace,book:bk?+bk.value:0,start:today()};delete QG.pendRoute;save();QSFX.win();renderQuest();return true}
+    case "changej":QG.journey.choosing=true;QG.pendRoute=QG.journey.route;QG.pendPace=QG.journey.pace;renderQuest();return true;
+    case "canceljourney":delete QG.journey.choosing;renderQuest();return true;
+    case "readdone":{const [b,c]=v.split("-").map(Number);const before=jTarget().done;setRead(b,c,true);QSFX.right();
+      const rt=ROUTES.find(r=>r.id===QG.journey.route),{total}=jTarget(),N=rt.stops.length,st=d=>Math.floor(Math.min(1,d/total)*(N-1)+1e-9);
+      if(st(before+1)>st(before)){QSFX.win();qAdd(15);toast(`You've reached ${rt.stops[st(before+1)]}! +15`)}
+      renderQuest();chapterQuestion(b);return true}
+    case "toggle":{const [b,c]=v.split("-").map(Number);setRead(b,c,!isRead(b,c));el.setAttribute("aria-pressed",isRead(b,c));QSFX.tap();return true}
+    case "markbook":{const b=+v;for(let c=1;c<=BIBLE[b].c;c++)setRead(b,c,true);renderQuest();toast(BIBLE[b].n+" marked as read");return true}
+    case "cert":certSheet();return true;
+    case "challenge":playChallenge(qShuffle(ALLQ.map((_,i)=>i)).slice(0,5),null);return true;
+    case "memopen":memSheet();return true;
+    case "convopen":convPlay();return true;
+    case "memmake":memMake();return true;
+    case "convmake":convMake();return true;
+    case "seasonclear":if(el.dataset.sure){QG.mem=null;QG.conv=null;save();renderQuest()}else{el.dataset.sure=1;el.textContent="Tap again to clear"}return true;
+  }
+  return false;
+}
+view.addEventListener("change",e=>{if(tab!=="quest")return;if(e.target.id==="q-gridbook"){QG.gridBook=+e.target.value;save();renderQuest();const d=view.querySelector("details.panel");if(d)d.open=true}if(e.target.id==="q-book"){QG.pendBook=+e.target.value;save()}});
+
+/* ---------- Bible characters, Character of the day, Insight library ---------- */
+const wolSearch=q=>"https://wol.jw.org/en/wol/s/r1/lp-e?q="+encodeURIComponent(q);
+const bookOf=v=>String(v||"").trim().replace(/\s+\d[\d:,\s\-–]*$/,"").replace(/\s+\d+:.*$/,"")||"Other";
+S.lib=S.lib||[];
+function libAdd(item){S.lib.unshift({id:"l"+Date.now()+Math.floor(Math.random()*1e3),d:today(),...item});save()}
+const cotd=()=>COTD[((qDay?qDay():0)%COTD.length+COTD.length)%COTD.length];
+
+function charHtml(o,mode){
+  const L=(l,a,f)=>a&&a.length?`<div class="block" style="font-family:var(--ui)"><b>${l}</b><ul class="steps" style="padding-left:18px">${a.map(f).join("")}</ul></div>`:"";
+  const ref=r=>r?` <a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a>`:"";
+  return `${o.summary?`<p class="story" style="margin:0">${esc(o.summary)}</p>`:""}
+  ${L("The scene, step by step",o.scene,s=>`<li>${esc(s.step)}${ref(s.ref)}</li>`)}
+  ${L(mode==="ministry"?"Questions people may ask":"Questions your audience may ask",o.questions,q=>`<li><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14.5px;color:var(--ink)">${esc(q.q)}</b><br>${esc(q.a||"")}${ref(q.ref)}${q.cont?`<br>➜ Continue with: <a href="${wolSearch(q.search||q.cont)}" target="_blank" rel="noopener">${esc(q.cont)}</a>`:""}</li>`)}
+  ${L("What makes this hard for us today",o.today,t=>`<li>${esc(t)}</li>`)}
+  ${L("Similar moments with other Bible characters",o.parallels,p=>`<li><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14.5px;color:var(--ink)">${esc(p.who)}</b>${ref(p.ref)}: ${esc(p.how||"")}</li>`)}
+  ${o.opener?`<div class="block"><b>Opening line</b>${esc(o.opener)}</div>`:""}
+  ${o.lesson?`<div class="point"><b>Lesson:</b> ${esc(o.lesson)}</div>`:""}`;
+}
+function charText(o){return `*${o.name}*\n${o.summary||""}`+
+  ((o.scene||[]).length?"\n\nThe scene:\n"+o.scene.map((s,i)=>`${i+1}. ${s.step}${s.ref?" ("+s.ref+")":""}`).join("\n"):"")+
+  ((o.questions||[]).length?"\n\nQuestions:\n"+o.questions.map(q=>`• ${q.q}\n  ${q.a||""}${q.ref?" ("+q.ref+")":""}${q.cont?"\n  Continue: "+q.cont:""}`).join("\n"):"")+
+  ((o.today||[]).length?"\n\nToday:\n"+o.today.map(t=>"• "+t).join("\n"):"")+
+  ((o.parallels||[]).length?"\n\nSimilar moments:\n"+o.parallels.map(p=>`• ${p.who}${p.ref?" ("+p.ref+")":""}: ${p.how||""}`).join("\n"):"")+
+  (o.opener?"\n\nOpening line: "+o.opener:"")+(o.lesson?"\n\nLesson: "+o.lesson:"")}
+function charSheet(name,mode){
+  let last=null;
+  const sh=openSheet(`<h3>Bible character</h3>
+    <div class="chips wrapit">${[["talk","For a talk"],["ministry","For the ministry"]].map(([k,l])=>`<button class="chip" data-k="mode" data-v="${k}" aria-pressed="${k===mode}">${l}</button>`).join("")}</div>
+    <label>Character<input id="cs-n" value="${esc(name||"")}" placeholder="e.g. Jonah, Ruth, Ebed-melech"></label>
+    <label>Focus (optional)<input id="cs-f" placeholder="e.g. running from an assignment, loyalty"></label>
+    <button class="btn primary" data-k="go">Study this character</button>
+    <div id="cs-out"></div>
+    <div class="row" id="cs-acts" hidden><button class="btn primary" data-k="lib">Save to Insight library</button><button class="btn" data-k="totalk">Add to a talk's notes</button><button class="btn" data-k="copy">Copy</button><button class="btn" data-close>Close</button></div>
+    <p class="sub" style="font-size:13px">Check scriptures in your Bible and lesson numbers in JW Library before you use them.</p>`);
+  sh.addEventListener("click",async e=>{
+    const el=e.target.closest("[data-k]");if(!el)return;const k=el.dataset.k;
+    if(k==="mode"){mode=el.dataset.v;sh.querySelectorAll("[data-k=mode]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===mode));return}
+    if(k==="copy"&&last){copy(charText(last));return}
+    if(k==="lib"&&last){libAdd({kind:"character",title:last.name+(mode==="ministry"?" (ministry)":" (talk)"),book:"Bible characters",mode,o:last});el.textContent="Saved ✓";el.disabled=true;toast("Saved to your Insight library");return}
+    if(k==="totalk"&&last){
+      if(!S.talks.length){toast("Add a talk first in My talks");return}
+      const pick=openSheet(`<h3>Add to which talk?</h3>${S.talks.map(t=>`<button class="btn list-btn" data-t="${t.id}">${esc(t.title)}</button>`).join("")}<button class="btn" data-close>Cancel</button>`);
+      pick.addEventListener("click",ev=>{const b=ev.target.closest("[data-t]");if(!b)return;const t=talkById(b.dataset.t);t.notes=((t.notes||"")+"\n\n"+charText(last)).trim();save();pick.remove();toast("Added to "+t.title+"'s notes")});return}
+    if(k==="go"){
+      const n=sh.querySelector("#cs-n").value.trim(),f=sh.querySelector("#cs-f").value.trim();if(!n){toast("Type a Bible character");return}
+      const common=`Bible character: ${n}${f?"\nFocus: "+f:""}\nUse the New World Translation and keep everything in line with the teachings of Jehovah's Witnesses. Keep each line short.`;
+      const prompt=mode==="talk"?`Help a Jehovah's Witness speaker in Ghana use a Bible character in a talk.\n${common}\n\nGive: a 2-sentence summary; the scene step by step (4 to 6 steps) with the scripture for each step; 3 or 4 "why/when/how" questions an audience would wonder about, each with a short answer and scripture; 2 or 3 things that make the same situation hard for us today; 2 or 3 similar moments with OTHER Bible characters, preferring lesser-known people, with scripture and how they are similar; and one lesson.\n\nReturn ONLY JSON, no other text:\n{"name":"","summary":"","scene":[{"step":"","ref":""}],"questions":[{"q":"","a":"","ref":""}],"today":[""],"parallels":[{"who":"","ref":"","how":""}],"lesson":""}`
+        :`Help a Jehovah's Witness in Ghana use a Bible character to start and continue conversations in the ministry.\n${common}\n\nGive: a 2-sentence summary; one natural opening line that uses this character; 4 questions people often ask about this account or what it teaches, each with a short answer, a scripture, and where to continue the conversation in a publication of Jehovah's Witnesses (prefer the Enjoy Life Forever! book, naming the lesson if you are sure, otherwise the topic; or a jw.org article), plus 2 to 4 search words; and one lesson.\n\nReturn ONLY JSON, no other text:\n{"name":"","summary":"","opener":"","questions":[{"q":"","a":"","ref":"","cont":"","search":""}],"lesson":""}`;
+      try{last=await aiRun(prompt,true,"Studying "+n+"…");last.name=last.name||n;sh.querySelector("#cs-out").innerHTML=charHtml(last,mode);sh.querySelector("#cs-acts").hidden=false}catch(err){aiError(err)}
+    }
+  });
+}
+function cotdCard(){
+  const [n,r,story,ask]=cotd();
+  return `<article class="ill"><div class="tag">Character of the day</div><h3>${esc(n)}</h3>
+    <div class="scr">📖 <a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a></div>
+    <p class="story" style="margin:0">${esc(story)}</p>
+    <div class="block"><b>Open with</b>${esc(ask)}</div>
+    <div class="row"><button class="btn primary" data-a="studycotd">Study this character</button>
+    <button class="btn" data-a="lccotd">Copy for Life Compass</button>
+    <a class="btn wa" href="${wa(`*${n}* (${r})\n${story}\n\nAsk: ${ask}`)}" target="_blank" rel="noopener">WhatsApp</a></div></article>`;
+}
+
+/* ---------- Insight library ---------- */
+let libQ="";
+function renderLibrary(){
+  const k=libQ.toLowerCase();
+  const items=S.lib.filter(x=>!k||JSON.stringify(x).toLowerCase().includes(k));
+  const books=[...new Set(items.map(x=>x.book||"Other"))];
+  view.innerHTML=`<button class="btn" data-a="backtalks" style="align-self:flex-start">← My talks</button>
+  <h2>Insight library</h2>
+  <p class="sub">Every word insight, background note and character study you save. It works without internet and is included in your backups.</p>
+  <input class="search" id="lib-q" type="search" placeholder="Search: Proverbs, friend, Jonah…" value="${esc(libQ)}">
+  <div class="row"><button class="btn" data-a="libnew">+ Scripture insight</button><button class="btn" data-a="libchar">+ Bible character</button></div>
+  ${items.length?books.map(b=>`<h4 style="margin-top:6px">${esc(b)}</h4><div class="list">${items.filter(x=>(x.book||"Other")===b).map(x=>`<div class="talk"><button class="head" data-a="libopen" data-id="${x.id}"><div><h3>${esc(x.title)}</h3><div class="meta">${x.kind==="character"?"Character study":"Scripture insight"} · ${fmtDate(x.d)}</div></div><span>${openTalk===x.id?"▴":"▾"}</span></button>
+    ${openTalk===x.id?`<div class="body">${x.kind==="character"?charHtml(x.o,x.mode):insightHtml(x.o)}<div class="row"><a class="btn wa" href="${wa(x.kind==="character"?charText(x.o):insightText(x.v,x.k,x.o))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-a="libcopy" data-id="${x.id}">Copy</button><button class="btn danger" data-a="libdel" data-id="${x.id}">Delete</button></div></div>`:""}</div>`).join("")}</div>`).join(""):`<div class="empty">${S.lib.length?"Nothing matches your search.":"Your library is empty. Save a scripture insight or a character study and it will appear here."}</div>`}`;
+  const qi=document.getElementById("lib-q");qi.oninput=e=>{libQ=e.target.value;const p=qi.selectionStart;renderLibrary();const n=document.getElementById("lib-q");n.focus();n.setSelectionRange(p,p)};
+}
+function charAction(a,el){
+  const id=el.dataset.id;
+  switch(a){
+    case "openlib":go("library");return true;
+    case "charstudy":charSheet("",tab==="ministry"?"ministry":"talk");return true;
+    case "studycotd":charSheet(cotd()[0],"ministry");return true;
+    case "lccotd":{const [n,r,,ask]=cotd();copy(`${fmtDate(today())} · Field service\nCharacter: ${n} (${r})\nOpener: ${ask}`);return true}
+    case "libnew":insightSheet("","",null);return true;
+    case "libchar":charSheet("","talk");return true;
+    case "libopen":openTalk=openTalk===id?"":id;renderLibrary();return true;
+    case "libcopy":{const x=S.lib.find(y=>y.id===id);copy(x.kind==="character"?charText(x.o):insightText(x.v,x.k,x.o));return true}
+    case "libdel":if(el.dataset.sure){S.lib=S.lib.filter(y=>y.id!==id);save();renderLibrary()}else{el.dataset.sure=1;el.textContent="Tap again to delete"}return true;
+  }
+  return false;
 }
 
 /* ---------- Actions ---------- */
 view.addEventListener("click",e=>{
   const el=e.target.closest("[data-a]");if(!el)return;const a=el.dataset.a,id=el.dataset.id,v=el.dataset.v;
   if(ministryAction(a,el))return;
+  if(charAction(a,el))return;
   const t=id&&talkById(id);
   switch(a){
     case "opentimer":go("timer");break;
@@ -1040,9 +2209,12 @@ view.addEventListener("click",e=>{
 });
 view.addEventListener("input",e=>{const n=e.target.dataset.notes;if(n){const t=talkById(n);if(t){t.notes=e.target.value;save()}}});
 
-function rerender(){({bank:renderBank,fresh:renderFresh,talks:renderTalks,timer:renderTimer,ministry:renderMinistry,more:renderMore})[tab]()}
-function go(t){tab=t;if(t!=="talks"&&t!=="ministry")openTalk="";const hi=t==="timer"?"talks":t;document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===hi?"page":"false"));rerender();window.scrollTo(0,0)}
+function rerender(){({bank:renderBank,fresh:renderFresh,talks:renderTalks,timer:renderTimer,ministry:renderMinistry,more:renderMore,quest:renderQuest,library:renderLibrary})[tab]()}
+function go(t){tab=t;if(t!=="talks"&&t!=="ministry")openTalk="";const hi=t==="timer"||t==="library"?"talks":t;document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===hi?"page":"false"));rerender();window.scrollTo(0,0)}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>go(b.dataset.tab));
-go("bank");
+if(questOnly){document.body.classList.add("questonly");document.getElementById("hdr-t").textContent="Scripture Trail";document.getElementById("hdr-s").textContent="Read, play and grow";document.title="Scripture Trail";go("quest");
+  if(qIncoming){const c=qIncoming;const sh=openSheet(`<h3>${esc(c.name)} challenged you!</h3><p class="sub" style="font-size:16px">${esc(c.name)} scored <b>${c.score} of 5</b>. Answer the same 5 Bible questions. Can you beat it?</p><button class="btn primary big" data-k="go">Play now</button><button class="btn" data-close>Later</button>`);
+    sh.addEventListener("click",e=>{if(e.target.closest("[data-k=go]")){sh.remove();playChallenge(c.ids,c)}})}}
+else go("bank");
 </script>
 <script>if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script></body></html>
