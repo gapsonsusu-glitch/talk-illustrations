@@ -109,6 +109,7 @@ pre.prompt{white-space:pre-wrap;font-size:13px;background:var(--bg);border:1px s
 details summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.spin{animation:none}.toast{transition:none}}
 /* Scripture Trail */
+.mtopics{display:flex;flex-wrap:wrap;gap:6px}.mtopics .chip{font-size:13px;padding:6px 11px}
 .code{font:800 18px var(--display);letter-spacing:.06em;text-align:center;background:var(--mark-soft);color:var(--warn);border-radius:12px;padding:10px;word-break:break-all}
 .rankrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .rank{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:5px 12px;font:800 14px var(--display)}
@@ -216,7 +217,7 @@ body.questonly nav.tabs{display:none}body.questonly{padding-bottom:20px}
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const VERSION="5.3";
+const VERSION="5.4";
 const SHORT_TRAIL="https://tinyurl.com/gideon-scripture-trail";
 const SHORT_APK="https://tinyurl.com/gideon-trail-android";
 const questOnly=/^#(quest|trail|ch-)/.test(location.hash);
@@ -688,6 +689,7 @@ function renderMore(){
       <div class="row"><button class="btn" data-a="bkcopy">Copy backup text</button><button class="btn" data-a="bkload">Load pasted backup</button></div></div>
     </details>
   </div>
+  ${shepMorePanel()}
   <h2>The app</h2>
   <div class="panel">
     <div class="row" style="justify-content:space-between"><span>Version <b>${VERSION}</b></span>${isInstalled()||isNative()?`<span class="pill ok">Installed ✓</span>`:""}</div>
@@ -734,6 +736,7 @@ function restore(text){
     S.fav=[...new Set([...S.fav,...(d.fav||[])])];
     d.talks.forEach((t,i)=>{t.id=t.id||("t"+Date.now()+i);const j=S.talks.findIndex(x=>x.id===t.id);if(j<0)S.talks.push(t);else S.talks[j]=t});
     Object.entries(d.used||{}).forEach(([id,arr])=>{const cur=S.used[id]||[];arr.forEach(u=>{if(!cur.some(c=>c.d===u.d&&c.w===u.w))cur.push(u)});S.used[id]=cur});
+    if(d.shep){S.shep.on=S.shep.on||d.shep.on;if(!S.shep.pin)S.shep.pin=d.shep.pin;(d.shep.notes||[]).forEach(n=>{if(!S.shep.notes.some(x=>x.id===n.id))S.shep.notes.push(n)})}
     (d.lib||[]).forEach(x=>{if(!S.lib.some(y=>y.id===x.id))S.lib.push(x)});
     if(d.quest&&Object.keys(d.quest.cards||{}).length>=Object.keys(S.quest.cards||{}).length)Object.assign(S.quest,d.quest);
     (d.kept||[]).forEach(k=>{S.kept=S.kept||[];if(!S.kept.some(x=>x.r===k.r&&x.open===k.open))S.kept.push(k)});
@@ -866,7 +869,7 @@ function adageCard(a){
   </article>`;
 }
 function renderMinistry(){
-  const seg=[["today","Today"],["someone","I see someone"],["kept","Kept"+((S.kept||[]).length?" ("+S.kept.length+")":"")],["chars","Characters"],["meeting","Service meeting"],["family","Family worship"]];
+  const seg=[["today","Today"],["someone","I see someone"],["kept","Kept"+((S.kept||[]).length?" ("+S.kept.length+")":"")],["chars","Characters"],...(S.shep&&S.shep.on?[["shep","🔒 Shepherding"]]:[]),["meeting","Service meeting"],["family","Family worship"]];
   let body="";
   if(mtab==="today"){
     body=`<p class="sub">${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})} · three scriptures we rarely use, each with a fresh angle. They change every day.</p>
@@ -881,6 +884,8 @@ function renderMinistry(){
       <button class="btn primary big" data-a="msgo">Give me openers</button>
     </div>
     <div class="list" id="ms-out">${FS.someone.map((x,i)=>fsCard(x,"someone",i)).join("")}</div>`;
+  }else if(mtab==="shep"){
+    body=S.shep.on?shepView():`<div class="empty">Shepherding is turned off. Turn it on in More.</div>`;
   }else if(mtab==="chars"){
     body=`<p class="sub">A lesser-known Bible character each day, and a study of any character for the ministry.</p>${cotdCard()}
     <button class="btn primary big" data-a="charstudy">Study a Bible character</button>
@@ -888,7 +893,7 @@ function renderMinistry(){
   }else if(mtab==="kept"){
     body=(S.kept||[]).length?`<p class="sub">Openers you kept. They work without internet.</p><div class="list">${S.kept.map((x,i)=>fsCard(x,"kept",i)).join("")}</div>`:`<div class="empty">No kept openers yet. Tap “Keep” on any scripture or opener you like.</div>`;
   }else if(mtab==="meeting"){
-    body=`<p class="sub">Type the topic. You get quick notes, a short outline, and jw.org articles and videos to choose from.</p>
+    body=`${meetTopicsHtml()}<h4 style="margin-top:6px">Another topic? Ask Claude</h4><p class="sub">Type the topic. You get quick notes, a short outline, and jw.org articles and videos to choose from.</p>
     <div class="panel">
       <label>Topic<input id="mt-topic" placeholder="e.g. Starting conversations in public places" value="${esc(MS.topic||"")}"></label>
       <label>Lesson from “Love People—Make Disciples” (optional)<input id="mt-sec" placeholder="e.g. Lesson 4, point 3" value="${esc(MS.sec)}"></label>
@@ -2197,11 +2202,161 @@ function charAction(a,el){
   return false;
 }
 
+/* ---------- Shepherding (private, PIN) and built-in field service meeting topics ---------- */
+/* Shepherding: [id, name, [[scripture, why]x3], [character, scripture, how it compares], opening, closing and prayer, avoid, jw.org topic] */
+const SHEP=[
+["inactive","Inactive",[["Luke 15:4-7","Jehovah goes looking for the one lost sheep and rejoices when it is found."],["Ezekiel 34:16","Jehovah himself promises to search for the lost and bandage the injured."],["Matthew 11:28-30","Jesus' yoke is kindly and refreshing, not a heavy burden."]],["Peter","John 21:15-17","After denying Jesus, Peter was lovingly restored and given work to do."],"“We've missed you, and we came because we care about you. How have you been?”","Thank Jehovah for his love for this one, and ask him to help them feel welcome to come back.","Counting how long they have been away, or pressuring them about meetings and reports.","return to Jehovah"],
+["meetings","Missing meetings",[["Hebrews 10:24, 25","Meetings are where we encourage one another, and that is needed more as the day draws near."],["Psalm 122:1","David rejoiced to go to Jehovah's house; meetings can be a joy, not a duty."],["Matthew 18:20","Jesus is with us when we gather in his name."]],["Thomas","John 20:24-29","Thomas missed one meeting and missed seeing the resurrected Jesus. At the next one his doubts were answered."],"“How have things been? Is anything making it hard to come to the meetings?”","Pray about the specific obstacle they mention, such as work, transport or health.","Blaming or comparing them with others who attend faithfully.","benefits of meetings"],
+["discouraged","Discouraged",[["Psalm 34:18","Jehovah is close to the brokenhearted."],["Isaiah 40:29-31","He gives power to the tired; those hoping in him regain strength."],["1 Peter 5:7","Throw all your anxiety on him, because he cares for you."]],["Elijah","1 Kings 19:4-8","Even a strong prophet was so discouraged he wanted to die. Jehovah first gave him food and rest, then new work."],"“You've been on our mind. How are you really feeling these days?”","Thank Jehovah for this one's faithfulness so far, and ask for peace and strength day by day.","Saying “just be positive” or brushing off their feelings.","discouragement"],
+["sick","Sick or in hospital",[["Psalm 41:3","Jehovah sustains the one on a sickbed."],["2 Corinthians 4:16","Though the body weakens, the inner person can be renewed day by day."],["Isaiah 33:24","A time is coming when no resident will say “I am sick.”"]],["Hezekiah","Isaiah 38:1-5","When King Hezekiah was very ill, he poured out his heart in prayer, and Jehovah heard him."],"“We came to see how you are, and to share a short encouraging thought.”","Keep the prayer short; ask for relief, wisdom for the doctors and peace of heart.","Long visits, medical advice, or comparing their illness with others.","coping with illness"],
+["elderly","Elderly or housebound",[["Psalm 92:12-14","The righteous keep bearing fruit even in old age."],["Isaiah 46:4","Jehovah promises to carry and rescue us even when our hair is grey."],["Hebrews 6:10","God does not forget the work and love we have shown."]],["Anna","Luke 2:36-38","At 84, the widow Anna was still serving God and spoke about the child Jesus to many."],"“We came to visit you and to hear how you are doing. Your example means a lot to us.”","Thank Jehovah for their years of faithful service; ask him to sustain them.","Speaking as if their service is over, or talking only about the old days.","elderly ones"],
+["grief","Grieving a loss",[["Psalm 147:3","Jehovah heals the brokenhearted and binds up their wounds."],["John 11:35","Jesus wept. Grief is not a lack of faith."],["Acts 24:15","There is going to be a resurrection."]],["Naomi","Ruth 1:20, 21; 4:14-16","Naomi lost her husband and sons and felt bitter, but Jehovah later comforted her through Ruth and a grandson."],"“We are so sorry for your loss. We just wanted to be with you for a little while.”","Thank Jehovah for the resurrection hope; ask him to comfort the family day by day.","“I know how you feel,” “They're in a better place,” or rushing them to stop grieving.","grief"],
+["money","Lost a job or money problems",[["Matthew 6:31-33","Keep seeking the Kingdom first, and the needed things will be added."],["Hebrews 13:5","Jehovah promises never to leave us."],["Psalm 37:25","David never saw the righteous one abandoned."]],["The widow of Zarephath","1 Kings 17:12-16","She had only a little flour and oil, but trusted Jehovah, and it did not run out."],"“We heard things have been hard lately. How are you managing?”","Pray for a job, wisdom in using what they have, and peace of mind.","Promising quick financial relief, or judging how they handled money.","money problems"],
+["marriage","Marriage or family problems",[["Colossians 3:12-14","Put on compassion, kindness, humility, mildness and patience; love is the perfect bond."],["Ephesians 4:26, 32","Don't let the sun set while you are still angry; forgive freely."],["Proverbs 15:1","A mild answer turns away rage."]],["Abigail","1 Samuel 25:23-33","Abigail's mild, humble words calmed an angry David and prevented great harm."],"“We wanted to see how the family is doing and share a thought that has helped many homes.”","Pray for peace in the home and for each one to show patience and love.","Taking sides, repeating what one mate said, or discussing it with others.","marriage"],
+["opposition","Opposition from family",[["Matthew 10:36","Jesus said a person's enemies may be from his own household."],["1 Peter 3:1, 2","Good conduct can win family members without a word."],["Psalm 27:10","Even if family abandons us, Jehovah will take us in."]],["Jesus' brothers","John 7:5; Acts 1:14","At first Jesus' own brothers did not believe in him, but later they were with the disciples."],"“How are things at home? We want you to know you're not alone.”","Pray for courage and mildness, and for the family members to soften.","Speaking badly of the opposing relatives or encouraging confrontation.","family opposition"],
+["single","Single parent",[["Psalm 68:5","Jehovah is a father of the fatherless and a protector of widows."],["Proverbs 22:6","Training a child in the right way has lasting value."],["Isaiah 41:10","Jehovah promises to strengthen and help."]],["Eunice","2 Timothy 1:5; 3:15","Timothy's mother taught him the Scriptures from infancy, and he grew into a fine servant of God."],"“You're doing a big job. How are you and the children?”","Thank Jehovah for this parent's efforts; ask for strength, provision and help with the children.","Hinting that they are to blame for their situation.","single parent"],
+["youth","Young one under pressure",[["1 Corinthians 15:33","Bad associations spoil useful habits."],["Ecclesiastes 12:1","Remember your Creator in the days of your youth."],["1 Timothy 4:12","Let no one look down on your youth; be an example."]],["Daniel","Daniel 1:8","As a teenager far from home, Daniel resolved in his heart not to compromise."],"“How's school going? What's the hardest thing about being a Witness at school?”","Pray for courage, good friends and wisdom for this young one.","Lecturing, or comparing them with other young ones.","peer pressure young people"],
+["newbap","Newly baptized",[["Colossians 2:6, 7","Keep walking in him, rooted and built up."],["Philippians 1:6","Jehovah will carry the good work he started to completion."],["Galatians 6:9","Don't give up in doing what is fine."]],["The Ethiopian official","Acts 8:35-39","After his baptism he went on his way rejoicing."],"“How has it been since your baptism? What has helped you most?”","Thank Jehovah for this new brother or sister; ask him to keep them close.","Giving them too many assignments or expectations at once.","newly baptized"],
+["fearpreach","Afraid to preach",[["Jeremiah 1:6-8","Jeremiah felt too young, but Jehovah said, “I am with you.”"],["2 Timothy 1:7","God gives a spirit of power, love and soundness of mind, not cowardice."],["Acts 4:29","The early disciples prayed for boldness."]],["Moses","Exodus 4:10-12","Moses felt he could not speak well, and Jehovah promised to help him."],"“Many of us find the ministry hard at times. What part feels hardest for you?”","Pray for boldness, and offer to work with them in the ministry soon.","Making them feel guilty about their hours or comparing them with others.","courage to preach"],
+["doubts","Doubts or weak faith",[["James 1:5, 6","Ask God for wisdom; he gives generously."],["Mark 9:24","“Help me where I need faith!” is a prayer Jesus accepted."],["Romans 10:17","Faith follows the thing heard; feeding on God's word builds faith."]],["Asaph","Psalm 73:2, 3, 16, 17","Asaph almost lost his way when he saw the wicked prosper, until he came into God's sanctuary."],"“It's okay to have questions. What has been on your mind?”","Pray for clear understanding and a heart that keeps trusting Jehovah.","Dismissing their questions or acting shocked.","strengthen faith"],
+["habit","Struggling with a bad habit",[["1 Corinthians 10:13","No temptation is beyond what we can bear; God provides the way out."],["Romans 7:21-25","Even Paul felt the struggle between right and wrong."],["Psalm 51:10","Create in me a pure heart, O God."]],["Joseph","Genesis 39:9, 12","Faced with temptation, Joseph refused and ran away."],"“We want to help, not judge. How have things been going?”","Pray for strength, practical steps, and Jehovah's forgiveness and help.","Acting shocked, or speaking as if they are beyond help.","bad habits"],
+["hurt","Hurt by someone in the congregation",[["Colossians 3:13","Keep forgiving freely, just as Jehovah forgave you."],["Proverbs 19:11","It is beautiful to overlook an offense."],["Matthew 5:23, 24","Making peace with our brother matters to God."]],["Joseph","Genesis 45:4-8","Joseph forgave the brothers who sold him and saw Jehovah's hand in it."],"“We noticed you seem hurt. Would you like to talk about it?”","Pray for healing of heart and for peace between the brothers.","Taking sides, naming or criticizing the other person.","forgiveness"],
+["guilt","Feeling unworthy or guilty",[["Isaiah 1:18","Though sins are like scarlet, they can be made white as snow."],["Psalm 103:12-14","Jehovah removes our sins far from us and remembers we are dust."],["1 John 3:19, 20","God is greater than our hearts."]],["Manasseh","2 Chronicles 33:12, 13","Even very wicked King Manasseh humbled himself, and Jehovah forgave him."],"“Jehovah sees much good in you. What has been weighing on you?”","Thank Jehovah for his mercy; ask him to help this one feel his forgiveness.","Bringing up past sins or minimizing their feelings.","guilt and forgiveness"],
+["carer","Caring for a sick relative",[["Isaiah 40:29","Jehovah gives power to the tired one."],["Matthew 11:28","Jesus invites the tired and loaded down to come for refreshment."],["Hebrews 6:10","God does not forget the love we show to others."]],["Ruth","Ruth 2:2, 18","Ruth worked hard to care for Naomi, and Jehovah blessed her."],"“You're taking care of everyone. How are YOU doing?”","Pray for the sick one and especially for the strength and health of the carer.","Telling them to do more, or not asking about their own needs.","caregivers"],
+["anxious","Stressed or anxious",[["Philippians 4:6, 7","Through prayer, the peace of God guards our hearts."],["Matthew 6:34","Don't be anxious about tomorrow."],["1 Peter 5:7","He cares for you."]],["Hannah","1 Samuel 1:10, 18","Hannah poured out her heart to Jehovah, and afterward her face was no longer troubled."],"“You seem to have a lot on your mind. What's worrying you most?”","Pray for peace of heart, sleep and wisdom; encourage seeing a doctor if needed.","Saying “just pray more” as if their anxiety is a lack of faith.","anxiety"],
+["reinstated","Recently reinstated",[["Luke 15:20-24","The father ran to meet his returning son and celebrated."],["Isaiah 55:7","Jehovah forgives in a large way."],["Psalm 86:5","Jehovah is good and ready to forgive."]],["The returning son","Luke 15:20-24","In Jesus' illustration, the father welcomed his son back warmly, without reproach."],"“We're so happy you're back. How can we help you feel at home?”","Thank Jehovah for this one's return; ask him to strengthen them and their friendships.","Mentioning the past or treating them coldly.","returning to Jehovah"]
+];
+/* Meeting topics: [name, example lines, Love People search words, [scriptures], video topic, article topic, tip] */
+const MEET=[
+["Starting conversations in public places",["“Good morning! The market is busy today. Many people tell us prices keep rising. Do you think things will ever get better?”","Listen, then read Psalm 72:12-14.","Offer a tract or show jw.org."],"conversation public witnessing",["Acts 17:17","Psalm 72:12-14"],"public witnessing","hope for the future","Smile, keep it short, and respect people's time."],
+["House to house: the first 30 seconds",["“Hello, my name is ___. We're sharing a short thought with neighbours. Do you think the world will ever be free of suffering?”","Let them answer, then read Revelation 21:4."],"start conversation",["Colossians 4:6","Revelation 21:4"],"house-to-house ministry","why does God allow suffering","Warm greeting, your name, one short question."],
+["Making return visits that build interest",["“Last time you asked why God allows suffering. I brought the answer. May I show you one verse?”","Leave a new question for next time."],"return visits",["1 Corinthians 3:6","Proverbs 20:5"],"return visit","why does God allow suffering","Note the question you leave, and come back soon."],
+["Offering a Bible study",["“Many people enjoy a free Bible course. Can I show you how it works? It takes a few minutes.”","Open the first lesson of Enjoy Life Forever! and go through one point together."],"offer a Bible study",["Matthew 28:19, 20","Acts 8:30, 31"],"Would you like a Bible study?","free Bible study","Demonstrate a lesson right away rather than only describing it."],
+["Using the Enjoy Life Forever! book at the door",["“This book has short lessons on the Bible's answers. Look at this first question.”","Read the lesson's scripture and ask the question in the box."],"Enjoy Life Forever",["Psalm 119:105","2 Timothy 3:16"],"Enjoy Life Forever","Bible study","Show the pictures and questions; keep the first visit short."],
+["Using videos in the ministry",["“May I show you a short video, about two minutes? It explains why so many people study the Bible.”","After it, ask what they thought."],"videos ministry",["Isaiah 48:17"],"Why Study the Bible?","videos","Ask before playing; download videos beforehand so they play offline."],
+["Tracts and the literature cart",["Stand beside the cart and smile at passers-by.","“Do you think the Bible can help families today? You're welcome to take one free.”"],"public witnessing cart",["Isaiah 52:7","2 Timothy 2:24"],"cart witnessing","family happiness","Don't block the way; let people come to you."],
+["Business territory",["“I see you're busy, so I'll be brief. Many business people tell us stress is a big problem. Here's a practical article on handling stress.”"],"business territory",["Proverbs 22:29","Ecclesiastes 4:6"],"business territory","how to handle stress","Avoid busy times, dress neatly and be brief."],
+["When someone says “I'm busy”",["“I understand, I'll be very brief. Just one thought from the Bible…”","Read one verse. “Can I come back at a better time?”"],"I'm busy objection",["Ecclesiastes 3:1","Colossians 4:5"],"short video","peace of mind","Respect them; offer a tract or a short video link."],
+["When someone says “I have my own church”",["“That's good. It shows you care about God. Many church members enjoy reading the Bible with us. What do you like most about the Bible?”"],"I have my own religion",["Acts 17:11","John 17:17"],"why study the Bible","Bible questions answered","Commend them, find common ground, and don't argue."],
+["Young people and students",["“Many students worry about their future. What do you think helps young people succeed?”","Read Psalm 1:1-3 and mention the Young People Ask series."],"young people",["Psalm 119:9","1 Timothy 4:12"],"Young People Ask","young people ask","Speak to them as adults; keep it relevant to school life."],
+["Speaking with Muslim neighbours",["“We both believe in one God and respect Abraham. Did you know the Bible calls Abraham God's friend?”","Read James 2:23."],"Islam Muslim",["Deuteronomy 6:4","James 2:23"],"Muslim","Abraham friend of God","Show respect, start with common ground, and avoid debate at first."],
+["People who doubt God exists",["“Many people find it hard to believe in God. What makes you think that way?”","Listen, then: “When you see a house, you know someone built it.” Read Hebrews 3:4."],"atheist doubt God",["Hebrews 3:4","Romans 1:20"],"Was It Designed?","does God exist","Ask, listen and reason; don't rush to scriptures."],
+["Comforting people who are grieving",["“I'm very sorry for your loss. Many people find comfort in this promise…”","Read John 5:28, 29."],"comfort grieving",["John 5:28, 29","Psalm 34:18"],"comfort for the grieving","when someone you love dies","Listen more than you talk; keep the visit short."],
+["Phone and letter witnessing",["Phone: “Good afternoon, my name is ___. I'm calling neighbours with a short, encouraging thought. Do you have a minute?”","Letter: a warm greeting, one question, one verse, the jw.org link."],"telephone letter witnessing",["Proverbs 25:25","Colossians 4:6"],"letter writing","letter witnessing","Keep calls short; write letters warmly and neatly."],
+["Witnessing to relatives and workmates",["When bad news comes up at work: “I read something hopeful about that…”","Share one verse; don't preach a sermon."],"informal witnessing",["1 Peter 3:15","Colossians 4:6"],"informal witnessing","informal witnessing","Let your conduct speak first, and be patient."],
+["Being adaptable like Paul",["To a farmer: talk about the seasons and God's provision.","To a student: talk about the future and purpose."],"adapt to the person",["1 Corinthians 9:22, 23","Acts 17:22, 23"],"adapting in the ministry","purpose of life","Notice what the person cares about and start there."],
+["Asking viewpoint questions and listening",["“What do you think…?” Then really listen.","Repeat back what they said before you read a scripture."],"ask questions listen",["James 1:19","Proverbs 20:5"],"listening","good listener","Ask, listen, then read; people feel respected."],
+["Inviting people to the Memorial or convention",["“We're inviting you to a special event. It's free and there is no collection. Here's the date and time.”","Show the invitation and the venue."],"Memorial invitation",["Luke 22:19","Psalm 122:1"],"Memorial invitation","Memorial","Show the invitation clearly; mention date, time and place."],
+["Keeping our joy when few listen",["Share a short experience of someone who listened after many visits.","Remind the group that our part is to witness faithfully."],"joy in the ministry",["Galatians 6:9","1 Corinthians 15:58"],"joy in the ministry","keep your joy","Success is faithfulness, not numbers."]
+];
+
+/* built-in meeting topics */
+let meetOpen=-1;
+function meetTopicsHtml(){
+  return `<div class="panel"><b>20 ready topics</b><p class="sub" style="margin:0">Pick a topic for today's meeting. These work without internet.</p>
+  <div class="mtopics">${MEET.map((m,i)=>`<button class="chip" data-a="meetpick" data-i="${i}" aria-pressed="${meetOpen===i}">${esc(m[0])}</button>`).join("")}</div></div>
+  ${meetOpen>=0?meetCard(MEET[meetOpen]):""}`;
+}
+function meetCard(m){
+  const [n,ex,lmd,sc,vid,art,tip]=m;
+  return `<article class="ill" id="meet-card"><div class="tag">Meeting for field service</div><h3>${esc(n)}</h3>
+    <div class="block" style="font-family:var(--ui)"><b>Example of how to go about it</b><ul class="steps" style="padding-left:18px">${ex.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
+    <div class="block" style="font-family:var(--ui)"><b>Main reference</b><a href="${wolSearch("Love People Make Disciples "+lmd)}" target="_blank" rel="noopener">Love People—Make Disciples: find the lesson on this topic</a></div>
+    <div class="scr">📖 ${sc.map(r=>`<a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a>`).join(" · ")}</div>
+    <div class="scr">🎬 <a href="${jwSearch(vid)}" target="_blank" rel="noopener">Video: ${esc(vid)}</a></div>
+    <div class="scr">📄 <a href="${jwSearch(art)}" target="_blank" rel="noopener">Article: ${esc(art)}</a></div>
+    <div class="point"><b>Tip:</b> ${esc(tip)}</div>
+    <div class="row"><button class="btn primary" data-a="meetsave">Save plan</button><a class="btn wa" href="${wa(meetText(m))}" target="_blank" rel="noopener">WhatsApp</a><button class="btn" data-a="meetcopy">Copy</button></div>
+    <p class="sub" style="font-size:13px">The links open a search, so look up the exact lesson in JW Library.</p></article>`;
+}
+const meetText=m=>`*Field service meeting: ${m[0]}*\n\nExample:\n${m[1].map(e=>"• "+e).join("\n")}\n\nReference: Love People—Make Disciples (lesson on this topic)\nScriptures: ${m[3].join("; ")}\nVideo: ${m[4]}\nArticle: ${m[5]}\n\nTip: ${m[6]}`;
+const meetObj=m=>({title:m[0],use:`Love People—Make Disciples, the lesson on ${m[0].toLowerCase()}`,summary:[m[6]],outline:m[1],scriptures:m[3],resources:[{type:"video",title:m[4],search:m[4]},{type:"article",title:m[5],search:m[5]}]});
+
+/* Shepherding */
+S.shep=Object.assign({on:false,pin:"",notes:[]},S.shep||{});
+let shepOpen=false,shepSit=-1,shepAsk=null;
+async function pinHash(p){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("ti-shep:"+p));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){let h=0;for(const c of "ti-shep:"+p)h=(h*31+c.charCodeAt(0))|0;return "s"+h}}
+function shepView(){
+  if(!shepOpen)return `<div class="panel" style="text-align:center;align-items:center"><div style="font-size:34px">🔒</div><b>Shepherding is locked</b>
+    <input id="sh-pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter your PIN" style="max-width:220px;text-align:center;font-size:20px;letter-spacing:.3em">
+    <button class="btn primary" data-a="shepunlock">Unlock</button>
+    <p class="sub" style="font-size:13px">Forgot your PIN? Restore a backup made before, or turn Shepherding off and on again in More. That clears your notes.</p></div>`;
+  const s=shepSit>=0?SHEP[shepSit]:null;
+  return `<div class="row" style="justify-content:space-between"><p class="sub" style="margin:0;flex:1;min-width:200px">Private. Nothing here is shared or sent unless you choose Ask Claude.</p><button class="btn" data-a="sheplock">🔒 Lock</button></div>
+  <div class="panel"><b>Choose the situation</b><div class="mtopics">${SHEP.map((x,i)=>`<button class="chip" data-a="shepsit" data-i="${i}" aria-pressed="${shepSit===i}">${esc(x[1])}</button>`).join("")}</div></div>
+  ${s?shepCard(s):""}
+  ${shepNotesHtml()}`;
+}
+function shepCard(s){
+  const [,n,sc,ch,open,close,avoid,jw]=s;
+  return `<article class="ill" id="shep-card"><div class="tag">Shepherding · ${esc(n)}</div>
+    <div class="block" style="font-family:var(--ui)"><b>Scriptures to read</b><ul class="steps" style="padding-left:18px">${sc.map(([r,w])=>`<li><a href="${wol(r)}" target="_blank" rel="noopener">${esc(r)}</a>: ${esc(w)}</li>`).join("")}</ul></div>
+    <div class="block" style="font-family:var(--ui)"><b>A Bible character to compare</b><b style="display:inline;text-transform:none;letter-spacing:0;font-size:14.5px;color:var(--ink)">${esc(ch[0])}</b> (<a href="${wol(ch[1])}" target="_blank" rel="noopener">${esc(ch[1])}</a>): ${esc(ch[2])}</div>
+    <div class="block"><b>Opening</b>${esc(open)}</div>
+    <div class="block"><b>Closing and prayer</b>${esc(close)}</div>
+    <div class="point"><b>Avoid:</b> ${esc(avoid)}</div>
+    <div class="scr">📄 <a href="${jwSearch(jw)}" target="_blank" rel="noopener">jw.org: ${esc(jw)}</a></div>
+    ${shepAsk?`<div class="block" style="font-family:var(--ui)"><b>From Claude</b>${shepAskHtml(shepAsk)}</div>`:""}
+    <details><summary>Need something more specific? Ask Claude</summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+      <label>A few words about the situation (no names)<input id="sh-ask" placeholder="e.g. lost his wife last month, stopped attending"></label>
+      <button class="btn" data-a="shepask">Ask Claude</button></div></details>
+    <div class="panel" style="padding:12px"><b>My private note for this visit</b>
+      <div class="two"><label>Who (initials)<input id="sh-who" placeholder="e.g. Bro. K.A."></label><label>Date<input id="sh-date" type="date" value="${today()}"></label></div>
+      <textarea id="sh-note" placeholder="What you shared, how they responded, follow-up"></textarea>
+      <div class="row"><button class="btn primary" data-a="shepsave">Save note</button><button class="btn" data-a="shepcopy">Copy for Life Compass</button></div></div>
+  </article>`;
+}
+function shepAskHtml(o){return `${(o.scriptures||[]).length?`<ul class="steps" style="padding-left:18px">${o.scriptures.map(x=>`<li><a href="${wol(x.ref)}" target="_blank" rel="noopener">${esc(x.ref)}</a>: ${esc(x.why||"")}</li>`).join("")}</ul>`:""}${o.character?`<p style="margin:6px 0 0"><b style="display:inline;text-transform:none;letter-spacing:0;color:var(--ink)">${esc(o.character.who||"")}</b> (${esc(o.character.ref||"")}): ${esc(o.character.how||"")}</p>`:""}${o.tip?`<p style="margin:6px 0 0">${esc(o.tip)}</p>`:""}`}
+function shepNotesHtml(){
+  const ns=S.shep.notes||[];if(!ns.length)return "";
+  return `<h4>My visit notes</h4><div class="list">${ns.map(x=>`<div class="talk"><button class="head" data-a="shepnote" data-id="${x.id}"><div><h3>${esc(x.who||"Visit")} · ${esc(x.sit)}</h3><div class="meta">${fmtDate(x.d)}</div></div><span>${openTalk===x.id?"▴":"▾"}</span></button>
+    ${openTalk===x.id?`<div class="body"><p class="story" style="margin:0;white-space:pre-wrap">${esc(x.note)}</p><div class="row"><button class="btn" data-a="shepcopynote" data-id="${x.id}">Copy for Life Compass</button><button class="btn danger" data-a="shepdel" data-id="${x.id}">Delete</button></div></div>`:""}</div>`).join("")}</div>`;
+}
+const shepLC=(who,d,sit,note)=>`${fmtDate(d)} · Shepherding visit${who?" · "+who:""}\nSituation: ${sit}\n${note||""}`;
+function shepMorePanel(){
+  return `<h2>Shepherding (private)</h2><div class="panel">
+    <p class="sub" style="margin:0">A private section in Ministry with 20 ready shepherding situations and your visit notes. It is locked with a PIN and nothing in it is shared.</p>
+    ${S.shep.on?`<div class="row"><span class="pill ok">On</span><button class="btn" data-a="shepoff">Turn off (hide)</button><button class="btn" data-a="shepnewpin">Change PIN</button></div>`:`
+    <div class="two"><label>Choose a PIN<input id="sh-p1" type="password" inputmode="numeric" placeholder="4 to 6 digits"></label><label>Repeat the PIN<input id="sh-p2" type="password" inputmode="numeric"></label></div>
+    <button class="btn primary" data-a="shepon">Turn on Shepherding</button>
+    <p class="sub" style="font-size:13px">Write your PIN down somewhere safe. If you forget it, you can only get back in by restoring a backup.</p>`}
+  </div>`;
+}
+async function shepAction(a,el){
+  switch(a){
+    case "meetpick":meetOpen=+el.dataset.i;renderMinistry();document.getElementById("meet-card")?.scrollIntoView({behavior:"smooth",block:"start"});return true;
+    case "meetcopy":copy(meetText(MEET[meetOpen]));return true;
+    case "meetsave":(S.plans=S.plans||[]).unshift({id:"p"+Date.now(),kind:"meeting",d:today(),obj:meetObj(MEET[meetOpen])});save();el.textContent="Saved ✓";el.disabled=true;return true;
+    case "shepon":{const p1=document.getElementById("sh-p1").value.trim(),p2=document.getElementById("sh-p2").value.trim();
+      if(!/^\d{4,6}$/.test(p1)){toast("Use a PIN of 4 to 6 digits");return true}if(p1!==p2){toast("The two PINs don't match");return true}
+      S.shep.pin=await pinHash(p1);S.shep.on=true;save();shepOpen=true;renderMore();toast("Shepherding is on. Find it in Ministry.");return true}
+    case "shepoff":if(el.dataset.sure){S.shep.on=false;shepOpen=false;save();renderMore();toast("Shepherding hidden. Your notes are kept.")}else{el.dataset.sure=1;el.textContent="Tap again to hide"}return true;
+    case "shepnewpin":S.shep.on=false;save();renderMore();toast("Choose a new PIN to turn it on again");return true;
+    case "shepunlock":{const p=document.getElementById("sh-pin").value.trim();if(await pinHash(p)===S.shep.pin){shepOpen=true;renderMinistry()}else{toast("Wrong PIN");document.getElementById("sh-pin").value=""}return true}
+    case "sheplock":shepOpen=false;shepSit=-1;shepAsk=null;renderMinistry();return true;
+    case "shepsit":shepSit=+el.dataset.i;shepAsk=null;renderMinistry();document.getElementById("shep-card")?.scrollIntoView({behavior:"smooth",block:"start"});return true;
+    case "shepsave":{const note=document.getElementById("sh-note").value.trim();if(!note){toast("Write a note first");return true}
+      S.shep.notes.unshift({id:"v"+Date.now(),d:document.getElementById("sh-date").value||today(),who:document.getElementById("sh-who").value.trim(),sit:SHEP[shepSit][1],note});save();renderMinistry();toast("Note saved on this phone");return true}
+    case "shepcopy":copy(shepLC(document.getElementById("sh-who").value.trim(),document.getElementById("sh-date").value||today(),SHEP[shepSit][1],document.getElementById("sh-note").value.trim()));toast("Copied. Paste it in Life Compass.");return true;
+    case "shepnote":openTalk=openTalk===el.dataset.id?"":el.dataset.id;renderMinistry();return true;
+    case "shepcopynote":{const x=S.shep.notes.find(y=>y.id===el.dataset.id);copy(shepLC(x.who,x.d,x.sit,x.note));toast("Copied. Paste it in Life Compass.");return true}
+    case "shepdel":if(el.dataset.sure){S.shep.notes=S.shep.notes.filter(y=>y.id!==el.dataset.id);save();renderMinistry()}else{el.dataset.sure=1;el.textContent="Tap again to delete"}return true;
+    case "shepask":{const words=document.getElementById("sh-ask").value.trim();const sit=SHEP[shepSit][1];
+      const sh=openSheet(`<h3>Send to Claude?</h3><p class="sub">Only this will be sent:</p><div class="block">Situation: ${esc(sit)}${words?`<br>Details: ${esc(words)}`:""}</div><p class="sub" style="font-size:13px">Please make sure there are no names in the details.</p><div class="row"><button class="btn primary" data-k="ok">Send</button><button class="btn" data-close>Cancel</button></div>`);
+      sh.addEventListener("click",async e=>{if(!e.target.closest("[data-k=ok]"))return;sh.remove();
+        const prompt=`An elder of Jehovah's Witnesses in Ghana is preparing a shepherding visit.\nSituation: ${sit}${words?"\nDetails: "+words:""}\nGive 3 fitting scriptures (New World Translation) with one line each on why, one Bible character whose experience compares, and one short practical tip for the visit. Warm, brief, in line with the teachings of Jehovah's Witnesses.\nReturn ONLY JSON: {"scriptures":[{"ref":"","why":""}],"character":{"who":"","ref":"","how":""},"tip":""}`;
+        try{shepAsk=await aiRun(prompt,true,"Asking Claude…");renderMinistry();document.getElementById("shep-card")?.scrollIntoView({block:"start"})}catch(err){aiError(err)}});return true}
+  }
+  return false;
+}
+
+const SHEP_ACTIONS=new Set(["meetpick","meetcopy","meetsave","shepon","shepoff","shepnewpin","shepunlock","sheplock","shepsit","shepsave","shepcopy","shepnote","shepcopynote","shepdel","shepask"]);
 /* ---------- Actions ---------- */
 view.addEventListener("click",e=>{
   const el=e.target.closest("[data-a]");if(!el)return;const a=el.dataset.a,id=el.dataset.id,v=el.dataset.v;
   if(ministryAction(a,el))return;
   if(charAction(a,el))return;
+  if(SHEP_ACTIONS.has(a)){shepAction(a,el);return}
   const t=id&&talkById(id);
   switch(a){
     case "opentimer":go("timer");break;
